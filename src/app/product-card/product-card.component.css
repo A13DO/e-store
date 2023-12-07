@@ -1,0 +1,25 @@
+.product {
+  background-color: white;
+  width: 200px;
+  height: 350px;
+  color: black;
+  border: black 2px solid;
+  border-radius: 5%;
+  overflow: hidden;
+}
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.details-holder {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+.product img {
+  width: 200px;
+}
+.buttons {
+  display: flex;
+}
