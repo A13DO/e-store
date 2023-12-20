@@ -3,13 +3,20 @@
     <h1 class="logo">Anon</h1>
   </div>
   <div class="header">
-    <h1 class="logo">Anon</h1>
+    <h1 class="logo" routerLink="/home">Anon</h1>
     <div class="search">
       <input type="search" name="search" id="search" placeholder="Search">
     </div>
     <div class="widget">
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-    </div>
+      <!-- <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg> -->
+      <button mat-icon-button routerLink="/wishlist">
+        <mat-icon [matBadge]="wishListLen" matBadgeColor="warn">favorite</mat-icon>
+      </button>
+        <!-- <mat-icon mat-icon-button matBadge="15" matBadgeColor="warn">shopping_cart</mat-icon> -->
+      </div>
+      <button mat-icon-button  (click)="cartToggle()">
+        <mat-icon [matBadge]="cartLen" matBadgeColor="warn">shopping_cart</mat-icon>
+      </button>
   </div>
 </div>

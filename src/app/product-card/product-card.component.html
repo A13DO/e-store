@@ -1,0 +1,20 @@
+<div class="product card" (product)="cardProduct">
+  <img  routerLink="/product" src="https://c.static-nike.com/a/images/f_auto,cs_srgb/w_1536,c_limit/g1ljiszo4qhthfpluzbt/123-joyride-cdp-apla-xa-xp.jpg" alt="image">
+  <div class="details-holder">
+    <div class="details">
+      <div class="name">{{ cardProduct.name }}</div>
+      ~{{ cardProduct.rate }}
+      <div class="price">{{ cardProduct.price }}$</div>
+      <!-- <button class="wishlist-btn" (click)="onAddToWishlist()">Love</button>
+      <button class="cart-btn" (click)="onAddToCart()">to cart</button> -->
+    </div>
+    <div class="buttons">
+      <button mat-icon-button (click)="onAddToWishlist()">
+        <mat-icon class="icon">favorite</mat-icon>
+      </button>
+      <button mat-icon-button (click)="onAddToCart()">
+        <mat-icon class="icon">shopping_cart</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

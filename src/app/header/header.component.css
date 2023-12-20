@@ -28,4 +28,6 @@ svg {
   box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
 }
 
-
+.logo {
+  cursor: pointer;
+}

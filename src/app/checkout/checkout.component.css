@@ -1,0 +1,27 @@
+.container {
+  top: 50px;
+  position: relative;
+}
+.form-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  gap: 10px;
+}
+form input {
+  padding: 5px 10px 5px 10px;
+  border-radius: 10px;
+  border: 1px gray solid;
+}
+button {
+  width: fit-content;
+  align-self: center;
+}
+form input:focus {
+  outline: none;
+}
