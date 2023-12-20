@@ -1,0 +1,53 @@
+<header>
+  <div class="container">
+    <p>
+      Home > Product > [Product_Name]
+    </p>
+  </div>
+  </header>
+<div class="container">
+  <div class="row">
+    <img class="product-img col-lg-4 col-md-4 col-sm-12" src="https://c.static-nike.com/a/images/f_auto,cs_srgb/w_1536,c_limit/g1ljiszo4qhthfpluzbt/123-joyride-cdp-apla-xa-xp.jpg" alt="image">
+    <div class="details col-lg-7 col-md-6 col-sm-12">
+      <h2 class="product-title">YEEZY</h2>
+      <div class="rating">
+        <mat-icon class="icon true">star_rate</mat-icon>
+        <mat-icon class="icon true">star_rate</mat-icon>
+        <mat-icon class="icon true">star_rate</mat-icon>
+        <mat-icon class="icon true">star_rate</mat-icon>
+        <mat-icon class="icon">star_rate</mat-icon>
+        <!-- star_rate_half -->
+        <p class="text">4.5</p>
+      </div>
+      <h3 class="price">300$</h3>
+      <div class="description">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor optio, cupiditate, expedita commodi eius cum incidunt voluptas nisi in omnis odio aspernatur laudantium, voluptates nobis? Itaque a necessitatibus enim assumenda.
+      </div>
+      <div class="type"><strong class="text">Type:</strong>Shoes</div>
+      <div class="type"><strong class="text">Brand:</strong>YEEZYY</div>
+      <div class="type"><strong class="text">Color:</strong>Red</div>
+      <div class="type"><strong class="text">Material:</strong>-</div>
+      <div class="select">
+        <label for="size">Size</label>
+        <select name="Size" id="size">
+          <option value="Small">Small</option>
+          <option value="Medium">Medium</option>
+          <option value="Large">Large</option>
+        </select>
+      </div>
+      <div class="btns">
+        <button class="add-btn btn" type="button" (click)="onAddToCart()">
+          <mat-icon class="icon">shopping_cart</mat-icon>
+          <span *ngIf="!cartStatus">Add to cart</span>
+          <span *ngIf="cartStatus">Added to cart</span>
+        </button>
+        <button class="save-btn btn" type="button" (click)="onSave()">
+          <mat-icon class="icon" [ngStyle]="{'color': saveStatus ? 'red' : 'grey'}">favorite</mat-icon>
+          <span *ngIf="!saveStatus">Save</span>
+          <span *ngIf="saveStatus">Saved</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

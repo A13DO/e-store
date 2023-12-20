@@ -1,9 +1,9 @@
 
 
-.products {
-  display: flex;
-  gap: 30px;
-}
+/* .products { */
+  /* display: flex;
+  gap: 30px; */
+/* } */
 .product {
   background-color: white;
   width: 200px;
@@ -24,8 +24,10 @@
 
 
 
-
-
+.pro-holder {
+  display: flex;
+  flex-direction: row;
+}
 
 
 

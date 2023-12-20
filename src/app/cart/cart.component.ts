@@ -1,7 +1,9 @@
-import { product } from './../store/store';
+import { ProductsEffect } from './../store/effects';
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { RequestsService } from '../shared/requests.service';
 import { Product } from '../shared/product.module';
+import { Store } from '@ngrx/store';
+import * as ProductsActions from '../store/actions';
 
 @Component({
   selector: 'app-cart',
@@ -10,24 +12,65 @@ import { Product } from '../shared/product.module';
 })
 export class CartComponent implements OnInit, OnChanges{
   products!: Product[];
+  produc: Product = {
+    id: 1,
+    name: 'NEW',
+    rate: 8,
+    price: 900,
+    unit: 1
+  };
   totalPrice: number = 0;
   units: number = 0;
-  constructor(private requestsService: RequestsService) {}
+  cartStatus!: boolean;
+  cart = "CART";
+  constructor(
+    private requestsService: RequestsService,
+    private store: Store<any>,
+    private productsEffect: ProductsEffect
+    ) {}
   ngOnInit() {
-    this.requestsService.getCart().subscribe(
-      resData => {
-        this.products = resData;
-        this.products == null? this.products = [] : this.products;
-        this.products = this.removeDuplicates(this.products)
-        for (let i = 0; i < this.products.length; i++) {
-          if (this.products[i].unit > 1) {
-            this.totalPrice += this.products[i].price * this.products[i].unit;
-          } else {
-            this.totalPrice += this.products[i].price;
-          }
-        }
+    this.store.select("productsReducer")
+    // this.store.dispatch(new ProductsActions.addToCartAction(this.product))
+    this.store.subscribe(
+      data => {
+        this.products = data.productsReducer.products
+        // for (let i = 0; i < this.products.length; i++) {
+        //   if (this.products[i].unit > 1) {
+        //       this.totalPrice += this.products[i].price * this.products[i].unit;
+        //     } else {
+        //       this.totalPrice += this.products[i].price;
+        //     }
+        //   }
+        // console.log(data.productsReducer.products);
       }
     )
+
+    // this.productsEffect.productsEffect$.subscribe(
+    //   data => {
+    //     console.log("From Cart Effect: ");
+    //     console.log(data);
+    //   }
+    // )
+    this.requestsService.isCartOpen$.subscribe(
+      status => {
+        this.cartStatus = status;
+      }
+    )
+    // this.requestsService.getCart().subscribe(
+    //   resData => {
+    //     this.products = resData;
+    //     this.products == null? this.products = [] : this.products;
+    //     // this.products = this.removeDuplicates(this.products)
+    //     for (let i = 0; i < this.products.length; i++) {
+    //       if (this.products[i].unit > 1) {
+    //         this.totalPrice += this.products[i].price * this.products[i].unit;
+    //       } else {
+    //         this.totalPrice += this.products[i].price;
+    //       }
+    //     }
+    //     console.log(this.products);
+    //   }
+    // )
   }
   ngOnChanges(changes: SimpleChanges) {
     // Called whenever an input property changes
@@ -53,6 +96,18 @@ export class CartComponent implements OnInit, OnChanges{
       return isFirstOccurrence;
     });
     return uniqueArray;
+  }
+  cartOpen() {
+    this.cartStatus = true;
+  }
+  cartClose() {
+    this.cartStatus = false;
+  }
+  onDeleteProduct(event: Event, product: Product) {
+    const productEl = (event.target as HTMLElement).closest('.product');
+    console.log(product);
+    productEl?.remove()
+    this.requestsService.removeItem(this.cart, product.id)
   }
 }
 

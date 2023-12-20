@@ -7,10 +7,25 @@
   background-color: bisque;
   top: 0;
   right: 0;
+  transition: 0.5s;
+  overflow: scroll;
 }
-
+/* .cart-nav::before {
+  content: "";
+  background-color: rgba(0, 0, 0, 0.093);
+  width: 100vw;
+  height: 100%;
+  position: absolute;
+  left: -333%;
+} */
+.header {
+  padding:  5px 20px 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .title {
-  padding:  5px 0 0 20px;
+  margin: 0;
 }
 .products {
   display: flex;

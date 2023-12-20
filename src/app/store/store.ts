@@ -1,71 +1,76 @@
-import { Action } from "@ngrx/store";
+import { Action, ActionReducerMap } from "@ngrx/store";
+import { Product } from "../shared/product.module";
+import * as ProductsActions from "./actions";
+import { removeDuplicates } from "../shared/requests.service";
 
 const INCREMENT = "increment";
 
 
-export interface StoreInterface {
-  counter: Counter
+export interface AppState {
+  productsReducer: productsState;
 }
-// Reducer Interface
-interface Counter {
-  n: number
-}
-
-let initialState = {
-  n: 0
-}
-// Action Interface
-interface customAction {
-  type: string;
-  payload?: any;
+export interface productsState {
+  products: Product[];
+  error: string;
 }
 
-// Action Class : to avoid using {type: "increment", paylaod: 2} when dispatch
-export class incrementAction implements Action {
-  type: string = "increment";
-  payload: number;
-
-  constructor(payload: number) {
-    this.payload = payload;
-  }
+export const initialState: productsState = {
+  products: [],
+  error: ""
 }
-export class decrementAction implements Action {
-  type: string = "decrement";
-  payload: number;
-
-  constructor(payload: number) {
-    this.payload = payload;
-  }
+export const appReducers: ActionReducerMap<AppState> = {
+  productsReducer: counterReducer,
 }
-
 
 // ==================== Products =================
 
-export interface product {
-  name: string;
-  rate: number;
-  price: number;
-}
-
-
 
 // Reducer
-export function counterReducer(store = initialState, action: customAction) {
+
+// I see that you have a Redux reducer named counterReducer that handles various actions, including INITIALIZESTATE, ADD_TO_CART, and CARTSUCCESS. In the INITIALIZESTATE case, you are trying to call the removeDuplicates function on the initProducts array, but you are not assigning the result back to anything.
+
+// Here's a modified version of your code:
+
+// typescript
+// Copy code
+export function counterReducer(store = initialState, action: ProductsActions.ProductsActions): productsState {
   switch (action.type) {
-    case "add-to-cart":
-      return {
-        n: store.n + action.payload
-        // ------------------------
-      }
-    case INCREMENT:
-      return {
-        n: store.n + action.payload
-      }
-      case "decrement":
-      return {
-        n: store.n - action.payload
-      }
+    case ProductsActions.INITIALIZESTATE:
+      let initProducts = (action as ProductsActions.initializeStateAction).payload;
+      console.log(typeof store.products);
+      initProducts = initProducts == null? store.products : initProducts;
+      // initProducts = removeDuplicates(initProducts);
+      console.log("Store: ", initProducts);
+      // ==================== return fetched state =================
+      return { ...store, products: [...store.products, ...initProducts] };
+    case ProductsActions.ADD_TO_CART:
+      const newProducts = (action as ProductsActions.addToCartAction).payload;
+      return { ...store, products: [...store.products, newProducts] };
+    case ProductsActions.CARTSUCCESS:
+      return { ...store, products: (action as ProductsActions.CartSuccessAction).payload };
     default:
       return store;
   }
 }
+
+// Action Class : to avoid using {type: "increment", paylaod: 2} when dispatch
+// export class addToCartAction implements Action {
+//   type: string = "add-to-cart";
+//   payload: Product;
+
+//   constructor(payload: Product) {
+//     this.payload = payload;
+//   }
+// }
+
+// export class decrementAction implements Action {
+//   type: string = "decrement";
+//   payload: number;
+
+//   constructor(payload: number) {
+//     this.payload = payload;
+//   }
+// }
+
+
+

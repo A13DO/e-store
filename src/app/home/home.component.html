@@ -1,9 +1,7 @@
 <div class="container">
 
-<div class="landing">
-
-</div>
-
+  <div class="landing">
+  </div>
   <div class="cards">
     <div class="card-container">
       <button (click)="onIncrement()" class="card card-small" tabindex="0">
@@ -35,33 +33,35 @@
         <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
         <span>Build for Production</span>
       </button>
+      <div class="select">
+        <label for="select">sort by: </label>
+        <select name="" id="">
+          <option value="name">name</option>
+          <option value="price">price</option>
+          <option value="price">rate</option>
+        </select>
+      </div>
     </div>
     </div>
-    <div class="products">
-      <app-product-card *ngFor="let product of products" [cardProduct]="product"></app-product-card>
 
-      <!-- <div class="product">
-        <img src="https://c.static-nike.com/a/images/f_auto,cs_srgb/w_1536,c_limit/g1ljiszo4qhthfpluzbt/123-joyride-cdp-apla-xa-xp.jpg" alt="image">
-        {{ product.name }}
-        ~{{ product.rate }}
-        {{ product.price }}$
-        <button class="wishlist-btn" (click)="onAddToWishlist()">Love</button>
-        <button class="cart-btn" (click)="onAddToCart()">to cart</button>
-      </div> -->
-      <!-- <div class="product">
-        <img src="https://c.static-nike.com/a/images/f_auto,cs_srgb/w_1536,c_limit/g1ljiszo4qhthfpluzbt/123-joyride-cdp-apla-xa-xp.jpg" alt="image">
-        {{ product.name }}
-        ~{{ product.rate }}
-        <strong>{{ product.price }}$</strong>
-        <button class="wishlist-btn" (click)="onAddToWishlist()">Love</button>
-        <button class="cart-btn" (click)="onAddToCart()">to cart</button>
-      </div> -->
+    <div class="pro-holder row">
+      <div class="catgories col-3">
+        <ol>
+          categories
+          <li><button>cat-1</button></li>
+          <br>
+          <li><button>cat-2</button></li>
+          <br>
+          <li><button>cat-3</button></li>
+          <br>
+          <li><button>cat-4</button></li>
+          <br>
+          <li><button>cat-5</button></li>
+        </ol>
+      </div>
+      <div class="products row col-9">
 
+        <app-product-card class="col-3" *ngFor="let product of products" [cardProduct]="product"></app-product-card>
+      </div>
     </div>
-</div>
-
-
-
-<div>
-  {{ count }}
 </div>

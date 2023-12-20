@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { StoreModule } from '@ngrx/store';
-import { counterReducer } from './store/store';
+import { appReducers } from './store/store';
 import { CartComponent } from './cart/cart.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { ProductCardComponent } from './product-card/product-card.component';
@@ -15,6 +15,10 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatBadgeModule} from '@angular/material/badge';
 import { HttpClientModule } from '@angular/common/http';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { EffectsModule } from '@ngrx/effects';
+import { ProductsEffect } from './store/effects';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 @NgModule({
   declarations: [
@@ -23,17 +27,20 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     CartComponent,
     WishlistComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    CheckoutComponent,
+    ProductDetailsComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    StoreModule.forRoot({counter: counterReducer}),
+    StoreModule.forRoot(appReducers),
     BrowserAnimationsModule,
     MatIconModule,
     MatButtonModule,
-    MatBadgeModule
+    MatBadgeModule,
+    EffectsModule.forRoot([ProductsEffect])
   ],
   providers: [],
   bootstrap: [AppComponent]
