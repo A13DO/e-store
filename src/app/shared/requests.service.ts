@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Product } from './product.module';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject, Subject, combineLatest } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class RequestsService {
+  private isCartToggleSubject = new Subject<boolean>;
   private isCartOpenSubject = new BehaviorSubject<boolean>(false);
+  private totalPriceSubject = new BehaviorSubject<number>(0);
   private cartLengthSubject = new BehaviorSubject<number>(0);
   private wishlistLengthSubject = new BehaviorSubject<number>(0);
 
@@ -15,6 +17,8 @@ export class RequestsService {
 
   itemsNumbers$ = combineLatest([this.cartLength$, this.wishlistLength$]);
   isCartOpen$ = this.isCartOpenSubject;
+  totalPrice$ = this.totalPriceSubject;
+  isCartToggle$ = this.isCartToggleSubject;
   wichlist = "WICHLIST";
   cart = "CART";
   products: Product[] = [];
@@ -39,10 +43,9 @@ export class RequestsService {
   addToWishlist(product: Product) {
     this.dbWishlist.push(product)
     this.dbWishlist = removeDuplicates(this.dbWishlist, product);
-    this.http.put<Product[]>("https://e-commerce-86f86-default-rtdb.firebaseio.com/wishlist.json",
-    this.dbWishlist
-  ).subscribe()
-  this.wishlistLengthSubject.next(this.dbWishlist.length)
+    this.wishlistLengthSubject.next(this.dbWishlist.length)
+    return this.http.put<Product[]>("https://e-commerce-86f86-default-rtdb.firebaseio.com/wishlist.json",
+    this.dbWishlist)
   }
   getWishlist() {
     return this.http.get<Product[]>("https://e-commerce-86f86-default-rtdb.firebaseio.com/wishlist.json");
@@ -50,7 +53,7 @@ export class RequestsService {
   addToCart(product: Product) {
     this.dbCart = removeDuplicates(this.dbCart, product);
     // this.dbCart.push(product)
-  console.log("AFTER REMOVE D: ", this.dbCart);
+    console.log("AFTER REMOVE D: ", this.dbCart);
     this.cartLengthSubject.next(this.dbCart.length)
 
     return this.http.put<Product[]>("https://e-commerce-86f86-default-rtdb.firebaseio.com/cart.json",
@@ -74,10 +77,14 @@ export class RequestsService {
     for (let removeId of this.draft) {
       list = list.filter((p: Product) => p.id !== removeId);
     }
-    console.log(list);
+    componentName === this.cart? this.dbCart = list : this.dbWishlist = list;
     this.http.put<Product[]>("https://e-commerce-86f86-default-rtdb.firebaseio.com/cart.json",
     list
-    ).subscribe()
+    ).subscribe(
+      res => {
+        console.log(res);
+      }
+    )
     subject?.next(list.length)
   }
 }

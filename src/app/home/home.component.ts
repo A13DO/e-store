@@ -70,11 +70,11 @@ export class HomeComponent implements OnInit{
   // })
 }
   ngOnInit() {
-    this.requestsService.getCart().subscribe(
-      data => {
-        this.store.dispatch(new ProductsActions.initializeStateAction(data))
-      }
-      )
+    // this.requestsService.getCart().subscribe(
+    //   data => {
+    //     this.store.dispatch(new ProductsActions.initializeStateAction(data))
+    //   }
+    //   )
       this.store.subscribe(
         data => {
           // console.log(data);

@@ -1,5 +1,31 @@
 
 
+/* .landing {
+  position: fixed;
+  background-color: #125699;
+  width: 100vw;
+  height: 700px;
+} */
+.landing img {
+  width: 1200px;
+}
+
+
+.holder {
+  background-color: white;
+  position: relative;
+  /* top: 700px; */
+}
+
+.container {
+  top: 100px;
+  position: relative;
+}
+
+
+
+
+
 /* .products { */
   /* display: flex;
   gap: 30px; */

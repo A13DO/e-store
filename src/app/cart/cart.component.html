@@ -9,7 +9,7 @@
       <div class="details">
         <h3 class="name">{{ product.name }}</h3>
         <p class="price">${{ product.price }}</p>
-        <p>unit x {{ product.unit }}</p>
+        <p>unit x {{ product.unit }} total: {{ product.price * product.unit }}</p>
       </div>
       <button (click)="onDeleteProduct($event, product)">X</button>
     </div>

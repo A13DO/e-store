@@ -46,6 +46,10 @@ export function counterReducer(store = initialState, action: ProductsActions.Pro
     case ProductsActions.ADD_TO_CART:
       const newProducts = (action as ProductsActions.addToCartAction).payload;
       return { ...store, products: [...store.products, newProducts] };
+    case ProductsActions.ADD_TO_WISHLIST:
+      const newWishProducts = (action as ProductsActions.addToWishlistAction).payload;
+      return { ...store, products: [...store.products, newWishProducts] };
+    // Delete,
     case ProductsActions.CARTSUCCESS:
       return { ...store, products: (action as ProductsActions.CartSuccessAction).payload };
     default:

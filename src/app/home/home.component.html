@@ -1,7 +1,36 @@
-<div class="container">
 
-  <div class="landing">
+<div class="landing">
+    <!-- <div class="container"> -->
+    <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYUE8dhfRHMh3o6QlXH-6hiH69AiEjO5obiw&usqp=CAU" alt=""> -->
+  <!-- </div> -->
+</div>
+
+<div class="holder">
+  <div class="container">
+      <div class="pro-holder row">
+        <div class="catgories col-3">
+          <ol>
+            categories
+            <li><button>cat-1</button></li>
+            <br>
+            <li><button>cat-2</button></li>
+            <br>
+            <li><button>cat-3</button></li>
+            <br>
+            <li><button>cat-4</button></li>
+            <br>
+            <li><button>cat-5</button></li>
+          </ol>
+        </div>
+        <div class="products row col-9">
+          <app-product-card class="col-3" *ngFor="let product of products" [cardProduct]="product"></app-product-card>
+        </div>
+      </div>
   </div>
+</div>
+<!--
+
+
   <div class="cards">
     <div class="card-container">
       <button (click)="onIncrement()" class="card card-small" tabindex="0">
@@ -42,26 +71,4 @@
         </select>
       </div>
     </div>
-    </div>
-
-    <div class="pro-holder row">
-      <div class="catgories col-3">
-        <ol>
-          categories
-          <li><button>cat-1</button></li>
-          <br>
-          <li><button>cat-2</button></li>
-          <br>
-          <li><button>cat-3</button></li>
-          <br>
-          <li><button>cat-4</button></li>
-          <br>
-          <li><button>cat-5</button></li>
-        </ol>
-      </div>
-      <div class="products row col-9">
-
-        <app-product-card class="col-3" *ngFor="let product of products" [cardProduct]="product"></app-product-card>
-      </div>
-    </div>
-</div>
+    </div> -->

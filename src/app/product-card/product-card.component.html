@@ -10,10 +10,10 @@
     </div>
     <div class="buttons">
       <button mat-icon-button (click)="onAddToWishlist()">
-        <mat-icon class="icon">favorite</mat-icon>
+        <mat-icon class="icon" [ngStyle]="{'color' : wishToggle? 'red' : 'grey'}">favorite</mat-icon>
       </button>
       <button mat-icon-button (click)="onAddToCart()">
-        <mat-icon class="icon">shopping_cart</mat-icon>
+        <mat-icon class="icon"  [ngStyle]="{'color' : cartToggle? 'green' : 'grey'}">shopping_cart</mat-icon>
       </button>
     </div>
   </div>
