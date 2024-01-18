@@ -1,16 +1,17 @@
 import { ProductsEffect } from './../store/effects';
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { RequestsService } from '../shared/requests.service';
 import { Product } from '../shared/product.module';
 import { Store } from '@ngrx/store';
 import * as ProductsActions from '../store/actions';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit, OnChanges{
+export class CartComponent implements OnInit, OnDestroy{
   products!: Product[];
   produc: Product = {
     id: 1,
@@ -23,6 +24,7 @@ export class CartComponent implements OnInit, OnChanges{
   units: number = 0;
   cartStatus!: boolean;
   cart = "CART";
+  subscription!: Subscription;
   constructor(
     private requestsService: RequestsService,
     private store: Store<any>,
@@ -34,13 +36,14 @@ export class CartComponent implements OnInit, OnChanges{
         this.totalPrice = data;
       }
     )
-    this.store.select("productsReducer")
-    // this.store.dispatch(new ProductsActions.addToCartAction(this.product))
-    this.store.subscribe(
+    this.store.select("cartReducer")
+    this.subscription = this.store.subscribe(
       data => {
-        this.products = data.productsReducer.products;
-        this.getTotalPrice(this.products);
-        console.log(data.productsReducer.products);
+        this.products = data.cartReducer.products;
+        if (this.products !== null) {this.getTotalPrice(this.products)}
+        // this.getTotalPrice(this.products);
+
+        console.log(data.cartReducer.products);
       }
     )
 
@@ -57,16 +60,7 @@ export class CartComponent implements OnInit, OnChanges{
       }
     )
   }
-  ngOnChanges(changes: SimpleChanges) {
-    // Called whenever an input property changes
-    for (const propName in changes) {
-      if (propName == "products") {
-        console.log(changes[propName]);
-        // if (changes[propName].currentValue == true) {
-        // }
-      }
-    }
-  }
+
   removeDuplicates(array: Product[]): Product[] {
     const uniqueArray = array.filter((product, index, self) => {
       // Check for duplicates based on "id"
@@ -91,8 +85,9 @@ export class CartComponent implements OnInit, OnChanges{
   onDeleteProduct(event: Event, product: Product) {
     const productEl = (event.target as HTMLElement).closest('.product');
     console.log(product);
-    productEl?.remove()
-    this.requestsService.removeItem(this.cart, product.id)
+    // productEl?.remove()
+    // this.requestsService.removeItem(this.cart, product.id)
+    this.store.dispatch(new ProductsActions.removeAction([this.cart, product.id]))
     this.totalPrice -= product.price * product.unit;
   }
   getTotalPrice(products: Product[]) {
@@ -100,6 +95,10 @@ export class CartComponent implements OnInit, OnChanges{
     for (let i = 0; i < products.length; i++) {
       this.totalPrice += products[i].price * products[i].unit;
     }
+  }
+  ngOnDestroy(): void {
+    // Unsubscribe when the component is destroyed
+    this.subscription.unsubscribe();
   }
 }
 

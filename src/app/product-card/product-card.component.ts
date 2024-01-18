@@ -24,13 +24,15 @@ export class ProductCardComponent implements OnInit {
   cartToggle: boolean = false;
   wishToggle!: boolean;
   @Input() cardProduct!: Product;
+  @Input() wishlistButton: boolean = true;
   onAddToWishlist() {
+    // this.store.select('wishlistReducer')
     this.store.dispatch(new ProductsActions.addToWishlistAction(this.cardProduct))
-    this.requestsService.totalPrice$.subscribe(
-    value => {
-      this.value = value;
-    });
-    this.requestsService.totalPrice$.next(this.value + this.cardProduct.price)
+    // this.requestsService.totalPrice$.subscribe(
+    // value => {
+    //   this.value = value;
+    // });
+    // this.requestsService.totalPrice$.next(this.value + this.cardProduct.price)
     this.wishToggle? this.wishToggle = false : this.wishToggle = true;
   }
   onAddToCart() {

@@ -1,10 +1,5 @@
-import { Action, ActionReducerMap } from "@ngrx/store";
 import { Product } from "../shared/product.module";
 import * as ProductsActions from "./actions";
-import { removeDuplicates } from "../shared/requests.service";
-
-const INCREMENT = "increment";
-
 
 export interface AppState {
   productsReducer: productsState;
@@ -17,9 +12,6 @@ export interface productsState {
 export const initialState: productsState = {
   products: [],
   error: ""
-}
-export const appReducers: ActionReducerMap<AppState> = {
-  productsReducer: counterReducer,
 }
 
 // ==================== Products =================
@@ -40,16 +32,17 @@ export function counterReducer(store = initialState, action: ProductsActions.Pro
       console.log(typeof store.products);
       initProducts = initProducts == null? store.products : initProducts;
       // initProducts = removeDuplicates(initProducts);
-      console.log("Store: ", initProducts);
+      console.log("Cart Store: ", initProducts);
       // ==================== return fetched state =================
       return { ...store, products: [...store.products, ...initProducts] };
     case ProductsActions.ADD_TO_CART:
       const newProducts = (action as ProductsActions.addToCartAction).payload;
       return { ...store, products: [...store.products, newProducts] };
-    case ProductsActions.ADD_TO_WISHLIST:
-      const newWishProducts = (action as ProductsActions.addToWishlistAction).payload;
-      return { ...store, products: [...store.products, newWishProducts] };
     // Delete,
+    case ProductsActions.REMOVE:
+      let removeId = (action as ProductsActions.removeAction).payload[1];
+      let updatedProducts = store.products.filter((p: Product) => p.id !== removeId);;
+      return { ...store, products: updatedProducts };
     case ProductsActions.CARTSUCCESS:
       return { ...store, products: (action as ProductsActions.CartSuccessAction).payload };
     default:

@@ -2,14 +2,18 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
 import * as ProductsActions from './actions';
 import { Product } from '../shared/product.module';
 import { RequestsService } from '../shared/requests.service';
+import { Store } from '@ngrx/store';
+import { productsState } from './store';
 
 @Injectable()
 export class ProductsEffect {
-  constructor(private http: HttpClient, private actions$: Actions, private requestsService: RequestsService) {}
+  private selectProductsState = (state: productsState) => state.products;
+
+  constructor(private http: HttpClient, private actions$: Actions, private requestsService: RequestsService, private store: Store) {}
 // switchMap operator to handle the asynchronous operation and dispatch new actions based on the outcome.
   productsEffect$ = createEffect(() =>
     this.actions$.pipe(
@@ -24,12 +28,13 @@ export class ProductsEffect {
       )
     )
   );
-  wishListEffect$ = createEffect(() =>
+
+  deleteEffect$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ProductsActions.ADD_TO_WISHLIST),
+      ofType(ProductsActions.REMOVE),
+      // withLatestFrom(this.store.select(this.selectProductsState)), // Replace 'yourReducerState' with your actual reducer state key
       switchMap((action) =>
-        // send the new product (in service there fetched data update it then send)
-        this.requestsService.addToWishlist((action as ProductsActions.addToWishlistAction).payload)
+        this.requestsService.removeItem((action as ProductsActions.removeAction).payload[0], (action as ProductsActions.removeAction).payload[1])
         .pipe(
           map((data) => new ProductsActions.CartSuccessAction(data)),
           catchError((err) => of(new ProductsActions.CartFailAction("err")))
@@ -39,7 +44,14 @@ export class ProductsEffect {
   );
 }
 
-
+// this.http.put<Product[]>("https://e-commerce-86f86-default-rtdb.firebaseio.com/cart.json",
+// list).subscribe(
+//   res => {
+//     console.log(res);
+//   }
+// )
+// subject?.next(list.length)
+// }
   // Assuming you have a selector to get the current state
   // private selectProductsState = (state: AppState) => state.products;
 

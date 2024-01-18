@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { StoreModule } from '@ngrx/store';
-import { appReducers } from './store/store';
+import { appReducers } from './store/app.reducer';
 import { CartComponent } from './cart/cart.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { ProductCardComponent } from './product-card/product-card.component';
@@ -19,6 +19,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { EffectsModule } from '@ngrx/effects';
 import { ProductsEffect } from './store/effects';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { wishlistEffect } from './wishlist/store/wishlist.effects';
 
 @NgModule({
   declarations: [
@@ -36,11 +37,11 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
     HttpClientModule,
     AppRoutingModule,
     StoreModule.forRoot(appReducers),
+    EffectsModule.forRoot([ProductsEffect, wishlistEffect]),
     BrowserAnimationsModule,
     MatIconModule,
     MatButtonModule,
-    MatBadgeModule,
-    EffectsModule.forRoot([ProductsEffect])
+    MatBadgeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

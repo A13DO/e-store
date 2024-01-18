@@ -9,7 +9,7 @@
       <button class="cart-btn" (click)="onAddToCart()">to cart</button> -->
     </div>
     <div class="buttons">
-      <button mat-icon-button (click)="onAddToWishlist()">
+      <button mat-icon-button *ngIf="wishlistButton" (click)="onAddToWishlist()">
         <mat-icon class="icon" [ngStyle]="{'color' : wishToggle? 'red' : 'grey'}">favorite</mat-icon>
       </button>
       <button mat-icon-button (click)="onAddToCart()">

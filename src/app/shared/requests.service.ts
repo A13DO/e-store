@@ -43,6 +43,7 @@ export class RequestsService {
   addToWishlist(product: Product) {
     this.dbWishlist.push(product)
     this.dbWishlist = removeDuplicates(this.dbWishlist, product);
+    console.log("wishlist before send!", removeDuplicates(this.dbWishlist, product));
     this.wishlistLengthSubject.next(this.dbWishlist.length)
     return this.http.put<Product[]>("https://e-commerce-86f86-default-rtdb.firebaseio.com/wishlist.json",
     this.dbWishlist)
@@ -74,18 +75,20 @@ export class RequestsService {
       list = this.dbWishlist;
       subject = this.wishlistLengthSubject;
     }
+    list == this.dbWishlist? list : "Cart";
     for (let removeId of this.draft) {
       list = list.filter((p: Product) => p.id !== removeId);
     }
     componentName === this.cart? this.dbCart = list : this.dbWishlist = list;
-    this.http.put<Product[]>("https://e-commerce-86f86-default-rtdb.firebaseio.com/cart.json",
-    list
-    ).subscribe(
-      res => {
-        console.log(res);
-      }
-    )
     subject?.next(list.length)
+    return this.http.put<Product[]>("https://e-commerce-86f86-default-rtdb.firebaseio.com/cart.json",
+    list
+    )
+    // .subscribe(
+    //   res => {
+    //     console.log(res);
+    //   }
+    // )
   }
 }
 export function removeDuplicates(array: Product[], product: Product): Product[] {
@@ -105,6 +108,7 @@ export function removeDuplicates(array: Product[], product: Product): Product[] 
   }
 
   // If the object is not found, add it to the array
+
   return [...array, product];
 }
 

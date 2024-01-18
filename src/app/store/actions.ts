@@ -7,10 +7,18 @@ export const REMOVE = "remove";
 export const CARTSUCCESS = "cart-success";
 export const CARTFAIL = "cart-fail";
 export const INITIALIZESTATE  = "initialize-state";
+export const INITIALIZEWISHLIST  = "initialize-wishlist";
 
 
 export class initializeStateAction implements Action {
   readonly type: string = INITIALIZESTATE;
+  payload: Product[]
+  constructor(payload: Product[]) {
+    this.payload = payload;
+  }
+}
+export class initializeWishlistAction implements Action {
+  readonly type: string = INITIALIZEWISHLIST;
   payload: Product[]
   constructor(payload: Product[]) {
     this.payload = payload;
@@ -32,8 +40,8 @@ export class addToWishlistAction implements Action {
 }
 export class removeAction implements Action {
   readonly type: string = REMOVE;
-  payload: Product
-  constructor(payload: Product) {
+  payload: [string, number]
+  constructor(payload: [string, number]) {
     this.payload = payload;
   }
 }
