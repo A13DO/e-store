@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="cart col-6">
+    <h1 class="title">Cart</h1>
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="product" *ngFor="let product of products">
+          <td><img [src]="product.images?.[0]" alt="image"></td>
+          <td>{{ product.title }}</td>
+          <!-- <td>{{ product.unit }}</td> -->
+          <td>${{ product.price}}</td>
+          <td class="product-quantity">
+            <mat-form-field>
+              <mat-label>Qty:</mat-label>
+              <mat-select [value]="product.unit" (selectionChange)="onQuantityChange($event.value, product)">
+                <mat-option [value]="one">1</mat-option>
+                <mat-option [value]="two">2</mat-option>
+                <mat-option [value]="three">3</mat-option>
+                <mat-option [value]="four">4</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <p>You selected: {{product.unit}}</p>
+          </td>
+          <td>${{ product.price * product.unit}}</td>
+          <td><button class="btn btn-danger" (click)="onDeleteProduct(product)">X</button></td>
+        </tr>
+      </tbody>
+      <hr>
+      <tfoot>
+        <td></td>
+        <td></td>
+        <td></td>
+        <th>Total:</th>
+        <td>${{ totalPrice }}</td>
+      </tfoot>
+    </table>
+    <button class="cart-btn" routerLink="/checkout">CHECKOUT</button>
+  </div>
+</div>
