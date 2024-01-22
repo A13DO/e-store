@@ -2,7 +2,7 @@
   <div class="row">
     <div class="form-holder col-6">
       <form>
-        <h1>Billing detailsa</h1>
+        <h1>Billing Details</h1>
         <input type="text" name="" id="" placeholder="card number">
         <input type="text" name="" id="" placeholder="card holder">
         <div class="name">
@@ -22,18 +22,19 @@
           <th>Price</th>
         </thead>
         <tbody *ngFor="let product of products">
-          <td>{{ product.name }}</td>
+          <td>{{ product.title }}</td>
           <td>{{ product.unit }}</td>
           <td>${{ product.price * product.unit}}</td>
-          <td><button class="btn btn-success">-</button></td>
-          <td>-- {{ product.unit }} --</td>
-          <td><button class="btn btn-success">+</button></td>
-          <td><button class="btn btn-danger" (click)="onDeleteProduct(product)">Delete</button></td>
+          <!-- <td><button class="btn btn-success">-</button></td> -->
+          <!-- <td>-- {{ product.unit }} --</td> -->
+          <!-- <td><button class="btn btn-success">+</button></td> -->
+          <!-- <td><button class="btn btn-danger" (click)="onDeleteProduct(product)">Delete</button></td> -->
         </tbody>
         <hr>
         <tfoot>
           <th>Total:</th>
           <td>${{ totalPrice }}</td>
+          <button class="cart-btn" routerLink="/cart">UPDATE CART</button>
         </tfoot>
       </table>
     </div>

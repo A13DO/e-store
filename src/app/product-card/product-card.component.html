@@ -1,8 +1,8 @@
 <div class="product card" (product)="cardProduct">
-  <img  routerLink="/product" src="https://c.static-nike.com/a/images/f_auto,cs_srgb/w_1536,c_limit/g1ljiszo4qhthfpluzbt/123-joyride-cdp-apla-xa-xp.jpg" alt="image">
+  <img  routerLink="/product" [src]="cardProduct.images?.[0]" alt="image">
   <div class="details-holder">
     <div class="details">
-      <div class="name">{{ cardProduct.name }}</div>
+      <div class="name">{{ cardProduct.title }}</div>
       ~{{ cardProduct.rate }}
       <div class="price">{{ cardProduct.price }}$</div>
       <!-- <button class="wishlist-btn" (click)="onAddToWishlist()">Love</button>

@@ -5,9 +5,9 @@
   </div>
   <div class="products">
     <div class="product" *ngFor="let product of products" >
-      <img src="https://c.static-nike.com/a/images/f_auto,cs_srgb/w_1536,c_limit/g1ljiszo4qhthfpluzbt/123-joyride-cdp-apla-xa-xp.jpg" alt="image">
+      <img [src]="product.images?.[0]" alt="image">
       <div class="details">
-        <h3 class="name">{{ product.name }}</h3>
+        <h3 class="name">{{ product.title }}</h3>
         <p class="price">${{ product.price }}</p>
         <p>unit x {{ product.unit }} total: {{ product.price * product.unit }}</p>
       </div>
@@ -19,6 +19,7 @@
       <p>Total:</p>
       <p>${{ this.totalPrice }}</p>
     </div>
-    <button class="checkout-btn" routerLink="/checkout">Checkout</button>
+    <button class="cart-btn" routerLink="/cart" (click)="cartClose()">VIEW CART</button>
+    <button class="cart-btn" routerLink="/checkout">CHECKOUT</button>
   </div>
 </div>

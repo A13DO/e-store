@@ -13,13 +13,6 @@ import { Subscription } from 'rxjs';
 })
 export class CartComponent implements OnInit, OnDestroy{
   products!: Product[];
-  produc: Product = {
-    id: 1,
-    name: 'NEW',
-    rate: 8,
-    price: 900,
-    unit: 1
-  };
   totalPrice: number = 0;
   units: number = 0;
   cartStatus!: boolean;
@@ -36,14 +29,15 @@ export class CartComponent implements OnInit, OnDestroy{
         this.totalPrice = data;
       }
     )
-    this.store.select("cartReducer")
+    // this.store.select("cartReducer")
     this.subscription = this.store.subscribe(
       data => {
+
         this.products = data.cartReducer.products;
         if (this.products !== null) {this.getTotalPrice(this.products)}
         // this.getTotalPrice(this.products);
 
-        console.log(data.cartReducer.products);
+        console.log(data.cartReducer);
       }
     )
 

@@ -40,10 +40,13 @@ export class RequestsService {
     )
   }
 
+  getAll() {
+    return this.http.get('https://api.escuelajs.co/api/v1/products')
+  }
   addToWishlist(product: Product) {
-    this.dbWishlist.push(product)
     this.dbWishlist = removeDuplicates(this.dbWishlist, product);
-    console.log("wishlist before send!", removeDuplicates(this.dbWishlist, product));
+    // this.dbWishlist.push(product)
+    console.log("wishlist before send!", this.dbWishlist);
     this.wishlistLengthSubject.next(this.dbWishlist.length)
     return this.http.put<Product[]>("https://e-commerce-86f86-default-rtdb.firebaseio.com/wishlist.json",
     this.dbWishlist)

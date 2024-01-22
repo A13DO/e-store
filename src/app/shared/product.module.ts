@@ -1,21 +1,29 @@
 export class Product {
   public id: number;
-  public name: string;
+  public title: string;
   public rate: number;
   public price: number;
   public unit: number;
+  public images?: string[];
+  public description?: string;
+  public category?: {id: number, name: string, image: string };
   constructor(
     id: number,
-    name: string,
-    rate: number,
+    title: string,
     price: number,
-    unit: number
+    unit: number,
+    images?: string[],
+    description?: string,
+    category?: {id: number, name: string, image: string },
   ) {
     this.id = id;
-    this.name = name;
-    this.rate = rate;
+    this.title = title;
+    this.rate = 9;
     this.price = price;
     this.unit = unit;
+    this.description = description;
+    this.category = category;
+    this.images = images;
   }
 }
 

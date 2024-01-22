@@ -22,8 +22,6 @@ export class CheckoutComponent implements OnInit {
         this.products = data.cartReducer.products
         console.log(this.products);
         if (this.products !== null) {this.getTotalPrice(this.products)}
-
-        // this.getTotalPrice(this.products)
       }
     )
   }

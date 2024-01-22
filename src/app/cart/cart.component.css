@@ -80,7 +80,7 @@ img {
   justify-content: space-between;
   margin: 0 10px;
 }
-.checkout-btn {
+.cart-btn {
   width: 90%;
   font-weight: bold;
   align-self: center;
@@ -88,5 +88,6 @@ img {
   background-color: #ff8100;
   border: none;
   padding: 10px;
+  margin-bottom: 10px;
   border-radius: 15px;
 }

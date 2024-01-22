@@ -7,54 +7,55 @@ import * as ProductsActions from '../store/actions';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+
 })
 export class HomeComponent implements OnInit{
-  // dbCart: product[] = [];
-  products: Product[] = [
-    {
-    id: 1,
-    name: "NIKE",
-    rate: 9,
-    price: 200,
-    unit: 1
-    },
-    {
-    id: 2,
-    name: "ADIDAS",
-    rate: 8,
-    price: 200,
-    unit: 1
-    },
-    {
-    id: 3,
-    name: "YEEZY",
-    rate: 8,
-    price: 200,
-    unit: 1
-    },
-    {
-    id: 4,
-    name: "RICK OWENS",
-    rate: 8,
-    price: 200,
-    unit: 1
-    },
-    {
-    id: 5,
-    name: "JORDAN",
-    rate: 8,
-    price: 200,
-    unit: 1
-    },
-    {
-    id: 6,
-    name: "FENDI",
-    rate: 7,
-    price: 200,
-    unit: 1
-    }
-  ];
+  products!: Product[];
+  // products: Product[] = [
+  //   {
+  //   id: 1,
+  //   name: "NIKE",
+  //   rate: 9,
+  //   price: 200,
+  //   unit: 1
+  //   },
+  //   {
+  //   id: 2,
+  //   name: "ADIDAS",
+  //   rate: 8,
+  //   price: 200,
+  //   unit: 1
+  //   },
+  //   {
+  //   id: 3,
+  //   name: "YEEZY",
+  //   rate: 8,
+  //   price: 200,
+  //   unit: 1
+  //   },
+  //   {
+  //   id: 4,
+  //   name: "RICK OWENS",
+  //   rate: 8,
+  //   price: 200,
+  //   unit: 1
+  //   },
+  //   {
+  //   id: 5,
+  //   name: "JORDAN",
+  //   rate: 8,
+  //   price: 200,
+  //   unit: 1
+  //   },
+  //   {
+  //   id: 6,
+  //   name: "FENDI",
+  //   rate: 7,
+  //   price: 200,
+  //   unit: 1
+  //   }
+  // ];
   count: any;
   constructor(private requestsService: RequestsService, private store: Store<any>) {
   // this.requestsService.getWishlist().subscribe(
@@ -75,6 +76,21 @@ export class HomeComponent implements OnInit{
     //     this.store.dispatch(new ProductsActions.initializeStateAction(data))
     //   }
     //   )
+    this.requestsService.getAll().subscribe(
+      (resProducts: any) => {
+        this.products = resProducts.map((productData: { id: number; title: string; price: number; images: string[] | undefined; description: string | undefined; category: { id: number; name: string; image: string; } | undefined; }) =>
+          new Product(
+            productData.id,
+            productData.title,
+            productData.price,
+            1,
+            productData.images,
+            productData.description,
+            productData.category
+          )
+        );;
+      }
+    )
       this.store.subscribe(
         data => {
           // console.log(data);

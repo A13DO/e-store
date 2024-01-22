@@ -9,7 +9,7 @@
   <div class="container">
       <div class="pro-holder row">
         <div class="catgories col-3">
-          <ol>
+          <!-- <ol>
             categories
             <li><button>cat-1</button></li>
             <br>
@@ -20,7 +20,13 @@
             <li><button>cat-4</button></li>
             <br>
             <li><button>cat-5</button></li>
-          </ol>
+          </ol> -->
+          <mat-chip-listbox class="holder" aria-label="Fish selection">
+            <mat-chip-option>One fish</mat-chip-option>
+            <mat-chip-option>Two fish</mat-chip-option>
+            <mat-chip-option color="accent" selected>Accent fish</mat-chip-option>
+            <mat-chip-option color="warn">Warn fish</mat-chip-option>
+          </mat-chip-listbox>
         </div>
         <div class="products row col-9">
           <app-product-card class="col-3" *ngFor="let product of products" [cardProduct]="product"></app-product-card>

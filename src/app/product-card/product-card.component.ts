@@ -11,10 +11,14 @@ import * as ProductsActions from '../store/actions';
 })
 export class ProductCardComponent implements OnInit {
   value!: number;
+  image!: any;
   constructor(private requestsService: RequestsService, private store: Store) {
-
   }
   ngOnInit(): void {
+    this.cardProduct.unit = 1;
+    console.log(typeof(this.cardProduct.price));
+    this.image = this.cardProduct?.images?.[0]
+
     this.requestsService.isCartToggle$.subscribe(
       status => {
         this.cartToggle = status;
