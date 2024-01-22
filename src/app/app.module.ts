@@ -20,6 +20,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { ProductsEffect } from './store/effects';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { wishlistEffect } from './wishlist/store/wishlist.effects';
+import { CartPageComponent } from './cart-page/cart-page.component';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,8 @@ import { wishlistEffect } from './wishlist/store/wishlist.effects';
     WishlistComponent,
     ProductCardComponent,
     CheckoutComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    CartPageComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +45,9 @@ import { wishlistEffect } from './wishlist/store/wishlist.effects';
     BrowserAnimationsModule,
     MatIconModule,
     MatButtonModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatChipsModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
