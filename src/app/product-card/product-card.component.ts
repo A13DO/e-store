@@ -3,6 +3,7 @@ import { RequestsService } from '../shared/requests.service';
 import { Product } from '../shared/product.module';
 import { Store } from '@ngrx/store';
 import * as ProductsActions from '../store/actions';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-product-card',
@@ -11,19 +12,23 @@ import * as ProductsActions from '../store/actions';
 })
 export class ProductCardComponent implements OnInit {
   value!: number;
-  image!: any;
-  constructor(private requestsService: RequestsService, private store: Store) {
+  image: SafeResourceUrl = '';
+  imageUrl: any;
+  constructor(private requestsService: RequestsService, private store: Store, private sanitizer: DomSanitizer) {
   }
   ngOnInit(): void {
     this.cardProduct.unit = 1;
-    console.log(typeof(this.cardProduct.price));
-    this.image = this.cardProduct?.images?.[0]
+    this.image =  this.getSafeImageUrl(this.cardProduct.images?.[0])
 
     this.requestsService.isCartToggle$.subscribe(
       status => {
         this.cartToggle = status;
       }
     )
+
+  }
+  getSafeImageUrl(url:any): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
   cartToggle: boolean = false;
   wishToggle!: boolean;

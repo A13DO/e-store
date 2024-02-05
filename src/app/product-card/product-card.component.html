@@ -1,5 +1,5 @@
 <div class="product card" (product)="cardProduct">
-  <img  routerLink="/product" [src]="cardProduct.images?.[0]" alt="image">
+  <img [routerLink]="'/product/' + cardProduct.id" [src]="getSafeImageUrl(this.cardProduct.images?.[0])" alt="image">
   <div class="details-holder">
     <div class="details">
       <div class="name">{{ cardProduct.title }}</div>

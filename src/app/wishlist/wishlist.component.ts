@@ -18,7 +18,8 @@ export class WishlistComponent implements OnInit, OnDestroy {
   sub!: Subscription;
 
   ngOnInit() {
-    this.sub = this.store.select('wishlistReducer').subscribe(data => {
+    this.store.select('wishlistReducer')
+    this.store.subscribe(data => {
       // Handle the selected state here
       this.products = data.products;
 
@@ -26,6 +27,6 @@ export class WishlistComponent implements OnInit, OnDestroy {
 
   }
   ngOnDestroy(): void {
-    this.sub.unsubscribe()
+    // this.sub.unsubscribe()
   }
 }

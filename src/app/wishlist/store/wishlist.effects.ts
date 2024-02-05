@@ -16,7 +16,6 @@ export class wishlistEffect {
 
   constructor(private http: HttpClient, private actions$: Actions, private requestsService: RequestsService, private store: Store) {}
   wishlistEffect$ = createEffect(() =>
-
     this.actions$.pipe(
       ofType(ProductsActions.ADD_TO_WISHLIST),
       switchMap((action) =>

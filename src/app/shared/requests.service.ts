@@ -19,7 +19,7 @@ export class RequestsService {
   isCartOpen$ = this.isCartOpenSubject;
   totalPrice$ = this.totalPriceSubject;
   isCartToggle$ = this.isCartToggleSubject;
-  wichlist = "WICHLIST";
+  wishlist = "WICHLIST";
   cart = "CART";
   products: Product[] = [];
   dbWishlist: Product[] = [];
@@ -42,6 +42,12 @@ export class RequestsService {
 
   getAll() {
     return this.http.get('https://api.escuelajs.co/api/v1/products')
+  }
+  getProduct(productId: number) {
+    return this.http.get(`https://api.escuelajs.co/api/v1/products/${productId}`)
+  }
+  updateProducts(products: Product[]) {
+    return this.http.put<any>(`https://e-commerce-86f86-default-rtdb.firebaseio.com/cart.json`, products)
   }
   addToWishlist(product: Product) {
     this.dbWishlist = removeDuplicates(this.dbWishlist, product);
@@ -71,23 +77,25 @@ export class RequestsService {
     this.draft.push(id)
     let list: Product[] = [];
     let subject;
+    let listName;
     if (componentName === this.cart) {
       list = this.dbCart;
+      listName = "cart";
       subject = this.cartLengthSubject;
-    } else if (componentName === this.wichlist) {
+    } else if (componentName === this.wishlist) {
+      listName = "wichlist";
       list = this.dbWishlist;
       subject = this.wishlistLengthSubject;
     }
-    list == this.dbWishlist? list : "Cart";
+    // list == this.dbWishlist? list : "Cart";
     for (let removeId of this.draft) {
       list = list.filter((p: Product) => p.id !== removeId);
     }
     componentName === this.cart? this.dbCart = list : this.dbWishlist = list;
     subject?.next(list.length)
-    return this.http.put<Product[]>("https://e-commerce-86f86-default-rtdb.firebaseio.com/cart.json",
-    list
-    )
-    // .subscribe(
+    return this.http.put<Product[]>(`https://e-commerce-86f86-default-rtdb.firebaseio.com/${listName}.json`,
+    list)
+    // return this.http.delete(`https://e-commerce-86f86-default-rtdb.firebaseio.com/${listName}/${id}.json`);
     //   res => {
     //     console.log(res);
     //   }

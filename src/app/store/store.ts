@@ -27,6 +27,7 @@ export const initialState: productsState = {
 // Copy code
 export function counterReducer(store = initialState, action: ProductsActions.ProductsActions): productsState {
   switch (action.type) {
+    // INITIALIZESTATE
     case ProductsActions.INITIALIZESTATE:
       let initProducts = (action as ProductsActions.initializeStateAction).payload;
       console.log(typeof store.products);
@@ -35,13 +36,22 @@ export function counterReducer(store = initialState, action: ProductsActions.Pro
       console.log("Cart Store: ", initProducts);
       // ==================== return fetched state =================
       return { ...store, products: [...store.products, ...initProducts] };
+    // ADD_TO_CART
     case ProductsActions.ADD_TO_CART:
+      store.products === null ? store = initialState : store;
+      console.log(store.products);
       const newProducts = (action as ProductsActions.addToCartAction).payload;
       return { ...store, products: [...store.products, newProducts] };
-    // Delete,
+    // UPDATE
+    case ProductsActions.UPDATE_PRODUCTS:
+      const updateProducts = (action as ProductsActions.updateProducts).payload;
+
+      return { ...store, products: updateProducts };
+    // DELETE
     case ProductsActions.REMOVE:
       let removeId = (action as ProductsActions.removeAction).payload[1];
-      let updatedProducts = store.products.filter((p: Product) => p.id !== removeId);;
+      let updatedProducts = [...store.products].filter((p: Product) => p.id !== removeId);
+      // let updatedProducts = store.products.filter((p: Product) => p.id !== removeId);
       return { ...store, products: updatedProducts };
     case ProductsActions.CARTSUCCESS:
       return { ...store, products: (action as ProductsActions.CartSuccessAction).payload };

@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: "wishlist", component: WishlistComponent},
   {path: "checkout", component: CheckoutComponent},
   {path: "cart", component: CartPageComponent},
-  {path: "product", component: ProductDetailsComponent}
+  {path: "product/:id", component: ProductDetailsComponent}
 ];
 
 @NgModule({

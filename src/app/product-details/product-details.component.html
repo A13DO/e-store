@@ -1,15 +1,15 @@
 <header>
   <div class="container">
     <p>
-      Home > Product > [Product_Name]
+      Home > Product > {{ product.title }}
     </p>
   </div>
   </header>
 <div class="container">
   <div class="row">
-    <img class="product-img col-lg-4 col-md-4 col-sm-12" src="https://c.static-nike.com/a/images/f_auto,cs_srgb/w_1536,c_limit/g1ljiszo4qhthfpluzbt/123-joyride-cdp-apla-xa-xp.jpg" alt="image">
+    <img class="product-img col-lg-4 col-md-4 col-sm-12" [src]="getSafeImageUrl(product.images?.[0])" alt="image">
     <div class="details col-lg-7 col-md-6 col-sm-12">
-      <h2 class="product-title">YEEZY</h2>
+      <h2 class="product-title">{{ product.title }}</h2>
       <div class="rating">
         <mat-icon class="icon true">star_rate</mat-icon>
         <mat-icon class="icon true">star_rate</mat-icon>
@@ -17,14 +17,14 @@
         <mat-icon class="icon true">star_rate</mat-icon>
         <mat-icon class="icon">star_rate</mat-icon>
         <!-- star_rate_half -->
-        <p class="text">4.5</p>
+        <p class="text">{{ product.rate }}</p>
       </div>
-      <h3 class="price">300$</h3>
+      <h3 class="price">${{product.price}}</h3>
       <div class="description">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor optio, cupiditate, expedita commodi eius cum incidunt voluptas nisi in omnis odio aspernatur laudantium, voluptates nobis? Itaque a necessitatibus enim assumenda.
+        {{ product.description }}
       </div>
-      <div class="type"><strong class="text">Type:</strong>Shoes</div>
-      <div class="type"><strong class="text">Brand:</strong>YEEZYY</div>
+      <div class="type"><strong class="text">Type:</strong>{{ product.category?.name }}</div>
+      <div class="type"><strong class="text">Brand:</strong>{{ product.title }}</div>
       <div class="type"><strong class="text">Color:</strong>Red</div>
       <div class="type"><strong class="text">Material:</strong>-</div>
       <div class="select">

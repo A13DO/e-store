@@ -1,10 +1,11 @@
 import { ProductsEffect } from './../store/effects';
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { RequestsService } from '../shared/requests.service';
 import { Product } from '../shared/product.module';
 import { Store } from '@ngrx/store';
 import * as ProductsActions from '../store/actions';
 import { Subscription } from 'rxjs';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-cart',
@@ -21,7 +22,7 @@ export class CartComponent implements OnInit, OnDestroy{
   constructor(
     private requestsService: RequestsService,
     private store: Store<any>,
-    private productsEffect: ProductsEffect
+    private sanitizer: DomSanitizer
     ) {}
   ngOnInit() {
     this.requestsService.totalPrice$.subscribe(
@@ -55,6 +56,9 @@ export class CartComponent implements OnInit, OnDestroy{
     )
   }
 
+  getSafeImageUrl(url: any): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
   removeDuplicates(array: Product[]): Product[] {
     const uniqueArray = array.filter((product, index, self) => {
       // Check for duplicates based on "id"

@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Product } from '../shared/product.module';
 import { RequestsService } from '../shared/requests.service';
 import * as ProductsActions from '../store/actions';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -90,6 +91,7 @@ export class HomeComponent implements OnInit{
           )
         );;
       }
+
     )
       this.store.subscribe(
         data => {

@@ -28,6 +28,19 @@ export class ProductsEffect {
       )
     )
   );
+  updateEffect$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProductsActions.UPDATE_PRODUCTS),
+      switchMap((action) =>
+        // send the new product (in service there fetched data update it then send)
+        this.requestsService.updateProducts((action as ProductsActions.updateProducts).payload)
+        .pipe(
+          map((data) => new ProductsActions.CartSuccessAction(data)),
+          catchError((err) => of(new ProductsActions.CartFailAction("err")))
+        )
+      )
+    )
+  );
 
   deleteEffect$ = createEffect(() =>
     this.actions$.pipe(

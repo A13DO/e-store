@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Product } from '../shared/product.module';
 import * as ProductsActions from '../store/actions';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css']
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent implements OnInit, OnDestroy {
 
   products!: Product[];
   cart = "CART";
   totalPrice!: number;
+  storeSub!: Subscription;
   constructor(private store: Store<any>) {}
 
   ngOnInit(): void {
@@ -34,5 +36,8 @@ export class CheckoutComponent implements OnInit {
   onDeleteProduct(product: Product) {
     this.store.dispatch(new ProductsActions.removeAction([this.cart, product.id]))
     this.totalPrice -= product.price * product.unit;
+  }
+  ngOnDestroy() {
+    // this.storeSub.unsubscribe()
   }
 }

@@ -13,7 +13,7 @@
       </thead>
       <tbody>
         <tr class="product" *ngFor="let product of products">
-          <td><img [src]="product.images?.[0]" alt="image"></td>
+          <td><img [src]="getSafeImageUrl(product.images?.[0])" alt="image"></td>
           <td>{{ product.title }}</td>
           <!-- <td>{{ product.unit }}</td> -->
           <td>${{ product.price}}</td>
@@ -27,7 +27,7 @@
                 <mat-option [value]="four">4</mat-option>
               </mat-select>
             </mat-form-field>
-            <p>You selected: {{product.unit}}</p>
+            <p>Qty: {{product.unit}}</p>
           </td>
           <td>${{ product.price * product.unit}}</td>
           <td><button class="btn btn-danger" (click)="onDeleteProduct(product)">X</button></td>

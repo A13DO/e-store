@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Product } from '../shared/product.module';
 import * as ProductsActions from '../store/actions';
+import { RequestsService } from '../shared/requests.service';
+import { Subscription } from 'rxjs';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-cart-page',
   templateUrl: './cart-page.component.html',
   styleUrls: ['./cart-page.component.css']
 })
-export class CartPageComponent implements OnInit {
+export class CartPageComponent implements OnInit, OnDestroy {
 [x: string]: any;
-  products!: Product[];
+  products: Product[] = [];
   one = 1;
   two = 2;
   three = 3;
@@ -19,11 +22,12 @@ export class CartPageComponent implements OnInit {
   selected: number = 0;
   cart = "CART";
   totalPrice!: number;
+  storeSub!: Subscription;
 value: any;
-  constructor(private store: Store<any>) {{}}
+  constructor(private store: Store<any>, private sanitizer: DomSanitizer ) {{}}
   ngOnInit(): void {
     this.store.select("cartReducer")
-    this.store.subscribe(
+    this.storeSub = this.store.subscribe(
       data => {
         this.products = data.cartReducer.products
         console.log(this.products);
@@ -32,10 +36,15 @@ value: any;
     )
   }
   onQuantityChange(selectedValue: number, product: Product) {
-    console.log(selectedValue);
+    // Update the product
     product = {...product, unit: selectedValue};
-    this.products = [...this.products, {...product}]
-    console.log(this.products);
+    // Add the updated product to the products
+    const index = this.products.findIndex((p) => p.id === product.id)
+    let array = [...(this.products)]
+    array[index] = product;
+    console.log(array);
+    // save products
+    this.store.dispatch(new ProductsActions.updateProducts(array))
   }
   getTotalPrice(products: Product[]) {
     this.totalPrice = 0;
@@ -47,4 +56,34 @@ value: any;
     this.store.dispatch(new ProductsActions.removeAction([this.cart, product.id]))
     this.totalPrice -= product.price * product.unit;
   }
+
+  getSafeImageUrl(url: any): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  removeDuplicates(array: Product[], product: Product): Product[] {
+    console.log("=============================================");
+
+    const index = array.findIndex((p) => p.id === product.id);
+
+    if (index !== -1) {
+      // If the object is found, create a modified object with the 'unit' property incremented
+      const modifiedObject: Product = { ...array[index], unit: array[index].unit};
+
+      // Update the array with the modified object
+      array[index] = modifiedObject;
+
+      // Return a new array with the modified object
+      return [...array];
+    }
+
+    // If the object is not found, add it to the array
+
+    return [...array, product];
+  }
+
+  ngOnDestroy() {
+    this.storeSub.unsubscribe()
+  }
 }
+

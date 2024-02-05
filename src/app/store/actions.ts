@@ -2,6 +2,7 @@ import { Action } from "@ngrx/store";
 import { Product } from "../shared/product.module";
 
 export const ADD_TO_CART = "add-to-cart";
+export const UPDATE_PRODUCTS = "update-products";
 export const ADD_TO_WISHLIST = "add-to-wishlist";
 export const REMOVE = "remove";
 export const CARTSUCCESS = "cart-success";
@@ -28,6 +29,13 @@ export class addToCartAction implements Action {
   readonly type: string = ADD_TO_CART;
   payload: Product
   constructor(payload: Product) {
+    this.payload = payload;
+  }
+}
+export class updateProducts implements Action {
+  readonly type: string = UPDATE_PRODUCTS;
+  payload: Product[]
+  constructor(payload: Product[]) {
     this.payload = payload;
   }
 }

@@ -41,6 +41,10 @@ import {MatSelectModule} from '@angular/material/select';
     HttpClientModule,
     AppRoutingModule,
     StoreModule.forRoot(appReducers),
+    // StoreModule.forRoot({
+    //   wishlist: appReducers.wishlistReducer,
+    //   cart: appReducers.cartReducer
+    // }),
     EffectsModule.forRoot([ProductsEffect, wishlistEffect]),
     BrowserAnimationsModule,
     MatIconModule,
