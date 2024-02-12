@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
     })
     this.requestsService.getWishlist().subscribe(
       data => {
+        console.log(data);
         this.store.dispatch(new ProductsActions.initializeWishlistAction(data))
     })
   }

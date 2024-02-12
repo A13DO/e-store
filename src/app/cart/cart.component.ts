@@ -2,10 +2,13 @@ import { ProductsEffect } from './../store/effects';
 import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { RequestsService } from '../shared/requests.service';
 import { Product } from '../shared/product.module';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import * as ProductsActions from '../store/actions';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, tap } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { selectCartProducts } from '../store/selectors';
+import { AppState } from '../store/app.reducer';
+import { productsState } from '../store/store';
 
 @Component({
   selector: 'app-cart',
@@ -18,29 +21,46 @@ export class CartComponent implements OnInit, OnDestroy{
   units: number = 0;
   cartStatus!: boolean;
   cart = "CART";
-  subscription!: Subscription;
+  storeSub!: Subscription;
+  ProductsObrsv$!: Observable<Product[]>;
   constructor(
     private requestsService: RequestsService,
-    private store: Store<any>,
+    private store: Store<AppState>,
     private sanitizer: DomSanitizer
-    ) {}
+    ) {
+      this.ProductsObrsv$ = this.store.pipe(select(selectCartProducts))
+      this.storeSub = this.ProductsObrsv$.subscribe((cartProducts: Product[]) => {
+        this.products = cartProducts;
+        if (this.products !== null) {
+          // Loop over the cart products array
+          this.getTotalPrice(this.products)
+        }
+      });
+    }
+    state: Observable<productsState> | undefined;
   ngOnInit() {
     this.requestsService.totalPrice$.subscribe(
       data => {
         this.totalPrice = data;
       }
     )
-    // this.store.select("cartReducer")
-    this.subscription = this.store.subscribe(
-      data => {
+    // this.subscription =
+    // this.state?.subscribe(
+    //   data => {
+    //     console.log(data.products);
+    //   }
+    // )
 
-        this.products = data.cartReducer.products;
-        if (this.products !== null) {this.getTotalPrice(this.products)}
-        // this.getTotalPrice(this.products);
 
-        console.log(data.cartReducer);
-      }
-    )
+    // this.store.subscribe(
+    //   (data: AppState) => {
+    //     this.products = data.cartReducer.products;
+    //     if (this.products !== null) {this.getTotalPrice(this.products)}
+    //     // this.getTotalPrice(this.products);
+
+    //     console.log(data.cartReducer);
+    //   }
+    // )
 
     // this.productsEffect.productsEffect$.subscribe(
     //   data => {
@@ -56,8 +76,10 @@ export class CartComponent implements OnInit, OnDestroy{
     )
   }
 
-  getSafeImageUrl(url: any): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  toSafeUrl(url: any) {
+    url = url.replace(/["\[\]]/g, '');
+    let safeUrl =  this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    return safeUrl;
   }
   removeDuplicates(array: Product[]): Product[] {
     const uniqueArray = array.filter((product, index, self) => {
@@ -96,7 +118,7 @@ export class CartComponent implements OnInit, OnDestroy{
   }
   ngOnDestroy(): void {
     // Unsubscribe when the component is destroyed
-    this.subscription.unsubscribe();
+    this.storeSub.unsubscribe();
   }
 }
 

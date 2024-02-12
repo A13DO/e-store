@@ -5,7 +5,7 @@
   </div>
   <div class="products">
     <div class="product" *ngFor="let product of products" >
-      <img [src]="getSafeImageUrl(product.images?.[0])" alt="image">
+      <img [src]="toSafeUrl(product.images?.[0])" alt="image">
       <div class="details">
         <h3 class="name">{{ product.title }}</h3>
         <p class="price">${{ product.price }}</p>

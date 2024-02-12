@@ -7,7 +7,7 @@
   </header>
 <div class="container">
   <div class="row">
-    <img class="product-img col-lg-4 col-md-4 col-sm-12" [src]="getSafeImageUrl(product.images?.[0])" alt="image">
+    <img class="product-img col-lg-4 col-md-4 col-sm-12" [src]="toSafeUrl(product.images?.[0])" alt="image">
     <div class="details col-lg-7 col-md-6 col-sm-12">
       <h2 class="product-title">{{ product.title }}</h2>
       <div class="rating">

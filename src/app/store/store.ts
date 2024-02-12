@@ -25,7 +25,7 @@ export const initialState: productsState = {
 
 // typescript
 // Copy code
-export function counterReducer(store = initialState, action: ProductsActions.ProductsActions): productsState {
+export function cartReducer(store = initialState, action: ProductsActions.ProductsActions): productsState {
   switch (action.type) {
     // INITIALIZESTATE
     case ProductsActions.INITIALIZESTATE:
@@ -45,7 +45,6 @@ export function counterReducer(store = initialState, action: ProductsActions.Pro
     // UPDATE
     case ProductsActions.UPDATE_PRODUCTS:
       const updateProducts = (action as ProductsActions.updateProducts).payload;
-
       return { ...store, products: updateProducts };
     // DELETE
     case ProductsActions.REMOVE:

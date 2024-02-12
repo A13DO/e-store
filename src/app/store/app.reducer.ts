@@ -4,11 +4,18 @@ import { ActionReducerMap } from "@ngrx/store";
 
 
 export interface AppState {
-  wishlistReducer: fromWishlist.productsState;
-  cartReducer: fromCart.productsState;
+  wishlist: fromWishlist.wishlistProductsState;
+  cart: fromCart.productsState;
 }
 
+
 export const appReducers: ActionReducerMap<AppState> = {
-  wishlistReducer: fromWishlist.wishlistReducer,
-  cartReducer: fromCart.counterReducer
+  wishlist: fromWishlist.wishlistReducer, // Use correct reducer name
+  cart: fromCart.cartReducer, // Use correct reducer name
 }
+
+// export interface AppState {
+//   wishlist: fromWishlist.productsState; // Use consistent naming
+//   cart: fromCart.productsState; // Use consistent naming
+// }
+

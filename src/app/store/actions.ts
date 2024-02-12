@@ -9,6 +9,8 @@ export const CARTSUCCESS = "cart-success";
 export const CARTFAIL = "cart-fail";
 export const INITIALIZESTATE  = "initialize-state";
 export const INITIALIZEWISHLIST  = "initialize-wishlist";
+export const WISHLISTSUCCESS  = "wishlist-success";
+export const WISHLISTFAIL  = "wishlist-fail";
 
 
 export class initializeStateAction implements Action {
@@ -66,6 +68,19 @@ export class CartFailAction implements Action {
     error = error
   }
 }
+export class WishlistSuccessAction implements Action {
+  readonly type: string = WISHLISTSUCCESS;
+  payload: any
+  constructor(payload: any) {
+    this.payload = payload;
+  }
+}
+export class WishlistFailAction implements Action {
+  readonly type: string = WISHLISTFAIL;
+  constructor( error: any) {
+    error = error
+  }
+}
 
 
 export type ProductsActions =
@@ -75,3 +90,5 @@ export type ProductsActions =
   | removeAction
   | CartSuccessAction
   | CartFailAction
+  | WishlistSuccessAction
+  | WishlistSuccessAction

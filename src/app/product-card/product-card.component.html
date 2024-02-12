@@ -1,12 +1,10 @@
 <div class="product card" (product)="cardProduct">
-  <img [routerLink]="'/product/' + cardProduct.id" [src]="getSafeImageUrl(this.cardProduct.images?.[0])" alt="image">
+  <img [routerLink]="'/product/' + cardProduct.id" [src]="safeImageUrl" alt="image">
   <div class="details-holder">
     <div class="details">
       <div class="name">{{ cardProduct.title }}</div>
       ~{{ cardProduct.rate }}
       <div class="price">{{ cardProduct.price }}$</div>
-      <!-- <button class="wishlist-btn" (click)="onAddToWishlist()">Love</button>
-      <button class="cart-btn" (click)="onAddToCart()">to cart</button> -->
     </div>
     <div class="buttons">
       <button mat-icon-button *ngIf="wishlistButton" (click)="onAddToWishlist()">

@@ -25,3 +25,17 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+cart :
+  0: {
+      "description": "Elevate your wardrobe with this stylish black t-shirt featuring a striking monochrome mountain range graphic. Perfect for those who love the outdoors or want to add a touch of nature-inspired design to their look, this tee is crafted from soft, breathable fabric ensuring all-day comfort. Ideal for casual outings or as a unique gift, this t-shirt is a versatile addition to any collection.",
+      "id": 12,
+      "images": [
+          "https://i.imgur.com/QkIa5tT.jpeg",
+          "https://i.imgur.com/jb5Yu0h.jpeg",
+          "https://i.imgur.com/UlxxXyG.jpeg"
+      ],
+      "price": 21056,
+      "rate": 9,
+      "title": "Majestic Mountain Graphic T-Shirt",
+      "unit": 1
+  }

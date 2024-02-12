@@ -22,26 +22,12 @@ export class wishlistEffect {
         // send the new product (in service there fetched data update it then send)
         this.requestsService.addToWishlist((action as ProductsActions.addToWishlistAction).payload)
         .pipe(
-          map((data) => new ProductsActions.CartSuccessAction(data)),
-          catchError((err) => of(new ProductsActions.CartFailAction("err")))
+          map((data) => new ProductsActions.WishlistSuccessAction(data)),
+          catchError((err) => of(new ProductsActions.CartFailAction(err)))
         )
       )
     )
   );
-
-  // wishlistEffect$ = createEffect(() =>
-  // this.actions$.pipe(
-  //   ofType(ProductsActions.ADD_TO_WISHLIST),
-  //   switchMap((action) =>
-  //     // send the new product (in service there fetched data update it then send)
-  //     this.requestsService.addToWishlist((action as ProductsActions.addToWishlistAction).payload)
-  //     .pipe(
-  //       map((data) => new ProductsActions.CartSuccessAction(data)),
-  //       catchError((err) => of(new ProductsActions.CartFailAction("err")))
-  //     )
-  //   )
-  // )
-  // );
 }
 
 

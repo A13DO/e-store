@@ -13,7 +13,7 @@
       </thead>
       <tbody>
         <tr class="product" *ngFor="let product of products">
-          <td><img [src]="getSafeImageUrl(product.images?.[0])" alt="image"></td>
+          <td><img [src]="toSafeUrl(product.images?.[0])" alt="image"></td>
           <td>{{ product.title }}</td>
           <!-- <td>{{ product.unit }}</td> -->
           <td>${{ product.price}}</td>

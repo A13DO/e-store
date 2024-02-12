@@ -2,7 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Product } from '../shared/product.module';
 import * as ProductsActions from '../store/actions';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, tap } from 'rxjs';
+import { selectCartProducts } from '../store/selectors';
+import { select } from '@ngrx/store';
 
 @Component({
   selector: 'app-checkout',
@@ -15,17 +17,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   cart = "CART";
   totalPrice!: number;
   storeSub!: Subscription;
+  ProductsObrsv$!: Observable<Product[]>;
   constructor(private store: Store<any>) {}
 
   ngOnInit(): void {
-    this.store.select("cartReducer")
-    this.store.subscribe(
-      data => {
-        this.products = data.cartReducer.products
-        console.log(this.products);
-        if (this.products !== null) {this.getTotalPrice(this.products)}
+    this.ProductsObrsv$ = this.store.pipe(select(selectCartProducts))
+    this.storeSub = this.ProductsObrsv$.subscribe((cartProducts: Product[]) => {
+      this.products = cartProducts;
+      if (this.products !== null) {
+        // Loop over the cart products array
+        this.getTotalPrice(this.products)
       }
-    )
+    });
   }
   getTotalPrice(products: Product[]) {
     this.totalPrice = 0;
@@ -38,6 +41,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.totalPrice -= product.price * product.unit;
   }
   ngOnDestroy() {
-    // this.storeSub.unsubscribe()
+    this.storeSub.unsubscribe()
   }
 }

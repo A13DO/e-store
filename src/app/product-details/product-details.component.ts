@@ -43,8 +43,10 @@ export class ProductDetailsComponent implements OnInit {
     )
   }
 
-  getSafeImageUrl(url: any): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  toSafeUrl(url: any) {
+    url = url.replace(/["\[\]]/g, '');
+    let safeUrl =  this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    return safeUrl;
   }
   // statusCartText = "Added to cart"
   onAddToCart() {

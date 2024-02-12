@@ -23,6 +23,8 @@ import { wishlistEffect } from './wishlist/store/wishlist.effects';
 import { CartPageComponent } from './cart-page/cart-page.component';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatSelectModule} from '@angular/material/select';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -34,17 +36,23 @@ import {MatSelectModule} from '@angular/material/select';
     ProductCardComponent,
     CheckoutComponent,
     ProductDetailsComponent,
-    CartPageComponent
+    CartPageComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    StoreModule.forRoot(appReducers),
-    // StoreModule.forRoot({
-    //   wishlist: appReducers.wishlistReducer,
-    //   cart: appReducers.cartReducer
-    // }),
+    // StoreModule.forRoot(appReducers),
+    StoreModule.forRoot({
+      wishlist: appReducers.wishlist,
+      cart: appReducers.cart
+    }),
+    // Instrumentation must be imported after importing StoreModule (config is optional)
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      // logOnly: environment.production, // Restrict extension to log-only mode
+    }),
     EffectsModule.forRoot([ProductsEffect, wishlistEffect]),
     BrowserAnimationsModule,
     MatIconModule,

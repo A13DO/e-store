@@ -5,18 +5,18 @@ import * as ProductsActions from "../../store/actions";
 
 
 
-export interface productsState {
+export interface wishlistProductsState {
   products: Product[];
   error: string;
 }
 
-export const initialState: productsState = {
+export const initialState: wishlistProductsState = {
   products: [],
   error: ""
 }
 
 
-export function wishlistReducer(store = initialState, action: ProductsActions.ProductsActions) : productsState {
+export function wishlistReducer(store = initialState, action: ProductsActions.ProductsActions) : wishlistProductsState {
   switch (action.type) {
     case ProductsActions.INITIALIZEWISHLIST:
       let initProducts = (action as ProductsActions.initializeWishlistAction).payload;
@@ -27,6 +27,8 @@ export function wishlistReducer(store = initialState, action: ProductsActions.Pr
       const newProducts = (action as ProductsActions.addToWishlistAction).payload;
       console.log("Wishlist Store: ", store);
       return { ...store, products: [...store.products, newProducts] };
+      case ProductsActions.WISHLISTSUCCESS:
+        return { ...store, products: (action as ProductsActions.WishlistSuccessAction).payload};
     default:
       return store;
     }

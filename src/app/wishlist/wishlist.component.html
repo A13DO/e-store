@@ -2,7 +2,7 @@
   <h1>Wishlist</h1>
   <hr>
   <div class="products row">
-    <app-product-card class="col-2" *ngFor="let product of products" [cardProduct]="product" [wishlistButton]="false"></app-product-card>
+    <app-product-card class="col-2" *ngFor="let product of wishlistProducts$ | async" [cardProduct]="product" [wishlistButton]="false"></app-product-card>
   </div>
 </div>
 

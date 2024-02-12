@@ -12,14 +12,18 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 })
 export class ProductCardComponent implements OnInit {
   value!: number;
-  image: SafeResourceUrl = '';
-  imageUrl: any;
+  safeImageUrl: any;
+  imageUrlOne: any;
+  imageUrlTwo: any;
+  imageUrlThree: any;
   constructor(private requestsService: RequestsService, private store: Store, private sanitizer: DomSanitizer) {
   }
   ngOnInit(): void {
-    this.cardProduct.unit = 1;
-    this.image =  this.getSafeImageUrl(this.cardProduct.images?.[0])
-
+    // this.cardProduct.unit = 1;
+      this.imageUrlOne = this.cardProduct.images?.[0];
+      this.imageUrlTwo = this.cardProduct.images?.[1];
+      this.imageUrlThree = this.cardProduct.images?.[2];
+      this.safeImageUrl =  this.toSafeUrl(this.imageUrlOne);
     this.requestsService.isCartToggle$.subscribe(
       status => {
         this.cartToggle = status;
@@ -27,22 +31,23 @@ export class ProductCardComponent implements OnInit {
     )
 
   }
-  getSafeImageUrl(url:any): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  toSafeUrl(url: any) {
+    url = url.replace(/["\[\]]/g, '');
+    let safeUrl =  this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    return safeUrl;
   }
   cartToggle: boolean = false;
   wishToggle!: boolean;
   @Input() cardProduct!: Product;
   @Input() wishlistButton: boolean = true;
   onAddToWishlist() {
-    // this.store.select('wishlistReducer')
-    this.store.dispatch(new ProductsActions.addToWishlistAction(this.cardProduct))
-    // this.requestsService.totalPrice$.subscribe(
-    // value => {
-    //   this.value = value;
-    // });
-    // this.requestsService.totalPrice$.next(this.value + this.cardProduct.price)
-    this.wishToggle? this.wishToggle = false : this.wishToggle = true;
+
+    if (this.wishToggle == false) {
+      this.wishToggle = true;
+      this.store.dispatch(new ProductsActions.addToWishlistAction(this.cardProduct))
+    } else {
+      this.store.dispatch(new ProductsActions.addToWishlistAction(this.cardProduct))
+    }
   }
   onAddToCart() {
     if (this.cartToggle == false) {
@@ -51,6 +56,5 @@ export class ProductCardComponent implements OnInit {
     } else {
       this.store.dispatch(new ProductsActions.addToCartAction(this.cardProduct))
     }
-
   }
 }

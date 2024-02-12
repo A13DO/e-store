@@ -6,14 +6,25 @@ import { catchError, map, mergeMap, switchMap, withLatestFrom } from 'rxjs/opera
 import * as ProductsActions from './actions';
 import { Product } from '../shared/product.module';
 import { RequestsService } from '../shared/requests.service';
-import { Store } from '@ngrx/store';
-import { productsState } from './store';
+import { Store, select } from '@ngrx/store';
+import { AppState, productsState } from './store';
+import { selectCartProducts } from './selectors';
 
 @Injectable()
 export class ProductsEffect {
   private selectProductsState = (state: productsState) => state.products;
+  products!: Product[]
 
-  constructor(private http: HttpClient, private actions$: Actions, private requestsService: RequestsService, private store: Store) {}
+  constructor(
+    private http: HttpClient,
+    private actions$: Actions,
+    private requestsService: RequestsService,
+    private store: Store<any>) {
+      // this.store.pipe(select(selectCartProducts)).subscribe((cartProducts: Product[]) => {
+      //   this.products = cartProducts;
+      //   console.log(this.products);
+      // })
+    }
 // switchMap operator to handle the asynchronous operation and dispatch new actions based on the outcome.
   productsEffect$ = createEffect(() =>
     this.actions$.pipe(
@@ -41,13 +52,16 @@ export class ProductsEffect {
       )
     )
   );
-
   deleteEffect$ = createEffect(() =>
+  // this.store.pipe(select(selectCartProducts)).subscribe((cartProducts: Product[]) => {
+  //   this.products = cartProducts;
+  // )
     this.actions$.pipe(
       ofType(ProductsActions.REMOVE),
-      // withLatestFrom(this.store.select(this.selectProductsState)), // Replace 'yourReducerState' with your actual reducer state key
+      // withLatestFrom(this.products), // Replace 'yourReducerState' with your actual reducer state key
       switchMap((action) =>
         this.requestsService.removeItem((action as ProductsActions.removeAction).payload[0], (action as ProductsActions.removeAction).payload[1])
+        // this.requestsService.updateProducts(this.products)
         .pipe(
           map((data) => new ProductsActions.CartSuccessAction(data)),
           catchError((err) => of(new ProductsActions.CartFailAction("err")))

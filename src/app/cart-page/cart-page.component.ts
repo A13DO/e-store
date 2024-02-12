@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { Product } from '../shared/product.module';
 import * as ProductsActions from '../store/actions';
 import { RequestsService } from '../shared/requests.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, tap } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { selectCartProducts } from '../store/selectors';
 
 @Component({
   selector: 'app-cart-page',
@@ -23,26 +24,44 @@ export class CartPageComponent implements OnInit, OnDestroy {
   cart = "CART";
   totalPrice!: number;
   storeSub!: Subscription;
+  ProductsObrsv$!: Observable<Product[]>;
 value: any;
   constructor(private store: Store<any>, private sanitizer: DomSanitizer ) {{}}
   ngOnInit(): void {
-    this.store.select("cartReducer")
-    this.storeSub = this.store.subscribe(
-      data => {
-        this.products = data.cartReducer.products
-        console.log(this.products);
-        if (this.products !== null) {this.getTotalPrice(this.products)}
+    // this.store.select("cartReducer")
+    // this.storeSub = this.store.subscribe(
+    //   data => {
+    //     this.products = data.cartReducer.products
+    //     console.log(this.products);
+    //     if (this.products !== null) {this.getTotalPrice(this.products)}
+    //   }
+    // )
+
+
+    this.ProductsObrsv$ = this.store.pipe(select(selectCartProducts))
+    this.storeSub = this.ProductsObrsv$.subscribe((cartProducts: Product[]) => {
+      this.products = cartProducts;
+      if (this.products !== null) {
+        // Loop over the cart products array
+        this.getTotalPrice(this.products)
       }
-    )
+    });
+  }
+  toSafeUrl(url: any) {
+    url = url.replace(/["\[\]]/g, '');
+    let safeUrl =  this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    return safeUrl;
   }
   onQuantityChange(selectedValue: number, product: Product) {
     // Update the product
     product = {...product, unit: selectedValue};
+
+    console.log(product);
     // Add the updated product to the products
     const index = this.products.findIndex((p) => p.id === product.id)
     let array = [...(this.products)]
+
     array[index] = product;
-    console.log(array);
     // save products
     this.store.dispatch(new ProductsActions.updateProducts(array))
   }
