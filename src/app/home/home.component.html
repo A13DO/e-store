@@ -7,7 +7,8 @@
 
 <div class="holder">
   <div class="container">
-      <div class="pro-holder row">
+    <span>{{ productsLen }}</span>
+    <div class="pro-holder row">
         <div class="catgories col-3">
           <!-- <ol>
             categories
@@ -22,10 +23,10 @@
             <li><button>cat-5</button></li>
           </ol> -->
           <mat-chip-listbox class="holder" aria-label="Fish selection">
-            <mat-chip-option>One fish</mat-chip-option>
-            <mat-chip-option>Two fish</mat-chip-option>
-            <mat-chip-option color="accent" selected>Accent fish</mat-chip-option>
-            <mat-chip-option color="warn">Warn fish</mat-chip-option>
+            <mat-chip-option (click)="onGetAllCategories()" selected>All</mat-chip-option>
+            <mat-chip-option (click)="onGetCategory(1)">Clothes</mat-chip-option>
+            <mat-chip-option (click)="onGetCategory(2)" color="accent">Electronics</mat-chip-option>
+            <mat-chip-option (click)="onGetCategory(3)" color="warn">Furniture</mat-chip-option>
           </mat-chip-listbox>
         </div>
         <div class="products row col-9">

@@ -78,6 +78,13 @@ getDbCart(): Observable<Product[]> {
   updateProducts(products: Product[]) {
     return this.http.put<any>(`https://e-commerce-86f86-default-rtdb.firebaseio.com/cart.json`, products)
   }
+  getAllCategories() {
+    return this.http.get<any>(`https://api.escuelajs.co/api/v1/categories`)
+  }
+  getCategory(id: number) {
+    return this.http.get<any>(`https://api.escuelajs.co/api/v1/products/?categoryId=${id}`)
+  }
+
   addToWishlist(product: Product) {
     this.dbWishlist = removeDuplicates(this.dbWishlist, product);
     // this.dbWishlist.push(product)

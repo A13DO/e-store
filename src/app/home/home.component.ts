@@ -13,6 +13,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 })
 export class HomeComponent implements OnInit{
   products!: Product[];
+  productsLen: number = 0;
   // products: Product[] = [
   //   {
   //   id: 1,
@@ -90,6 +91,7 @@ export class HomeComponent implements OnInit{
             productData.category
           )
         );;
+        this.productsLen = this.products.length;
       }
 
     )
@@ -106,12 +108,41 @@ export class HomeComponent implements OnInit{
   onAddToCart() {
     // this.requestsService.addToCart()
   }
-  onIncrement() {
-    // this.store.dispatch(new incrementAction(5))
+  onGetAllCategories() {
+    this.requestsService.getAll().subscribe(
+      (resProducts: any) => {
+        this.products = resProducts.map((productData: { id: number; title: string; price: number; images: string[] | undefined; description: string | undefined; category: { id: number; name: string; image: string; } | undefined; }) =>
+          new Product(
+            productData.id,
+            productData.title,
+            productData.price,
+            1,
+            productData.images,
+            productData.description,
+            productData.category
+          )
+        );;
+      }
 
+    )
   }
-  onDecrement() {
-    // this.store.dispatch(new decrementAction(5))
+  onGetCategory(id: number) {
+    this.requestsService.getCategory(id).subscribe(
+      (resProducts: any) => {
+        this.products = resProducts.map((productData: { id: number; title: string; price: number; images: string[] | undefined; description: string | undefined; category: { id: number; name: string; image: string; } | undefined; }) =>
+          new Product(
+            productData.id,
+            productData.title,
+            productData.price,
+            1,
+            productData.images,
+            productData.description,
+            productData.category
+          )
+        );
+        this.productsLen = this.products.length;
+      }
+      )
   }
 }
 

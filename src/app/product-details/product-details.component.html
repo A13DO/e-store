@@ -7,7 +7,27 @@
   </header>
 <div class="container">
   <div class="row">
-    <img class="product-img col-lg-4 col-md-4 col-sm-12" [src]="toSafeUrl(product.images?.[0])" alt="image">
+    <!-- <img class="product-img col-lg-4 col-md-4 col-sm-12" [src]="product.images?.[0]" alt="image">
+    <img class="product-img col-lg-4 col-md-4 col-sm-12" [src]="toSafeUrl(product.images?.[1])" alt="image">
+    <img class="product-img col-lg-4 col-md-4 col-sm-12" [src]="toSafeUrl(product.images?.[2])" alt="image"> -->
+      <div class="product-img col-lg-4 col-md-4 col-sm-12">
+        <p-galleria [value]="images" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '640px' }" >
+          <ng-template pTemplate="item" let-item>
+            <img [src]="item" style="width: 100%;" />
+        </ng-template>
+        <ng-template pTemplate="thumbnail" let-item>
+          <div class="grid grid-nogutter justify-content-center">
+              <img [src]="item" style="width: 90%;"/>
+          </div>
+        </ng-template>
+        </p-galleria>
+      </div>
+
+      <!-- <p-galleria [value]="images" [numVisible]="3" [circular]="true">
+        <ng-template let-image pTemplate="item">
+          <img [src]="image.src" alt="Image" style="display:block;width:100%">
+        </ng-template>
+      </p-galleria> -->
     <div class="details col-lg-7 col-md-6 col-sm-12">
       <h2 class="product-title">{{ product.title }}</h2>
       <div class="rating">
@@ -38,16 +58,36 @@
       <div class="btns">
         <button class="add-btn btn" type="button" (click)="onAddToCart()">
           <mat-icon class="icon">shopping_cart</mat-icon>
-          <span *ngIf="!cartStatus">Add to cart</span>
-          <span *ngIf="cartStatus">Added to cart</span>
+          <span *ngIf="!cartToggle">Add to cart</span>
+          <span *ngIf="cartToggle">Added to cart</span>
         </button>
-        <button class="save-btn btn" type="button" (click)="onSave()">
-          <mat-icon class="icon" [ngStyle]="{'color': saveStatus ? 'red' : 'grey'}">favorite</mat-icon>
-          <span *ngIf="!saveStatus">Save</span>
-          <span *ngIf="saveStatus">Saved</span>
+        <button class="save-btn btn" type="button" (click)="onAddToWishlist()">
+          <mat-icon class="icon" [ngStyle]="{'color': wishToggle ? 'red' : 'grey'}">favorite</mat-icon>
+          <span *ngIf="!wishToggle">Save</span>
+          <span *ngIf="wishToggle">Saved</span>
         </button>
       </div>
     </div>
   </div>
 </div>
 
+<!-- <app-product-card class="col-3" *ngFor="let product of recommendedProducts" [cardProduct]="product"></app-product-card> -->
+
+<p-carousel [value]="recommendedProducts" [numVisible]="3" [numScroll]="3" [circular]="false" [responsiveOptions]="responsiveOptions">
+  <ng-template let-product pTemplate="item">
+      <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
+          <!-- <div class="mb-3">
+            <img [src]="product.images[0]" [alt]="product.name" style="width: 80%;" class="w-6 shadow-2" />
+          </div> -->
+          <app-product-card class="mb-3" [cardProduct]="product" style="width: 80% ;" class="w-6 shadow-2" ></app-product-card>
+          <!-- <div>
+              <h4 class="mb-1">{{ product.name }}</h4>
+              <h6 class="mt-0 mb-3">{{ '$' + product.price }}</h6>
+              <div class="car-buttons mt-5">
+                  <p-button type="button" styleClass="p-button p-button-rounded mr-2" icon="pi pi-search"></p-button>
+                  <p-button type="button" styleClass="p-button-success p-button-rounded mr-2" icon="pi pi-star-fill"></p-button>
+              </div>
+          </div> -->
+      </div>
+  </ng-template>
+</p-carousel>

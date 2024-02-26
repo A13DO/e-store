@@ -25,6 +25,9 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatSelectModule} from '@angular/material/select';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthComponent } from './auth/auth.component';
+import { GalleriaModule } from 'primeng/galleria';
+import { CarouselModule } from 'primeng/carousel';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -59,7 +62,10 @@ import { AuthComponent } from './auth/auth.component';
     MatButtonModule,
     MatBadgeModule,
     MatChipsModule,
-    MatSelectModule
+    MatSelectModule,
+    GalleriaModule,
+    CarouselModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

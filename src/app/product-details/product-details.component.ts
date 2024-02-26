@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RequestsService } from '../shared/requests.service';
 import { Product } from '../shared/product.module';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Store } from '@ngrx/store';
+import * as ProductsActions from '../store/actions';
 
 @Component({
   selector: 'app-product-details',
@@ -12,23 +14,48 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 export class ProductDetailsComponent implements OnInit {
   statusCartText = "Add to cart"
   product!: Product;
+  catId: number = 0;
 
   constructor(
     private route: ActivatedRoute,
     private requestService: RequestsService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private store: Store,
+    private router: Router
     ) {}
-  cartStatus: boolean = false;
-  saveStatus: boolean = false;
+  cartToggle: boolean = false;
+  wishToggle: boolean = false;
+  images: any;
   productId!: number;
+  recommendedProducts: Product[] = [];;
+  responsiveOptions = [
+    {
+      breakpoint: '1024px',
+      numVisible: 3,
+      numScroll: 3
+    },
+    {
+      breakpoint: '768px',
+      numVisible: 2,
+      numScroll: 2
+    },
+    {
+      breakpoint: '560px',
+      numVisible: 1,
+      numScroll: 1
+    }
+  ];
   ngOnInit(): void {
     this.route.params.subscribe(
       params => {
         this.productId = params['id'];
         console.log(params['id']);
+        this.getProductsDetails(this.productId);
       }
-    )
-    this.requestService.getProduct(this.productId).subscribe(
+      )
+  }
+  getProductsDetails(id: any) {
+    this.requestService.getProduct(id).subscribe(
       (resProduct: any) => {
         this.product = new Product(
           resProduct.id,
@@ -38,11 +65,13 @@ export class ProductDetailsComponent implements OnInit {
           resProduct.images,
           resProduct.description,
           resProduct.category
-          );
+        );
+        this.catId = resProduct.category?.id;
+        this.images = this.product.images
+        this.getRecommendations(this.catId)
       }
     )
   }
-
   toSafeUrl(url: any) {
     url = url.replace(/["\[\]]/g, '');
     let safeUrl =  this.sanitizer.bypassSecurityTrustResourceUrl(url);
@@ -50,9 +79,34 @@ export class ProductDetailsComponent implements OnInit {
   }
   // statusCartText = "Added to cart"
   onAddToCart() {
-    this.cartStatus? this.cartStatus = false : this.cartStatus = true;
+    if (this.cartToggle == false) {
+      this.cartToggle = true;
+      this.store.dispatch(new ProductsActions.addToCartAction(this.product))
+    } else {
+      this.store.dispatch(new ProductsActions.addToCartAction(this.product))
+    }
   }
-  onSave() {
-    this.saveStatus? this.saveStatus = false : this.saveStatus = true;
+  onAddToWishlist() {
+    if (this.wishToggle == false) {
+      this.wishToggle = true;
+      this.store.dispatch(new ProductsActions.addToWishlistAction(this.product))
+    } else {
+      this.store.dispatch(new ProductsActions.addToWishlistAction(this.product))
+    }
   }
+  getRecommendations(id: number) {
+    this.requestService.getCategory(id)
+    .subscribe(resProducts => {
+      this.recommendedProducts = resProducts.map((productData: { id: number; title: string; price: number; images: string[] | undefined; description: string | undefined; category: { id: number; name: string; image: string; } | undefined; }) =>
+        new Product(
+          productData.id,
+          productData.title,
+          productData.price,
+          1,
+          productData.images,
+          productData.description,
+          productData.category
+        )
+    );
+  })}
 }

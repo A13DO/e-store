@@ -32,14 +32,19 @@ export class ProductCardComponent implements OnInit {
 
   }
   toSafeUrl(url: any) {
+    if (url === undefined) {
+      return '';
+    }
     url = url.replace(/["\[\]]/g, '');
-    let safeUrl =  this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    let safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
     return safeUrl;
   }
+
   cartToggle: boolean = false;
   wishToggle!: boolean;
   @Input() cardProduct!: Product;
   @Input() wishlistButton: boolean = true;
+  @Input() cartButton: boolean = true;
   onAddToWishlist() {
 
     if (this.wishToggle == false) {
