@@ -1,0 +1,36 @@
+<p>auth works!</p>
+<div class="container">
+  <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
+    <h1>sign in</h1>
+    <!-- <div class="form-group"> -->
+      <span class="p-float-label">
+        <input
+        class="form-control"
+        id="email"
+        name="email"
+        type="email"
+        email
+        required
+        ngModel
+        pInputText
+        />
+        <label for="email">Email</label>
+      </span>
+      <span class="p-float-label">
+        <input
+        class="form-control"
+        id="password"
+        name="password"
+        type="password"
+        required
+        ngModel
+        pInputText
+        />
+        <label for="password">Password</label>
+      </span>
+      <p-button class="btn" styleClass=" p-button-success" label="Log In" type="submit" ></p-button>
+    <!-- </div> -->
+    <!-- <button class="btn" type="submit">Log In</button> -->
+  </form>
+</div>
+

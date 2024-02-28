@@ -1,8 +1,8 @@
 # Tasks 
--- start ad admin project.
+-- start ad admin project. #DONE
 -- auth client.
-
-
+-- move services to core/services
+-- product-cart to shared?
 ## General
 -- use fake store api #DONE
 -- add state for wishlist #DONE
