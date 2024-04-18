@@ -1,4 +1,5 @@
 // import * as authActions from "./auth.actions";
+import { User } from "../../interfaces/user.model";
 import * as authActions from "./auth.actions";
 
 
@@ -7,28 +8,49 @@ export interface AppState {
 }
 
 export interface AuthState {
-  data: string[]
-  error: string;
+  user: User | null;
+  authError: string | null;
+  loading: boolean;
 
 }
 
 const initialState: AuthState = {
-  data: [""],
-  error: ""
+  user: null,
+  authError: null,
+  loading: false
 }
 
 
 
 export function authReducer(store = initialState, action: any) : AuthState {
   switch (action.type) {
+    case authActions.SIGNIN_START:
+      console.log("SIGNINStart!");
+      return store;
+    case authActions.SIGNUP_START:
+      console.log("SIGNINStart!");
+      return store;
     case authActions.SIGNIN:
-      console.log("SIGNIN!");
-      console.log(((action as authActions.signIn).payload));
-      return store
+      const user = new User(action.payload.email, action.payload.userId, action.payload.token,  action.payload.expirationDate)
+      console.log(user);
+      return {
+        user: user,
+        authError: null,
+        loading: false
+      }
       case authActions.SIGNUP:
-        console.log(((action as authActions.signUp).payload));
-      console.log("SIGNUP!");
-      return store
+      const userd = new User(action.payload.email, action.payload.userId, action.payload.token,  action.payload.expirationDate)
+        return {
+          user: userd,
+          authError: null,
+          loading: false
+        }
+    case authActions.SIGNINFAILED:
+      return {
+        user: null,
+        authError: action.payload,
+        loading: false
+      }
     default:
       return store
   }

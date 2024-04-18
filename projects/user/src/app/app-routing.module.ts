@@ -7,10 +7,11 @@ import { ProductDetailsComponent } from './feature/product-details/product-detai
 import { CartPageComponent } from './feature/cart-page/cart-page.component';
 import { AuthComponent } from './core/auth/auth.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { SignedInGuard } from './core/guards/signedin.guard';
 
 const routes: Routes = [
   {path: "", redirectTo: "/home", pathMatch: "full"},
-  {path: "auth", component: AuthComponent},
+  {path: "auth", component: AuthComponent, canActivate: [SignedInGuard]},
   {path: "home", component: HomeComponent},
   {path: "wishlist", component: WishlistComponent, canActivate: [AuthGuard]},
   {path: "checkout", component: CheckoutComponent, canActivate: [AuthGuard]},

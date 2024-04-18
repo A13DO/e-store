@@ -41,6 +41,7 @@ export function cartReducer(store = initialState, action: ProductsActions.Produc
       store.products === null ? store = initialState : store;
       console.log(store.products);
       const newProducts = (action as ProductsActions.addToCartAction).payload;
+      // let fliteredProducts = [...store.products].filter((p: Product) => p.id !== newProducts.id);
       return { ...store, products: [...store.products, newProducts] };
     // UPDATE
     case ProductsActions.UPDATE_PRODUCTS:
@@ -53,7 +54,9 @@ export function cartReducer(store = initialState, action: ProductsActions.Produc
       // let updatedProducts = store.products.filter((p: Product) => p.id !== removeId);
       return { ...store, products: updatedProducts };
     case ProductsActions.CARTSUCCESS:
-      return { ...store, products: (action as ProductsActions.CartSuccessAction).payload };
+      console.log(store.products);
+      // return { ...store, products: [...store.products, (action as ProductsActions.CartSuccessAction).payload]};
+      return { ...store, products: (action as ProductsActions.CartSuccessAction).payload};
     default:
       return store;
   }

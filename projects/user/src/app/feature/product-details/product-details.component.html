@@ -72,14 +72,32 @@
 </div>
 
 <!-- <app-product-card class="col-3" *ngFor="let product of recommendedProducts" [cardProduct]="product"></app-product-card> -->
-
+<hr>
+  <button class="add-btn btn" type="button" (click)="addComment()">Comment</button>
+  <div class="comments">
+    <div class="comment" *ngFor="let comment of comments">
+      <div style="display: flex">
+        <h2 style="margin: 0">{{ comment.username }}</h2>
+        <div class="rating">
+          <mat-icon class="icon true">star_rate</mat-icon>
+          <mat-icon class="icon true">star_rate</mat-icon>
+          <mat-icon class="icon true">star_rate</mat-icon>
+          <mat-icon class="icon true">star_rate</mat-icon>
+          <mat-icon class="icon">star_rate</mat-icon>
+          <p class="text">{{ comment.rating }}</p>
+        </div>
+      </div>
+      <p>{{ comment.comment }}</p>
+    </div>
+  </div>
+<hr>
 <p-carousel [value]="recommendedProducts" [numVisible]="3" [numScroll]="3" [circular]="false" [responsiveOptions]="responsiveOptions">
   <ng-template let-product pTemplate="item">
       <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
           <!-- <div class="mb-3">
             <img [src]="product.images[0]" [alt]="product.name" style="width: 80%;" class="w-6 shadow-2" />
           </div> -->
-          <app-product-card class="mb-3" [cardProduct]="product" style="width: 80% ;" class="w-6 shadow-2" ></app-product-card>
+          <app-product-card class="mb-3" [cardProduct]="product" class="w-6 shadow-2" ></app-product-card>
           <!-- <div>
               <h4 class="mb-1">{{ product.name }}</h4>
               <h6 class="mt-0 mb-3">{{ '$' + product.price }}</h6>

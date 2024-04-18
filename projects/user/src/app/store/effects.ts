@@ -29,6 +29,11 @@ export class ProductsEffect {
   productsEffect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ProductsActions.ADD_TO_CART),
+
+      // withLatestFrom(this.store.pipe(select(selectCartProducts))),
+      // switchMap((action) => {
+      //   return this.requestsService.addToCart((action as ProductsActions.addToCartAction).payload)
+      // })
       switchMap((action) =>
         // send the new product (in service there fetched data update it then send)
         this.requestsService.addToCart((action as ProductsActions.addToCartAction).payload)
@@ -38,18 +43,23 @@ export class ProductsEffect {
         )
       )
     )
+    // , {dispatch: false}
   );
+
   updateEffect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ProductsActions.UPDATE_PRODUCTS),
-      switchMap((action) =>
-        // send the new product (in service there fetched data update it then send)
-        this.requestsService.updateProducts((action as ProductsActions.updateProducts).payload)
-        .pipe(
-          map((data) => new ProductsActions.CartSuccessAction(data)),
-          catchError((err) => of(new ProductsActions.CartFailAction("err")))
-        )
-      )
+      switchMap((action) => {
+        return this.requestsService.updateProducts((action as ProductsActions.updateProducts).payload)
+      })
+      // switchMap((action) =>
+      //   // send the new product (in service there fetched data update it then send)
+      //   this.requestsService.updateProducts((action as ProductsActions.updateProducts).payload)
+      //   .pipe(
+      //     map((data) => new ProductsActions.CartSuccessAction(data)),
+      //     catchError((err) => of(new ProductsActions.CartFailAction("err")))
+      //   )
+      // )
     )
   );
   deleteEffect$ = createEffect(() =>
@@ -60,7 +70,7 @@ export class ProductsEffect {
       ofType(ProductsActions.REMOVE),
       // withLatestFrom(this.products), // Replace 'yourReducerState' with your actual reducer state key
       switchMap((action) =>
-        this.requestsService.removeItem((action as ProductsActions.removeAction).payload[0], (action as ProductsActions.removeAction).payload[1])
+        this.requestsService.removeCartItem((action as ProductsActions.removeAction).payload[1])
         // this.requestsService.updateProducts(this.products)
         .pipe(
           map((data) => new ProductsActions.CartSuccessAction(data)),

@@ -81,3 +81,10 @@ header p {
   justify-items: center;
   align-items: center;
 }
+
+
+
+:host ::ng-deep app-product-card .product.card,
+:host ::ng-deep app-product-card .product.card img {
+  width: 325px;
+}

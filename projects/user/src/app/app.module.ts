@@ -9,7 +9,7 @@ import { StoreModule } from '@ngrx/store';
 import { appReducers } from './store/app.reducer';
 import { CartComponent } from './core/nav-cart/cart.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
-import { ProductCardComponent } from './product-card/product-card.component';
+import { ProductCardComponent } from './shared/components/product-card/product-card.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -30,6 +30,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import { AuthEffect } from './core/auth/store/auth.effects';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,7 @@ import { FormsModule } from '@angular/forms';
       maxAge: 25, // Retains last 25 states
       // logOnly: environment.production, // Restrict extension to log-only mode
     }),
-    EffectsModule.forRoot([ProductsEffect, wishlistEffect]),
+    EffectsModule.forRoot([ProductsEffect, wishlistEffect, AuthEffect]),
     BrowserAnimationsModule,
     FormsModule,
     MatIconModule,

@@ -18,5 +18,22 @@
       <button mat-icon-button  (click)="cartToggle()">
         <mat-icon [matBadge]="cartLen" matBadgeColor="warn">shopping_cart</mat-icon>
       </button>
+      <button
+        pButton
+        pRipple
+        label="Log in"
+        class="p-button-success"
+        *ngIf="!isSignedIn"
+        (click)="Login()"
+        routerLink="/auth"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="Log out"
+        class="p-button-danger"
+        *ngIf="isSignedIn"
+        (click)="Logout()"
+      ></button>
   </div>
 </div>

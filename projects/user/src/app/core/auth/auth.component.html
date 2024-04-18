@@ -1,7 +1,11 @@
 <p>auth works!</p>
 <div class="container">
   <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
-    <h1>sign in</h1>
+    <div class="btns-holder">
+      <h1 (click)="onLoginSwitch()" [ngStyle]="{'color': isLoginMode ? '#22c55e' : 'black'}">sign in</h1>
+      <h1 (click)="onSignupSwitch()" [ngStyle]="{'color': !isLoginMode ? '#22c55e' : 'black'}">sign up</h1>
+      <span class="after" [ngStyle]="{'left': isLoginMode ? '40px' : '120px', 'width': isLoginMode ? '20%' : '22%'}"></span>
+    </div>
     <!-- <div class="form-group"> -->
       <span class="p-float-label">
         <input

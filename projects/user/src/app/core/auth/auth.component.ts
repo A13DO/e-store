@@ -9,13 +9,28 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent {
+  isLoginMode: boolean = true;
+
   constructor(private store: Store<any>) {}
+  onSignupSwitch() {
+    this.isLoginMode = false;
+    console.log(this.isLoginMode);
+  }
+  onLoginSwitch() {
+    this.isLoginMode = true;
+    console.log(this.isLoginMode);
+  }
   onSubmit(form: NgForm) {
     const email = form.controls['email'];
     console.log("Email: ", email.value, "Status: ", email.status);
     const password = form.controls['password'];
     console.log("Password: ", password.value, "Status: ", password.status);
-    this.store.dispatch(new authActions.signIn([email.value, password.value]))
+    if (this.isLoginMode) {
+      this.store.dispatch(new authActions.signInStart({email: email.value, password: password.value}))
+    } else if (!this.isLoginMode) {
+      this.store.dispatch(new authActions.signUpStart({email: email.value, password: password.value}))
+      console.log("Sign UP!");
+    }
   }
 }
 

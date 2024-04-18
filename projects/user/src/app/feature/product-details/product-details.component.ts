@@ -5,6 +5,7 @@ import { Product } from '../../shared/product.module';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import * as ProductsActions from '../../store/actions';
+import { Comment } from '../../core/interfaces/comment.model';
 
 @Component({
   selector: 'app-product-details',
@@ -27,6 +28,7 @@ export class ProductDetailsComponent implements OnInit {
   wishToggle: boolean = false;
   images: any;
   productId!: number;
+  comments: Comment[] = [];
   recommendedProducts: Product[] = [];;
   responsiveOptions = [
     {
@@ -51,8 +53,21 @@ export class ProductDetailsComponent implements OnInit {
         this.productId = params['id'];
         console.log(params['id']);
         this.getProductsDetails(this.productId);
+        this.getComments(this.productId)
       }
       )
+  }
+  addComment() {
+    console.log("Nice Product!");
+    this.requestService.saveComment(this.productId, "Nice Product!").subscribe()
+  }
+  getComments(id: number) {
+    this.requestService.getComments(id).subscribe(
+      comments => {
+        this.comments = [comments]
+        console.log(this.comments[0])
+      }
+    )
   }
   getProductsDetails(id: any) {
     this.requestService.getProduct(id).subscribe(

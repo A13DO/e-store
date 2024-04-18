@@ -6,6 +6,7 @@ import { getAuth, signOut } from 'firebase/auth';
 import { Router } from '@angular/router';
 import { initializeApp } from "firebase/app";
 // import { jwtDecode } from "jwt-decode";
+import * as authActions from '../store/auth.actions';
 
 export interface AuthResponseData  {
   kind?: string;
@@ -43,6 +44,12 @@ export class AuthService {
 
   constructor(private router: Router, private http: HttpClient) {}
   expirationTime: any;
+  private tokenExpirationTimer:any ;
+  setLogoutTimer(expirationDuration: number) {
+    this.tokenExpirationTimer = setTimeout(() =>
+    {
+    }, expirationDuration)
+  }
   signUp(email: string, password: string) {
     // APi SignIN
     return this.http

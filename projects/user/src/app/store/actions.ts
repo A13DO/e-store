@@ -49,17 +49,15 @@ export class addToWishlistAction implements Action {
   }
 }
 export class removeAction implements Action {
-  readonly type: string = REMOVE;
-  payload: [string, number]
-  constructor(payload: [string, number]) {
+  readonly type = REMOVE;
+  payload: any
+  constructor(payload: any) {
     this.payload = payload;
   }
 }
 export class CartSuccessAction implements Action {
   readonly type: string = CARTSUCCESS;
-  payload: any
-  constructor(payload: any) {
-    this.payload = payload;
+  constructor(public payload: any) {
   }
 }
 export class CartFailAction implements Action {
