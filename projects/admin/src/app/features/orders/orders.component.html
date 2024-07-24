@@ -1,0 +1,96 @@
+<header>
+  <h1>Orders Management</h1>
+</header>
+<body>
+  <section>
+    <table>
+      <thead>
+        <td><strong>Name</strong></td>
+        <td><strong>Email</strong></td>
+        <td><strong>Contact Number</strong></td>
+        <td><strong>Total</strong></td>
+        <td><strong>Action</strong></td>
+      </thead>
+      <tbody>
+          <!-- <tr *ngFor="let product of products">
+          <td><img [src]="product.images[0]" alt="image"></td>
+          <td>{{product.title}}</td>
+          <td>{{product.category}}</td>
+          <td>{{product.description}}</td>
+          <td></td>
+          <td>${{product.price}}</td>
+          <td>
+            <span class="material-symbols-outlined action-btn" style="color: rgb(100, 100, 247);" [routerLink]="'/dashboard/products/create/' + product._id" (click)="onUpdateProduct(product._id)">edit</span>
+            <span class="material-symbols-outlined action-btn"style="color: red;" (click)="onDeleteProduct($event, product)">delete</span>
+          </td>
+        </tr> -->
+          <tr *ngFor="let order of orders">
+          <td>{{ order.userInfo.name }}</td>
+          <td>{{ order.userInfo.email }}</td>
+          <td>{{ order.userInfo.contactNumber }}</td>
+          <td>${{ order.userInfo.totalCost }}</td>
+          <td>
+            <span class="material-symbols-outlined action-btn"style="color: green;" (click)="onFocus(order.products, order.userInfo.totalCost)">book</span>
+            <span class="material-symbols-outlined action-btn" style="color: rgb(100, 100, 247);" >edit</span>
+            <span class="material-symbols-outlined action-btn"style="color: red;" (click)="onDelete($event, order._id)">delete</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section *ngIf="focusedProducts">
+    <h1>Order Details</h1>
+    <table class="cart-table">
+      <thead>
+        <td>Name</td>
+        <td>Quantity</td>
+        <td>Price</td>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of focusedProducts">
+          <td>{{ product.name }}</td>
+          <td>{{ product.quantity }}</td>
+          <td>${{ product.price }}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <td></td>
+        <th>Total:</th>
+        <td>${{ focusedTotal }}</td>
+      </tfoot>
+    </table>
+  </section>
+</body>
+
+<app-loading></app-loading>
+
+
+
+<!--
+<thead>
+  <td></td>
+  <td>
+    <strong class="sort-btn" (click)="titleSorting()">
+      Name
+      <span class="arrow-up" *ngIf="titleArrowUp"></span>
+      <span class="arrow-down" *ngIf="!titleArrowUp"></span>
+    </strong>
+  </td>
+  <td><strong>Category</strong></td>
+  <td><strong>Description</strong></td>
+  <td>
+    <span class="sort-btn" (click)="newestSorting()">
+      Newest
+      <span class="arrow-up" *ngIf="newestArrowUp"></span>
+      <span class="arrow-down" *ngIf="!newestArrowUp"></span>
+    </span>
+  </td>
+  <td>
+    <strong class="sort-btn" (click)="priceSorting()">
+      Price
+      <span class="arrow-up" *ngIf="priceArrowUp"></span>
+      <span class="arrow-down" *ngIf="!priceArrowUp"></span>
+    </strong>
+  </td>
+  <td><strong>Action</strong></td>
+</thead> -->

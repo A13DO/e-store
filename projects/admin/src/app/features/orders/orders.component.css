@@ -1,0 +1,62 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+}
+section {
+  box-shadow: 0 0 0 0 black;
+  height: 545px;
+  position: relative;
+  overflow: scroll;
+  border-radius: 10px;
+  background-color: white;
+  padding: 15px;
+}
+table {
+  border: none;
+  border-spacing: 0;
+
+  /* height: 1--%; */
+}
+thead {
+  color: gray;
+  background-color: white;
+}
+tbody, td, tfoot, th, thead, tr {
+  border-bottom: 2px solid;
+  border-color: rgba(128, 128, 128, 0.301);
+  min-width: 90px;
+  height: 50px;
+  background-color: white;
+  margin: 0;
+}
+td {
+  padding: 8px;
+}
+
+button.action-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+}
+.action-btn {
+  cursor: pointer;
+  padding: 3px;
+}
+
+thead td .sort-btn{
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}

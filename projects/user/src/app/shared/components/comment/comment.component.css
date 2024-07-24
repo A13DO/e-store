@@ -1,0 +1,16 @@
+.rating {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.rating .icon {
+    color: #a39393;
+}
+.rating .true {
+    color: #ffbf00;
+}
+.rating .text {
+    color: black;
+    margin: 0;
+/* font-weight: bold; */
+}
