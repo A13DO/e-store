@@ -1,0 +1,12 @@
+<body>
+  <div class="header-holder">
+    <app-header [sticky]="isSticky"></app-header>
+  </div>
+
+  <router-outlet></router-outlet>
+  <app-cart></app-cart>
+<!-- Scroll to Top Button -->
+  <button id="scrollBtn" (click)="scrollToTop()" class="scroll-top-btn" title="Go to top" *ngIf="isVisible">
+    Top
+  </button>
+</body>

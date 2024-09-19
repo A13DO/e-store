@@ -1,0 +1,56 @@
+<div >
+  <div class="header top-header">
+    <select name="page" id="page" (change)="onPageSelect($event)">
+      <option value="client">client</option>
+      <option value="dashboard">dashboard</option>
+    </select>
+    <span><strong>Contact: </strong>{{"example@site.com"}}</span>
+  </div>
+  <div class="header" *ngIf="showHeader" [class.sticky]="sticky">
+    <h1 class="logo" routerLink="/home">E-store</h1>
+    <div class="select" *ngIf="showCtgSelect">
+      <span class="nav-btn" (click)="navToggle()">
+        <h6>
+          <span class="material-symbols-outlined">menu</span>
+          Categories
+        </h6>
+        <span class="material-symbols-outlined">keyboard_arrow_down</span>
+      </span>
+      <nav #contentWrapper [ngClass]="showNav ? 'nav-expanded' : 'nav-collapsed'">
+        <a *ngFor="let item of categories" (click)="navigateToProducts(item.category)">{{ item.category }}</a>
+      </nav>
+    </div>
+    <div class="search">
+      <!-- (input)="onSearch($event)" -->
+      <input #searchInput type="search" name="search" id="search" placeholder="Search" (keydown)="onKeyDown($event)" >
+      <button (click)="onSearch(searchInput)">search</button>
+    </div>
+    <div class="widget">
+      <!-- <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg> -->
+      <button mat-icon-button routerLink="/wishlist">
+        <mat-icon [matBadge]="wishListLen" matBadgeColor="warn">favorite</mat-icon>
+      </button>
+        <!-- <mat-icon mat-icon-button matBadge="15" matBadgeColor="warn">shopping_cart</mat-icon> -->
+      </div>
+      <button mat-icon-button  (click)="cartToggle()">
+        <mat-icon [matBadge]="cartLen" matBadgeColor="warn">shopping_cart</mat-icon>
+      </button>
+      <button
+      type="button"
+      mat-raised-button
+      style="background-color: #4caf50; color: white;"
+      *ngIf="!isSignedIn"
+      (click)="Login()"
+      routerLink="/auth"
+      >
+      Log in
+      </button>
+      <button
+      *ngIf="isSignedIn"
+      (click)="Logout()"
+      mat-raised-button color="warn">
+        Log out
+      </button>
+  </div>
+</div>

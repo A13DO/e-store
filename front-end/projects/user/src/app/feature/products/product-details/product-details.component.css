@@ -1,0 +1,226 @@
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ff8100;
+  color: white;
+  padding: 20px;
+  margin-bottom: 40px;
+}
+header p {
+  margin: 0;
+}
+.product-img {
+  min-width: 320px;
+  height: 100%;
+}
+.product-title {
+  margin-bottom: 0;
+}
+.rating {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.rating .icon {
+  color: #a39393;
+
+}
+.rating .true {
+  color: #ffbf00;
+}
+.rating .text {
+  color: black;
+  margin: 0;
+  /* font-weight: bold; */
+}
+.type {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 216px;
+  margin: 15px 0 0 0;
+}
+
+.select {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+.select label {
+  margin-top: 100px;
+  font-size: 14px;
+}
+.btns {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.btn {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  border: none;
+  font-size: 15px;
+  padding: 5px;
+}
+.add-btn {
+  color: white;
+  background-color: #ff8100;
+  border-radius: 10px;
+  padding: 0 10px 0 10px;
+}
+.save-btn .icon {
+  color: rgb(185, 32, 32);
+}
+.icon {
+  font-size: 20px;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
+
+
+:host ::ng-deep app-product-card .product.card,
+:host ::ng-deep app-product-card .product.card img {
+  width: 80%;
+}
+@media (min-width: 1500px) {
+  :host ::ng-deep app-product-card .product.card,
+  :host ::ng-deep app-product-card .product.card img {
+  width: 65%;
+  }
+}
+.reviews {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 40px 30px;
+}
+.reviews > h1 {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+}
+.comment-field {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 200px;
+  gap: 10px;
+  margin: 20px;
+}
+.comment-field button {
+  width: fit-content;
+}
+.comment-field textarea {
+  resize: none;
+}
+.comments {
+  margin: 20px;
+}
+.comments h2 {
+  margin: 0 5px 0 0;
+}
+.comment .user-details{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.comment .pfp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 1px solid #c7c8c9;
+  width: 50px;
+  height: 50px;
+}
+.comment .pfp span{
+  font-size: 30px;
+  color: #c9cacb;
+}
+.comment p {
+  width: fit-content;
+  position: relative;
+  left: 60px;
+}
+
+
+span.action-btn {
+  color: rgb(100, 100, 247);
+  cursor: pointer;
+  font-size: 20px;
+  position: relative;
+  top: 4px;
+  left: 5px;
+}
+.rating-details {
+  width: 25%;
+}
+.rating-details .icon {
+  font-size: 35px;
+  width: fit-content;
+}
+.rating-details .rating-holder {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.rating-details .rating {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.rating-details .rating-numbers {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.rating-details .rating-numbers > div{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+.rating-details strong {
+  display: flex;
+  flex: 1;
+}
+.rating-details .progress-bar {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  width: 85%;
+  position: relative;
+}
+.rating-details .progress-bar::after {
+  content: "";
+  background-color: #ffbf00;
+  height: 100%;
+  position: absolute;
+}
+.rating-numbers div:nth-child(1) .progress-bar::after {
+  width: 85%;
+}
+.rating-numbers div:nth-child(2) .progress-bar::after {
+  width: 60%;
+}
+.rating-numbers div:nth-child(3) .progress-bar::after {
+  width: 40%;
+}
+.rating-numbers div:nth-child(4) .progress-bar::after {
+  width: 20%;
+}
+.rating-numbers div:nth-child(5) .progress-bar::after {
+  width: 10%;
+}
+::ng-deep .custom-rating .p-rating-icon {
+  color: #ffbf00 !important; /* Ensure the color is applied */
+}
+

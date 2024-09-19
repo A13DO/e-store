@@ -1,0 +1,19 @@
+{
+  "projects": {
+    "default": "e-commerce-86f86"
+  },
+  "targets": {
+    "e-commerce-86f86": {
+      "hosting": {
+        "user-site": [
+          "e-commerce-86f86"
+        ],
+        "admin-site": [
+          "dashboard-5b2fd"
+        ]
+      }
+    }
+  },
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
+}

@@ -1,0 +1,111 @@
+<h1>Add New Product</h1>
+
+<form #productForm="ngForm" (ngSubmit)="onSubmit(productForm)">
+  <div class="form-holder">
+    <section>
+      <!-- Images Input -->
+      <h1>Thumbnail</h1>
+      <div class="thumbnail-image">
+        <img [src]="base64Images[0]" style="width: 250px;">
+        <span class="material-symbols-outlined icon-overlay" *ngIf="!base64Images[0]">add_photo_alternate</span>
+      </div>
+      <div class="images-holder">
+        <div class="image-frame" >
+          <img *ngIf="base64Images[0]" [src]="base64Images[0]" style="width: 100px;">
+          <span class="material-symbols-outlined icon-overlay" *ngIf="!base64Images[0]">add_photo_alternate</span>
+        </div>
+        <div class="image-frame" >
+          <img *ngIf="base64Images[1]" [src]="base64Images[1]" style="width: 100px;">
+          <span class="material-symbols-outlined icon-overlay" *ngIf="!base64Images[1]">add_photo_alternate</span>
+        </div>
+        <div class="image-frame" >
+          <img *ngIf="base64Images[2]" [src]="base64Images[2]" style="width: 100px;">
+          <span class="material-symbols-outlined icon-overlay" *ngIf="!base64Images[2]">add_photo_alternate</span>
+        </div>
+      </div>
+      <input name="file" class="file-input" ngModel required type="file" (change)="handleFileInput($event)" multiple accept="image/*">
+      <!-- Error -->
+      <div *ngIf="productForm.controls['file']?.invalid && (productForm.controls['file']?.touched || submitted)">
+        <small *ngIf="productForm.controls['file']?.errors?.['required']">At least 1 Image required.</small>
+      </div>
+      <div *ngIf="errorMessage" class="error">
+        <small>{{ errorMessage }}</small>
+      </div>
+      <div>
+        <label for="imageUrl">or Enter Image URL:</label>
+        <br>
+        <input type="text" class="input-size" id="imageUrl" ngModel minlength="3" name="imageUrl" #imageUrl="ngModel">
+        <button type="button" (click)="addUrl(productForm)" [disabled]="imageUrl.invalid">Add Image</button>
+      </div>
+    </section>
+
+    <section>
+      <h1>General</h1>
+      <div class="inputs">
+        <!-- Title Input -->
+        <label for="title">Product Name</label>
+        <input type="text" class="input-size"id="title" [(ngModel)]="title" required="true" minlength="3" name="title" required>
+        <!-- Error -->
+        <div *ngIf="productForm.controls['title']?.invalid && (productForm.controls['title']?.touched || submitted)">
+          <small *ngIf="productForm.controls['title']?.errors?.['required']">Name is required.</small>
+          <small *ngIf="productForm.controls['title']?.errors?.['minlength']">Name must be at least 3 characters long.</small>
+        </div>
+        <!-- Description Input -->
+        <label for="description">Description</label>
+        <textarea id="description" [(ngModel)]="description" required name="description" cols="60" rows="10"></textarea>
+        <!-- Error -->
+        <div *ngIf="productForm.controls['description']?.invalid && (productForm.controls['description']?.touched || submitted)">
+          <small *ngIf="productForm.controls['description']?.errors?.['required']">Description is required.</small>
+        </div>
+        <div class="row">
+          <div>
+            <!-- Price Input -->
+            <label for="price">Pricing</label>
+            <input type="number" id="price" [(ngModel)]="price" required name="price" required>
+            <!-- Error -->
+            <div *ngIf="productForm.controls['price']?.invalid && (productForm.controls['price']?.touched || submitted)">
+              <small *ngIf="productForm.controls['price']?.errors?.['required']">Price is required.</small>
+            </div>
+          </div>
+          <div>
+            <!-- Quantity Input -->
+            <label for="quantity">Quantity In Stock</label>
+            <input type="number"  id="quantity" [(ngModel)]="quantity" required name="quantity" required>
+            <!-- Error -->
+            <div *ngIf="productForm.controls['quantity']?.invalid && (productForm.controls['quantity']?.touched || submitted)">
+              <small *ngIf="productForm.controls['quantity']?.errors?.['required']">Quantity is required.</small>
+            </div>
+          </div>
+      </div>
+      <div class="row">
+        <div class="options">
+          <!-- Category Input -->
+          <label for="category">Category</label>
+          <select class="input-size" id="category" [(ngModel)]="category" required name="category" required>
+
+            <option *ngFor="let category of (CategoriesObrsv$ | async).categories" [value]="category">{{ category }}</option>
+            <!-- <option value="electronics">Electronics</option>
+            <option value="furniture">Furniture</option>
+            <option value="others">Others</option> -->
+          </select>
+          <!-- Error -->
+          <div *ngIf="productForm.controls['category']?.invalid && (productForm.controls['category']?.touched || submitted)">
+            <small *ngIf="productForm.controls['category']?.errors?.['required']">Category is required.</small>
+          </div>
+        </div>
+        <button style="padding: 8px; border-radius: 5px; cursor: pointer;" *ngIf="!addCtgMode" (click)="switchAddCtgMode()">Add Category</button>
+        <div *ngIf="addCtgMode">
+          <input type="text" name="category" #categoryInput>
+          <small *ngIf="(CategoriesObrsv$ | async).error">{{ (CategoriesObrsv$ | async).error}}</small>
+        </div>
+        <button  type="button" style="padding: 8px; border-radius: 5px; cursor: pointer;" *ngIf="addCtgMode" (click)="addNewCategory()">Add</button>
+      </div>
+        <!-- Discount Input -->
+        <label class="input-size" for="discountType">Discount Type</label>
+        <input type="text" id="discountType" [(ngModel)]="discountType" name="discountType">
+      </div>
+    </section>
+    <button type="submit" class="submit" [disabled]="productForm.invalid">Submit</button>
+  </div>
+</form>
+<app-loading></app-loading>

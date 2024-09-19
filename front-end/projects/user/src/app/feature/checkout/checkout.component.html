@@ -1,0 +1,138 @@
+<div class="container">
+
+  <div class="row col-12">
+    <div class="form-holder col-8">
+      <div class="flip-card">
+        <div class="card" [ngStyle]="getCardStyle()">
+          <div class="face front">
+            <div class="holder" style="gap: 45%; height: 50px;">
+              <span class="chip"></span>
+              <span class="logo"></span>
+            </div >
+            <p class="card-number">{{ cardNumber || "#### #### #### ####" }}</p>
+            <div class="holder">
+              <div class="card-holder-wrapper">
+                <label for="card-holder-input">Card Holder</label>
+                <p class="card-holder" id="card-holder-input">{{cardHolder.toUpperCase() || "FULL NAME"}}</p>
+              </div>
+              <div class="date-wrapper">
+                <label for="date-input">Expires</label>
+                <p class="date" id="date-input">{{ expirationDate }}</p>
+              </div>
+            </div>
+            <div class="card-item__focus"></div>
+          </div>
+          <div class="face back">
+            <span class="black-line"></span>
+            <span class="white-line">{{ cvv }}</span>
+          </div>
+        </div>
+      </div>
+      <form #billingForm="ngForm" (ngSubmit)="onSubmit(billingForm)">
+        <h1>Billing Details</h1>
+        <mat-form-field appearance="fill">
+          <mat-label>Card Number</mat-label>
+          <input
+            matInput
+            id="number"
+            name="card-number"
+            type="text"
+            required
+            [ngModel]="cardNumber"
+            maxlength="19"
+            placeholder="Card Number"
+            (focus)="onCardNumberFocus()"
+            (input)="limitCardNumberLength($event)">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Card Holder</mat-label>
+          <input
+            matInput
+            id="text"
+            name="name"
+            type="text"
+            required
+            maxlength="20"
+            [(ngModel)]="cardHolder"
+            (focus)="onCardHolderFocus()"
+            placeholder="Card Holder">
+        </mat-form-field>
+
+        <div class="name">
+          <mat-form-field appearance="fill">
+            <mat-label>Expiration Date</mat-label>
+            <input
+              matInput
+              id="date"
+              name="date"
+              type="month"
+              required
+              (input)="dateInput($event)"
+              (focus)="onExpirationDateFocus()"
+              ngModel
+              [min]="minDate"
+              [max]="maxDate">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>CVV</mat-label>
+            <input
+              matInput
+              id="CVV"
+              name="CVV"
+              type="text"
+              required
+              ngModel
+              placeholder="CVV"
+              minlength="4"
+              maxlength="4"
+              (input)="cvvInput($event)"
+              (focus)="onFocus()"
+              (blur)="onBlur()">
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Contact Number</mat-label>
+          <input
+            matInput
+            id="contact-number"
+            name="contact-number"
+            type="text"
+            required
+            ngModel
+            placeholder="Contact Number"
+            minlength="8"
+            maxlength="14">
+        </mat-form-field>
+        <button type="submit" mat-raised-button color="primary">Done</button>
+
+        <!-- <button type="submit" class="btn btn-success">Done</button> -->
+      </form>
+    </div>
+    <div class="cart col-4">
+      <h1>Your order</h1>
+      <table class="cart-table" >
+        <thead>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </thead>
+        <tbody *ngFor="let product of products">
+          <td>{{ product.title }}</td>
+          <td>{{ product.unit }}</td>
+          <td>${{ product.price * product.unit}}</td>
+        </tbody>
+        <hr>
+        <tfoot>
+          <th>Total:</th>
+          <td>${{ totalPrice }}</td>
+          <!-- <button class="cart-btn" routerLink="/cart">UPDATE CART</button> -->
+          <button type="button" mat-raised-button style="background-color: #4caf50; color: white; font-size: 14px;" routerLink="/cart">UPDATE CART</button>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+<app-loading></app-loading>

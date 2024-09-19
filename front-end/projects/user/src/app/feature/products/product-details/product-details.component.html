@@ -1,0 +1,162 @@
+<header>
+  <div class="container">
+    <p>
+      Home > Product > {{ product ? product.title || "" : "" }}
+    </p>
+  </div>
+  </header>
+<div class="container">
+  <div class="row">
+    <!-- <img class="product-img col-lg-4 col-md-4 col-sm-12" [src]="product.images?.[0]" alt="image">
+    <img class="product-img col-lg-4 col-md-4 col-sm-12" [src]="toSafeUrl(product.images?.[1])" alt="image">
+    <img class="product-img col-lg-4 col-md-4 col-sm-12" [src]="toSafeUrl(product.images?.[2])" alt="image"> -->
+      <div class="product-img col-lg-4 col-md-4 col-sm-12">
+        <p-galleria [value]="images" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '640px' }" >
+          <ng-template pTemplate="item" let-item>
+            <img [src]="item" style="width: 100%;" />
+        </ng-template>
+        <ng-template pTemplate="thumbnail" let-item>
+          <div class="grid grid-nogutter justify-content-center">
+              <img [src]="item" style="width: 90%;"/>
+          </div>
+        </ng-template>
+        </p-galleria>
+      </div>
+
+      <!-- <p-galleria [value]="images" [numVisible]="3" [circular]="true">
+        <ng-template let-image pTemplate="item">
+          <img [src]="image.src" alt="Image" style="display:block;width:100%">
+        </ng-template>
+      </p-galleria> -->
+    <div class="details col-lg-7 col-md-6 col-sm-12">
+      <h2 class="product-title">{{ product ? product.title || "" : "" }}</h2>
+      <div class="rating">
+        <mat-icon class="icon true">star_rate</mat-icon>
+        <mat-icon class="icon true">star_rate</mat-icon>
+        <mat-icon class="icon true">star_rate</mat-icon>
+        <mat-icon class="icon true">star_rate</mat-icon>
+        <mat-icon class="icon">star_rate</mat-icon>
+        <!-- star_rate_half -->
+        <p class="text">{{ product.rate }}</p>
+      </div>
+      <h3 class="price">${{product.price}}</h3>
+      <div class="description">
+        {{ product.description }}
+      </div>
+      <div class="type"><strong class="text">Type:</strong>{{ product.category?.name }}</div>
+      <div class="type"><strong class="text">Brand:</strong>{{ product.title }}</div>
+      <div class="type"><strong class="text">Color:</strong>Red</div>
+      <div class="type"><strong class="text">Material:</strong>-</div>
+      <div class="select">
+        <label for="size">Size</label>
+        <select name="Size" id="size">
+          <option value="Small">Small</option>
+          <option value="Medium">Medium</option>
+          <option value="Large">Large</option>
+        </select>
+      </div>
+      <div class="btns">
+        <button class="add-btn btn" type="button" (click)="onAddToCart()">
+          <mat-icon class="icon">shopping_cart</mat-icon>
+          <span *ngIf="!cartToggle">Add to cart</span>
+          <span *ngIf="cartToggle">Added to cart</span>
+        </button>
+        <button class="save-btn btn" type="button" (click)="onAddToWishlist()">
+          <mat-icon class="icon" [ngStyle]="{'color': wishToggle ? 'red' : 'grey'}">favorite</mat-icon>
+          <span *ngIf="!wishToggle">Save</span>
+          <span *ngIf="wishToggle">Saved</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <app-product-card class="col-3" *ngFor="let product of recommendedProducts" [cardProduct]="product"></app-product-card> -->
+<hr>
+<div class="comment-field" *ngIf="!commentExists || editCommentMode">
+  <span>A</span>
+  <p-rating class="custom-rating" [(ngModel)]="rateValue" [cancel]="false" />
+  <textarea name="comment" id="comment" [(ngModel)]="commentText" cols="30" rows="10" resizable="none"></textarea>
+  <button class="add-btn btn" type="button" *ngIf="!commentExists" (click)="addComment()">Comment</button>
+  <button class="add-btn btn" type="button" *ngIf="editCommentMode" (click)="updateComment()">update</button>
+</div>
+<section class="reviews">
+  <h1>Reviews</h1>
+  <div class="comments">
+    <h1>comments</h1>
+    <!-- <div class="comment" *ngFor="let comment of comments"> -->
+    <div class="comment" *ngFor="let comment of CommentsObrsv$ | async" >
+      <div class="user-details">
+        <div class="pfp"><span>{{ comment.username[0] }}</span></div>
+        <h2>{{ comment.username }}</h2>
+        <div class="rating">
+          <p-rating class="custom-rating" [ngModel]="comment.rating" [readonly]="true" [cancel]="false" />
+        </div>
+        <span class="material-symbols-outlined action-btn" (click)="switchToEdit()">edit</span>
+      </div>
+      <p>{{ comment.comment }}</p>
+    </div>
+  </div>
+  <div class="rating-details">
+    <div class="rating-holder">
+
+    <div class="rating" >
+      <mat-icon class="icon true">star_rate</mat-icon>
+      <mat-icon class="icon true">star_rate</mat-icon>
+      <mat-icon class="icon true">star_rate</mat-icon>
+      <mat-icon class="icon true">star_rate</mat-icon>
+      <mat-icon class="icon">star_rate</mat-icon>
+    </div>
+    <span class="rating">4.5</span>
+    </div>
+    <hr>
+    <div class="rating-numbers">
+      <div>
+        <strong style="justify-content: flex-start;">5</strong>
+        <span class="progress-bar"></span>
+        <strong style="justify-content: flex-end;">21</strong>
+      </div>
+      <div>
+        <strong style="justify-content: flex-start;">4</strong>
+        <span class="progress-bar"></span>
+        <strong style="justify-content: flex-end;">9</strong>
+      </div>
+      <div>
+        <strong style="justify-content: flex-start;">3</strong>
+        <span class="progress-bar"></span>
+        <strong style="justify-content: flex-end;">4</strong>
+      </div>
+      <div>
+        <strong style="justify-content: flex-start;">2</strong>
+        <span class="progress-bar"></span>
+        <strong style="justify-content: flex-end;">2</strong>
+      </div>
+      <div>
+        <strong style="justify-content: flex-start;">1</strong>
+        <span class="progress-bar"></span>
+        <strong style="justify-content: flex-end;">1</strong>
+      </div>
+    </div>
+  </div>
+</section>
+  <!-- <app-comment  *ngFor="let comment of comments" [commenttt]="comment"></app-comment> -->
+<hr>
+<p-carousel [value]="recommendedProducts" [numVisible]="3" [numScroll]="3" [circular]="false" [responsiveOptions]="responsiveOptions">
+  <ng-template let-product pTemplate="item">
+      <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
+          <!-- <div class="mb-3">
+            <img [src]="product.images[0]" [alt]="product.name" style="width: 80%;" class="w-6 shadow-2" />
+          </div> -->
+          <app-product-card class="mb-3" [cardProduct]="product" class="w-6 shadow-2" ></app-product-card>
+          <!-- <div>
+              <h4 class="mb-1">{{ product.name }}</h4>
+              <h6 class="mt-0 mb-3">{{ '$' + product.price }}</h6>
+              <div class="car-buttons mt-5">
+                  <p-button type="button" styleClass="p-button p-button-rounded mr-2" icon="pi pi-search"></p-button>
+                  <p-button type="button" styleClass="p-button-success p-button-rounded mr-2" icon="pi pi-star-fill"></p-button>
+              </div>
+          </div> -->
+      </div>
+  </ng-template>
+</p-carousel>
+<app-loading></app-loading>

@@ -1,0 +1,52 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 85vh;
+}
+.btns-holder {
+  display: flex;
+  gap: 15px;
+}
+.btns-holder .after {
+  background-color: #22c55e;
+  width: 20%;
+  height: 6px;
+  position: absolute;
+  left: 40px;
+  top: 71px;
+  transition: 0.5s;
+}
+h1 {
+  justify-self: flex-start;
+  cursor: pointer;
+  margin:0;
+}
+form {
+  /* border: 1px solid #b19a9a; */
+  height: fit-content;
+  width: 385px;
+  padding: 40px;
+  position: relative;
+  top: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px 11px #00000045;
+  display: flex;
+  /* align-items: center; */
+  /* justify-content: center; */
+  flex-direction: column;
+  gap: 35px;
+}
+.form-control {
+  width: 100%;
+  padding: 10px;
+  background-color: #8080805e;
+}
+.p-float-label label {
+  font-weight: bold;
+}
+
+/* button.p-button {
+  color: white;
+  width: 200px;
+} */

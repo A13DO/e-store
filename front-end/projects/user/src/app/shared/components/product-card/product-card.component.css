@@ -1,0 +1,118 @@
+.product {
+  background-color: white;
+  width: 100%;
+  /* height: 250px; */
+  height: 100%;
+  color: black;
+  /* border: black 2px solid; */
+  border-radius: 5%;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+.wishlist-btn {
+  position: absolute;
+  top: -35px;
+  right: 0;
+  z-index: 10;
+  transition: 0.3s;
+}
+.wishlist-btn mat-icon{
+  color: red;
+}
+.product:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+}
+.product:hover .wishlist-btn {
+  top: 0;
+}
+
+.details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 0 0 20px 0;
+}
+.details-holder {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  flex-direction: column;
+  position: relative;
+  bottom: 0;
+}
+.product .image-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 70%;
+  min-height: 253px;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  /* border-bottom: 1px gainsboro solid; */
+  /* background-color: black; */
+}
+.product img {
+  /* width: 100%; */
+  cursor: pointer;
+  overflow: hidden;
+}
+.details .name {
+  font-weight: 500;
+  font-size: 16px;
+}
+.details .price {
+  font-weight: 500;
+  font-size: 16px;
+}
+.buttons {
+  display: flex;
+  justify-content: center;
+  height: fit-content;
+}
+
+.cart-btn {
+  border: 1px solid #3b82f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 10px 20px;
+  width: 90%;
+  border-radius: 8px;
+  color: #3b82f6;
+  background-color: white;
+}
+
+.cart-btn .icon {
+  flex: 1;
+}
+.cart-btn span {
+  flex-basis: 90%;
+}
+
+
+/* .mat-mdc-icon-button {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+.icon {
+  font-size: 18px;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+} */
+mat-icon {
+  color: gray;
+}
+.red {
+  color: red;
+}

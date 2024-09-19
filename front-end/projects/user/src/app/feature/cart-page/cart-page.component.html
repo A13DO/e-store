@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="cart col-6">
+    <h1 class="title">Cart</h1>
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="product" *ngFor="let product of products">
+          <td><img [src]="toSafeUrl(product.images[0])" alt="image"></td>
+          <td><h1>{{ product.title }}</h1></td>
+          <!-- <td>{{ product.unit }}</td> -->
+          <td>${{ product.price}}</td>
+          <td class="product-quantity">
+            <mat-form-field>
+              <mat-label>Qty:</mat-label>
+              <mat-select [value]="product.unit" (selectionChange)="onQuantityChange($event.value, product)">
+                <mat-option *ngFor="let i of generateStockArray(product.stockQuantity)" [value]="i">{{ i }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <p>In Stock: {{product.stockQuantity}}</p>
+
+            <!-- <div class="card flex justify-content-center" style="width: 50px">
+              <p-inputNumber
+              [(ngModel)]="value"
+              [value]="product.unit"
+              [showButtons]="true"
+              [style]="{'width': '50px'}"
+              [size]="inputSize"
+
+              buttonLayout="vertical"
+              spinnerMode="vertical"
+              inputId="vertical"
+              decrementButtonClass="p-button-secondary"
+              incrementButtonClass="p-button-secondary"
+              ></p-inputNumber>
+          </div> -->
+
+          </td>
+          <td>${{ product.price * product.unit}}</td>
+          <td><button class="btn btn-danger" (click)="onDeleteProduct(product)">X</button></td>
+        </tr>
+      </tbody>
+      <!-- <hr> -->
+      <tfoot>
+        <td></td>
+        <td></td>
+        <td></td>
+        <th>Total:</th>
+        <td>${{ totalPrice }}</td>
+      </tfoot>
+    </table>
+    <button class="cart-btn" routerLink="/checkout">CHECKOUT</button>
+  </div>
+</div>
+<app-loading></app-loading>

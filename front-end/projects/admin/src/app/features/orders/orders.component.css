@@ -1,0 +1,84 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 0 20px 1px #00000024;
+}
+body {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 25px;
+}
+section {
+  box-shadow: 0 0 0 0 black;
+  border: #d9d9d9 solid 2px;
+  height: 545px;
+  position: relative;
+  overflow: auto;
+  border-radius: 10px;
+  background-color: white;
+  padding: 15px;
+  box-shadow: 0 0 20px 1px #00000024;
+}
+section.orders {
+  flex-basis: 70%;
+}
+section.order {
+  flex-basis: 25%;
+}
+table {
+  border: none;
+  border-spacing: 0;
+  width: 100%;
+  /* height: 1--%; */
+}
+thead {
+  color: gray;
+  background-color: white;
+}
+tbody, td, tfoot, th, thead, tr {
+  border-bottom: 2px solid;
+  border-color: rgba(128, 128, 128, 0.301);
+  min-width: 90px;
+  height: 50px;
+  background-color: white;
+  margin: 0;
+}
+td {
+  padding: 8px;
+}
+/* section.orders tr {
+  cursor: context-menu;
+} */
+section.orders tr:hover td{
+  background-color: gainsboro;
+}
+button.action-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+}
+.action-btn {
+  cursor: pointer;
+  padding: 3px;
+}
+
+thead td .sort-btn{
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.order-empty-text {
+  color: gray;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

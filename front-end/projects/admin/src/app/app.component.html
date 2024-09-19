@@ -1,0 +1,38 @@
+<body>
+  <!-- <header class="toolbar" role="banner">
+    <button (click)="Login()" *ngIf="!isSigned">Log in</button>
+    <button (click)="Logout()" *ngIf="isSigned">Logout</button>
+  </header> -->
+  <nav class="nav">
+    <table>
+      <thead>
+        <th><img src="../assets/dashboard_8899687.png" alt="icon"><span>Dashboard</span></th>
+      </thead>
+      <tbody>
+        <td class="btn">
+
+          <a href="/dashboard"><span class="material-symbols-outlined">house</span>Dashboard</a>
+        </td>
+        <td class="btn">
+          <a href="/dashboard/products"><span class="material-symbols-outlined">inventory_2</span>Products</a>
+        </td>
+        <td class="btn">
+          <a href="/dashboard/orders"><span class="material-symbols-outlined">receipt_long</span>Orders</a>
+        </td>
+        <td>
+          <select name="page" id="page" (change)="onPageSelect($event)">
+            <option value="dashboard">dashboard</option>
+            <option value="client">client</option>
+          </select>
+        </td>
+        <td>
+          <button (click)="Login()" *ngIf="!isSigned">Log in</button>
+          <button (click)="Logout()" *ngIf="isSigned">Logout</button>
+        </td>
+      </tbody>
+    </table>
+  </nav>
+  <section>
+    <router-outlet></router-outlet>
+  </section>
+</body>

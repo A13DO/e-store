@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "title": "NIKE shoes",
+        "rating": 4,
+        "image": "ImageLink",
+        "images": ["ImageLink"],
+        "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum, voluptate. Aperiam cumque quidem ipsum iusto impedit.",
+        "category": "clothes"
+        
+    },
+    {
+        "id": 2,
+        "title": "PUMA shoes",
+        "rating": 3.5,
+        "image": "ImageLink",
+        "images": ["ImageLink"],
+        "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum, voluptate. Aperiam cumque quidem ipsum iusto impedit.",
+        "category": "clothes"
+        
+    },
+    {
+        "id": 3,
+        "title": "Xbox controller",
+        "rating": 4.5,
+        "image": "ImageLink",
+        "images": ["ImageLink"],
+        "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum, voluptate. Aperiam cumque quidem ipsum iusto impedit.",
+        "category": "electric"
+        
+    },
+    {
+        "id": 4,
+        "title": "PS controller",
+        "rating": 4.5,
+        "image": "ImageLink",
+        "images": ["ImageLink"],
+        "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum, voluptate. Aperiam cumque quidem ipsum iusto impedit.",
+        "category": "electric"
+        
+    },
+    {
+        "id": 5,
+        "title": "ADIDAS t-shirt",
+        "rating": 5,
+        "image": "ImageLink",
+        "images": ["ImageLink"],
+        "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum, voluptate. Aperiam cumque quidem ipsum iusto impedit.",
+        "category": "clothes"
+        
+    }
+]

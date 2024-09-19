@@ -1,0 +1,22 @@
+<body>
+  <h1>Analytics</h1>
+  <div class="wrapper">
+    <div class="box">
+      <span>Products In Stock</span>
+      <span class="number">{{ productsNum }}</span>
+    </div>
+    <div class="box">
+      <span>Orders</span>
+      <span class="number">{{ ordersNum }}</span>
+    </div>
+    <div class="box">
+      <span>Manage Products</span>
+      <button class="btn" routerLink="/dashboard/products" >Show</button>
+    </div>
+    <div class="box">
+      <span>Manage Orders</span>
+      <button class="btn" routerLink="/dashboard/orders" >Show</button>
+    </div>
+  </div>
+</body>
+<app-loading></app-loading>

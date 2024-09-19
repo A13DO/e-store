@@ -1,0 +1,137 @@
+
+form {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  /* width: 73vw; */
+  height: 70vh;
+  border-radius: 15px;
+}
+.form-holder {
+  width: fit-content;
+  border-radius: 15px;
+  border: solid;
+  border-width: 2px;
+  border-color: rgba(128, 128, 128, 0.301);
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  background-color: white;
+  padding: 12px 30px;
+  border-radius: 15px;
+}
+/* section {
+  flex-basis: 50%;
+} */
+.thumbnail-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: gray;
+  width: 390px;
+  height: 345px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.thumbnail-image .icon-overlay {
+  position: absolute;
+
+  font-size: 48px; /* Adjust size as needed */
+  color: rgba(0, 0, 0, 0.5); /* Adjust color as needed */
+  pointer-events: none; /* Make sure the icon doesn't block any interaction with the image */
+}
+
+
+
+.images-holder {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 25px;
+  justify-content: space-between;
+}
+.images-holder .image-frame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: gray;
+  width: 100px;
+  height: 100px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  color: gray;
+  overflow: hidden;
+}
+.inputs {
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  gap: 10px;
+  /* align-items: center; */
+  color: gray;
+  font-weight: bold;
+  font-size: 15px;
+}
+.options select,
+textarea,
+input {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid rgb(94, 91, 91);
+
+}
+.file-input {
+  margin-top: 25px;
+}
+.input-size {
+/* input, select { */
+  width: 100%;
+  max-width: 260px;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: end;
+}
+.row div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex-basis: 48%;
+}
+textarea:focus,
+input:focus {
+  outline-color: blueviolet;
+}
+.row {
+  width: 100%;
+}
+.options {
+  /* margin-top: 20px; */
+  color: gray;
+  font-weight: bold;
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+}
+.options label {
+  margin-bottom: 10px;
+}
+
+button.submit {
+  position: absolute;
+  bottom: 175px;
+  left: 90%;
+}
+
+
+small {
+  color: red;
+}
+.is-invalid {
+  border-color: red;
+}

@@ -1,0 +1,64 @@
+<!-- <div class=" " style="display: flex; flex-direction: column; margin-top: 80px;"> -->
+  <header class="products-header">
+    <span><strong>{{ productsLen }} results</strong></span>
+    <p-dropdown [options]="sortByOptions" [(ngModel)]="selectedSortByOption" optionLabel="name" (onChange)="onSortOptionChange($event)"></p-dropdown>
+  </header>
+<!-- </div> -->
+<body class="row">
+  <!-- <div class="container"> -->
+    <!-- <div class="pro-holder row"> -->
+        <nav class="catgories col-2">
+          <div>
+          <h3>Category</h3>
+          <!-- <mat-chip-listbox class="holder" aria-label="Fish selection">
+            <mat-chip-option (click)="onGetAll()" selected>All</mat-chip-option>
+            <mat-chip-option *ngFor="let item of categories" (click)="onGetAll(item.category)">{{ item.category }}</mat-chip-option>
+          </mat-chip-listbox> -->
+          <mat-chip-listbox class="holder" aria-label="Fish selection">
+            <!-- The "All" chip does not use category, so it will be selected based on the condition -->
+            <mat-chip-option
+              (click)="onGetAll()"
+              [selected]="noSelectedCategory">All</mat-chip-option>
+            <!-- Iterate over categories and set the selected state based on the current category -->
+            <mat-chip-option
+              *ngFor="let item of categories"
+              (click)="onGetAll(undefined, item.category)"
+              [selected]="item.category === category">
+              {{ item.category }}
+            </mat-chip-option>
+          </mat-chip-listbox>
+          </div>
+          <div class="price-range">
+            <h3>Price</h3>
+            <p>{{convertRangeToCurrency(rangeValues)}}</p>
+            <p-slider [(ngModel)]="rangeValues" [min]="1" [max]="670"[range]="true"></p-slider>
+            <button mat-raised-button color="primary" (click)="getProductswithRangePrice(rangeValues)" style="margin-top: 16px;">Go</button>
+          </div>
+
+        </nav>
+        <div class="products row col-10">
+          <app-product-card class="col-2" *ngFor="let product of products" [cardProduct]="product"></app-product-card>
+        </div>
+      <!-- </div> -->
+  <!-- </div> -->
+</body>
+<footer class="row">
+  <div class="element col-2">
+    <h3>VisualAlloy</h3>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatibus nisi, consectetur perferendis eos veritatis aut voluptatem saepe quia quidem sed ipsam unde sint commodi. Impedit necessitatibus modi consectetur quis quae.</p>
+  </div>
+  <div class="element col-2">
+    <h3>Collections</h3>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit, quae numquam esse deleniti suscipit sed illum. Magni est iste beatae explicabo vel velit iusto ipsa, assumenda ipsum nemo nisi id.</p>
+  </div>
+  <div class="element col-2">
+    <h3>Contact Us</h3>
+    <p>email-test.com</p>
+    <p>email-test.com</p>
+  </div>
+  <div class="element col-2">
+    <h3>Company</h3>
+    <p>Terms of Service</p>
+    <p>Privacy Policy</p>
+  </div>
+</footer>

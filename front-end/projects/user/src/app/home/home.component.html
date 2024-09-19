@@ -1,0 +1,182 @@
+
+<section class="landing" style="margin: 0;">
+  <div class="wrapper">
+    <h1>Special Offers, Quick Shopping</h1>
+    <p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
+    <div class="buttons">
+      <button class="shop-now-btn" routerLink="/products">Shop Now</button>
+      <button class="explore-btn" routerLink="/products">Explore</button>
+    </div>
+  </div>
+  <img src="../../assets/optimized-pexels-karolina-grabowska-min.webp"  width="1903" height="673" style="width: 100%;" style="width: 100%; position: relative;" alt="landing image">
+</section>
+
+<section class="container" >
+  <div class="categories">
+    <div class="holder">
+      <h2 class="products-title">Popular products</h2>
+      <mat-chip-listbox class="listbox" aria-label="Fish selection">
+
+              <!-- <mat-chip-option *ngFor="let item of categories" (click)="onGetAll(item.category)">{{ item.category }}</mat-chip-option> -->
+              <mat-chip-option (click)="onGetAll(clothing)">Clothing</mat-chip-option>
+              <mat-chip-option (click)="onGetAll(electronics)">Electronics</mat-chip-option>
+              <mat-chip-option (click)="onGetAll(accessories)">Accessories</mat-chip-option>
+              <mat-chip-option (click)="onGetAll(furniture)">Furniture</mat-chip-option>
+              <!-- <mat-chip-option (click)="onGetAll()" selected>All</mat-chip-option>
+              <mat-chip-option (click)="onGetAll(electronics)" color="accent">Electronics</mat-chip-option> -->
+      </mat-chip-listbox>
+    </div>
+  </div>
+
+  <div class="products-showcase">
+    <div class="element" *ngFor="let product of products">
+      <div class="image-holder">
+      </div>
+      <img [src]="product.images[0]" loading="lazy" alt="image"  [routerLink]="'/products/' + product._id">
+      <h3>{{ product.title }}</h3>
+      <span>${{ product.price }}</span>
+      <span class="material-symbols-outlined" (click)="onAddToCart(product)">add_shopping_cart</span>
+    </div>
+  </div>
+  <button class="products-btn" routerLink="/products">See All<span class="material-symbols-outlined" style="font-size: 20px;">arrow_forward</span></button>
+</section>
+
+
+<section class="categories-section">
+  <h2 class="products-title">Popular categories</h2>
+  <div class="container" style="  gap: 15px;">
+    <div class="row col-12 ">
+      <div class="box col-6 clothing" (click)="navigateToProducts('clothing')">
+        <h2>Clothes and shoes</h2>
+        <span>50 item</span>
+        <img src="../../assets/pngwing.com (1).webp" width="250" height="188" loading="lazy" alt="image">
+      </div>
+      <div class="box col-3 electronics" (click)="navigateToProducts('electronics')">
+        <h2>Electronics</h2>
+        <span>50 item</span>
+        <img src="../../assets/New folder/electronics 2-min-misssn.png" width="300" height="300" loading="lazy" alt="">
+      </div>
+      <div class="box col-3 sport" (click)="navigateToProducts('')">
+        <h2>Sport</h2>
+        <span>50 item</span>
+        <img src="../../assets/New folder/sport 1.webp" width="300" height="300" loading="lazy" alt="">
+      </div>
+    </div>
+    <div class="row col-12 ">
+      <div class="box col-3 kitchen" (click)="navigateToProducts('')">
+        <h2>Kitchen</h2>
+        <span>50 item</span>
+        <img src="../../assets/New folder/kitchen 1.webp" width="286" height="280" loading="lazy" alt="">
+      </div>
+      <div class="box col-3 beauty" (click)="navigateToProducts('beauty')">
+        <h2>Beauty</h2>
+        <span>50 item</span>
+        <img src="../../assets/10571891.webp" width="287" height="243" loading="lazy"  alt="">
+      </div>
+      <div class="box col-6 furniture"  (click)="navigateToProducts('furniture')">
+        <h2>Furniture</h2>
+        <span>50 item</span>
+        <img src="../../assets/98.webp" width="611" height="344" loading="lazy" alt="">
+      </div>
+    </div>
+</div>
+</section>
+<section class="container products-showcase">
+  <div class="" style="width: 300px;">
+    <h1 style="font-size: 30px; font-weight: 500;">Build Your Gaming Setup.</h1>
+    <p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
+  </div>
+  <div class="element" >
+    <div class="image-holder">
+    </div>
+    <img src="../../assets/pngwing.com (14).webp" width="300" height="300" loading="lazy" alt="image">
+    <h3>Gaming Chair</h3>
+    <span>$120</span>
+  </div>
+  <div class="element" >
+    <div class="image-holder">
+      <img src="../../assets/pngwing.com (17).webp" width="300" height="300" loading="lazy" alt="image">
+    </div>
+    <h3>Ps4</h3>
+    <span>$299</span>
+  </div>
+  <div class="element" >
+    <div class="image-holder">
+      <img src="../../assets/pngwing.com (19).webp" width="300" height="192" loading="lazy" alt="image">
+    </div>
+    <h3>Gaming Keyboard</h3>
+    <span>$50</span>
+  </div>
+
+</section>
+<section class="info container">
+  <div class="row">
+    <!-- Left side: 4 boxes in 2 rows -->
+    <div class="elements col-lg-6 col-md-12">
+      <div class="row" style="flex: none; justify-content: center;">
+        <h2 class="products-title">Why Choose Us</h2>
+        <p class="title-text">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
+      </div>
+      <div class="row">
+        <div class="element col">
+          <span class="material-symbols-outlined icon">thumb_up</span>
+          <h1>Exceptional Quality</h1>
+          <p>Durable, weather-proof metal and a premium finish define our wall art's exceptional quality.</p>
+        </div>
+        <div class="element col">
+          <span class="material-symbols-outlined icon">package_2</span>
+          <h1>Free Worldwide Shipping</h1>
+          <p>No hidden costs, no surprises; we ship to your doorstep for free!</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="element col">
+          <span class="material-symbols-outlined icon">description</span>
+          <h1>Easy Installation</h1>
+          <p>No need for professional help; our wall art comes with simple instructions and all necessary hardware.</p>
+        </div>
+        <div class="element col">
+          <span class="material-symbols-outlined icon">keyboard_return</span>
+          <h1>30-Day Return Policy</h1>
+          <p>Not satisfied with your purchase? Return it within 30 days for a full refund or exchange.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right side: Image -->
+    <div class="image-wrapper col-6">
+      <img loading="lazy" src="../../assets/why-us-img.webp" width="623" height="713" style="width: 100%;" alt="image">
+    </div>
+  </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+<section>
+<div class="carousel">
+  <div class="carousel-wrapper" #carouselWrapper>
+    <div *ngFor="let brand of brands" class="carousel-slide">
+      <img  [src]="'assets/brands/' + brand.image" [alt]="brand.image" width="228" height="228" loading="lazy"/>
+    </div>
+  </div>
+</div>
+</section>
+<footer class="row">
+  <div class="element col-2">
+    <h3>E-Store</h3>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatibus nisi, consectetur perferendis eos veritatis aut voluptatem saepe quia quidem sed ipsam unde sint commodi. Impedit necessitatibus modi consectetur quis quae.</p>
+  </div>
+  <div class="element col-2">
+    <h3>Collections</h3>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit, quae numquam esse deleniti suscipit sed illum. Magni est iste beatae explicabo vel velit iusto ipsa, assumenda ipsum nemo nisi id.</p>
+  </div>
+  <div class="element col-2">
+    <h3>Contact Us</h3>
+    <p>email-test.com</p>
+    <p>email-test.com</p>
+  </div>
+  <div class="element col-2">
+    <h3>Company</h3>
+    <p>Terms of Service</p>
+    <p>Privacy Policy</p>
+  </div>
+</footer>
+<app-loading></app-loading>
