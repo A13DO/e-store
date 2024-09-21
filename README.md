@@ -11,9 +11,7 @@ Visit the Store Dashboard as Admin [Dashboard Demo](https://dashboard-5b2fd.web.
 ## Table of Contents
 - [Features](#features)
 - [Technologies Used](#technologies-used)
-- [Usage](#usage)
 - [Getting Started](#getting-started)
-- [License](#license)
 
 ## Features
 ### Customer Side
@@ -52,12 +50,12 @@ Visit the Store Dashboard as Admin [Dashboard Demo](https://dashboard-5b2fd.web.
 
 *Run*
 1. In a new terminal, install the frontend dependencies:
-  ```bash
-  npm i
+   ```bash
+   npm i
 2. Start the Angular application as Customer:
-  ```bash
-  ng serve shop
+   ```bash
+   ng serve shop
 3. Start the Angular application as Admin:
-  ```bash
-  ng serve admin
+   ```bash
+   ng serve admin
 
