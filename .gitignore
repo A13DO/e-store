@@ -2,10 +2,12 @@
 
 /server/.env
 
-# Compiled output
-/dist
-/tmp
-/out-tsc
+# Angular build and cache
+dist/
+build/
+tmp/
+.out-tsc/
+.angular/
 /bazel-out
 
 # Node
@@ -13,6 +15,7 @@
 /server/node_modules
 npm-debug.log
 yarn-error.log
+package-lock.json
 
 # IDEs and editors
 .idea/
@@ -39,6 +42,10 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
+
+# Firebase related files
+.firebase/
+.firebaserc
 
 # System files
 .DS_Store

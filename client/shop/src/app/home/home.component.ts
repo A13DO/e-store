@@ -5,7 +5,7 @@ import { RequestsService } from '../core/services/requests.service';
 import * as ProductsActions from '../store/actions';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
-import { ProductsService } from 'projects/admin/src/app/core/services/products.service';
+import { ProductsService } from 'client/admin/src/app/core/services/products.service';
 import { Route, Router } from '@angular/router';
 import { Carousel } from 'primeng/carousel';
 

@@ -7,7 +7,7 @@ import { catchError, map, mergeMap, switchMap, withLatestFrom } from 'rxjs/opera
 import { Store, select } from '@ngrx/store';
 import { CommentsState } from './comment.store';
 import * as CommentsActions  from "./comment.actions";
-import { RequestsService } from 'projects/user/src/app/core/services/requests.service';
+import { RequestsService } from 'client/shop/src/app/core/services/requests.service';
 
 @Injectable()
 export class CommentsEffect {

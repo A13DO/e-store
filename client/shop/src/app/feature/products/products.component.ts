@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Product } from '../../shared/product.model';
 import { RequestsService } from '../../core/services/requests.service';
-import { ProductsService } from 'projects/admin/src/app/core/services/products.service';
+import { ProductsService } from 'client/admin/src/app/core/services/products.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 interface SortByOption {

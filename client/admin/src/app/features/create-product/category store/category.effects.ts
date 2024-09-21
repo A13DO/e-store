@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { catchError, map, mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
 import { CategoriesState } from './category.store';
 import * as CategoriesActions  from "./category.actions";
-import { RequestsService } from 'projects/user/src/app/core/services/requests.service';
+import { RequestsService } from 'client/shop/src/app/core/services/requests.service';
 
 @Injectable()
 export class CategoryEffect {

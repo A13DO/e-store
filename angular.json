@@ -1,31 +1,31 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "projects",
+  "newProjectRoot": "client",
   "projects": {
     "admin": {
       "projectType": "application",
       "schematics": {},
-      "root": "projects/admin",
-      "sourceRoot": "projects/admin/src",
+      "root": "client/admin",
+      "sourceRoot": "client/admin/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/admin",
-            "index": "projects/admin/src/index.html",
-            "main": "projects/admin/src/main.ts",
+            "index": "client/admin/src/index.html",
+            "main": "client/admin/src/main.ts",
             "polyfills": [
               "zone.js"
             ],
-            "tsConfig": "projects/admin/tsconfig.app.json",
+            "tsConfig": "client/admin/tsconfig.app.json",
             "assets": [
-              "projects/admin/src/favicon.ico",
-              "projects/admin/src/assets"
+              "client/admin/src/favicon.ico",
+              "client/admin/src/assets"
             ],
             "styles": [
-              "projects/admin/src/styles.css"
+              "client/admin/src/styles.css"
             ],
             "scripts": []
           },
@@ -87,46 +87,46 @@
               "zone.js",
               "zone.js/testing"
             ],
-            "tsConfig": "projects/admin/tsconfig.spec.json",
+            "tsConfig": "client/admin/tsconfig.spec.json",
             "assets": [
-              "projects/admin/src/favicon.ico",
-              "projects/admin/src/assets"
+              "client/admin/src/favicon.ico",
+              "client/admin/src/assets"
             ],
             "styles": [
-              "projects/admin/src/styles.css"
+              "client/admin/src/styles.css"
             ],
             "scripts": []
           }
         }
       }
     },
-    "user": {
+    "shop": {
       "projectType": "application",
       "schematics": {},
-      "root": "projects/user",
-      "sourceRoot": "projects/user/src",
+      "root": "client/shop",
+      "sourceRoot": "client/shop/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/user",
-            "index": "projects/user/src/index.html",
-            "main": "projects/user/src/main.ts",
+            "outputPath": "dist/shop",
+            "index": "client/shop/src/index.html",
+            "main": "client/shop/src/main.ts",
             "polyfills": [
               "zone.js"
             ],
-            "tsConfig": "projects/user/tsconfig.app.json",
+            "tsConfig": "client/shop/tsconfig.app.json",
             "assets": [
-              "projects/user/src/favicon.ico",
-              "projects/user/src/assets"
+              "client/shop/src/favicon.ico",
+              "client/shop/src/assets"
             ],
             "styles": [
               "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules\\bootstrap\\dist\\css\\bootstrap.min.css",
-              "projects/user/src/styles.css"
+              "client/shop/src/styles.css"
             ],
             "scripts": []
           },
@@ -167,10 +167,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "user:build:production"
+              "browserTarget": "shop:build:production"
             },
             "development": {
-              "browserTarget": "user:build:development"
+              "browserTarget": "shop:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -178,7 +178,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "user:build"
+            "browserTarget": "shop:build"
           }
         },
         "test": {
@@ -188,13 +188,13 @@
               "zone.js",
               "zone.js/testing"
             ],
-            "tsConfig": "projects/user/tsconfig.spec.json",
+            "tsConfig": "client/shop/tsconfig.spec.json",
             "assets": [
-              "projects/user/src/favicon.ico",
-              "projects/user/src/assets"
+              "client/shop/src/favicon.ico",
+              "client/shop/src/assets"
             ],
             "styles": [
-              "projects/user/src/styles.css"
+              "client/shop/src/styles.css"
             ],
             "scripts": []
           }

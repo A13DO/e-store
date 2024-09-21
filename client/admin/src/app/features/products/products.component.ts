@@ -1,4 +1,3 @@
-import { productsState } from './../../../../../user/src/app/store/store';
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { ProductsService } from '../../core/services/products.service';
 import { Product } from '../../core/interfaces/product.model';

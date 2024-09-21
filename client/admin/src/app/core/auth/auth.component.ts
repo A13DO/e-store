@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, NgForm } from '@angular/forms';
 import { AuthService } from './services/auth.service';
-import { User } from 'projects/user/src/app/core/interfaces/user.model';
+import { User } from 'client/shop/src/app/core/interfaces/user.model';
 
 @Component({
   selector: 'app-auth',

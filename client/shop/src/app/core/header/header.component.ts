@@ -2,7 +2,7 @@ import { RequestsService } from '../services/requests.service';
 import { Component, ElementRef, HostListener, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { User } from '../interfaces/user.model';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { ProductsService } from 'projects/admin/src/app/core/services/products.service';
+import { ProductsService } from 'client/admin/src/app/core/services/products.service';
 
 @Component({
   selector: 'app-header',
