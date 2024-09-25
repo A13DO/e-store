@@ -33,6 +33,7 @@ export class ProductsComponent {
   categories: any;
   category: string = '';
   searchValue: any;
+  isNavOpen: boolean = false;
   constructor(private requestsService: RequestsService, private route: ActivatedRoute, private router: Router, private productsService: ProductsService) {
   // this.requestsService.getWishlist().subscribe(
   //   data => {
@@ -101,5 +102,8 @@ export class ProductsComponent {
   }
   get noSelectedCategory(): boolean {
     return this.category === ''; // Returns true if "All" should be selected
+  }
+  toggleNav() {
+    this.isNavOpen = !this.isNavOpen; // Toggle the nav state
   }
 }

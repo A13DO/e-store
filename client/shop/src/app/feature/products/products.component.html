@@ -7,7 +7,7 @@
 <body class="row">
   <!-- <div class="container"> -->
     <!-- <div class="pro-holder row"> -->
-        <nav class="catgories col-2">
+        <nav class="catgories col-2" [ngClass]="{'open': isNavOpen}">
           <div>
           <h3>Category</h3>
           <!-- <mat-chip-listbox class="holder" aria-label="Fish selection">
@@ -34,10 +34,10 @@
             <p-slider [(ngModel)]="rangeValues" [min]="1" [max]="670"[range]="true"></p-slider>
             <button mat-raised-button color="primary" (click)="getProductswithRangePrice(rangeValues)" style="margin-top: 16px;">Go</button>
           </div>
-
+          <button class="nav-toggle"(click)="toggleNav()"><span class="material-symbols-outlined">menu</span></button>
         </nav>
         <div class="products row col-10">
-          <app-product-card class="col-2" *ngFor="let product of products" [cardProduct]="product"></app-product-card>
+          <app-product-card class="col-5 col-sm-5 col-md-5 col-lg-4  col-xl-2" *ngFor="let product of products" [cardProduct]="product"></app-product-card>
         </div>
       <!-- </div> -->
   <!-- </div> -->

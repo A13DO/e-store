@@ -73,16 +73,17 @@
 
 <!-- <app-product-card class="col-3" *ngFor="let product of recommendedProducts" [cardProduct]="product"></app-product-card> -->
 <hr>
-<div class="comment-field" *ngIf="!commentExists || editCommentMode">
-  <span>A</span>
-  <p-rating class="custom-rating" [(ngModel)]="rateValue" [cancel]="false" />
-  <textarea name="comment" id="comment" [(ngModel)]="commentText" cols="30" rows="10" resizable="none"></textarea>
-  <button class="add-btn btn" type="button" *ngIf="!commentExists" (click)="addComment()">Comment</button>
-  <button class="add-btn btn" type="button" *ngIf="editCommentMode" (click)="updateComment()">update</button>
-</div>
 <section class="reviews">
   <h1>Reviews</h1>
+
   <div class="comments">
+    <div class="comment-field" *ngIf="!commentExists || editCommentMode">
+      <span class="user-icon">U</span>
+      <p-rating class="custom-rating" [(ngModel)]="rateValue" [cancel]="false" />
+      <textarea name="comment" id="comment" [(ngModel)]="commentText" cols="30" rows="10" resizable="none"></textarea>
+      <button class="add-btn btn" type="button" *ngIf="!commentExists" (click)="addComment()">Comment</button>
+      <button class="add-btn btn" type="button" *ngIf="editCommentMode" (click)="updateComment()">update</button>
+    </div>
     <h1>comments</h1>
     <!-- <div class="comment" *ngFor="let comment of comments"> -->
     <div class="comment" *ngFor="let comment of CommentsObrsv$ | async" >
@@ -96,6 +97,7 @@
       </div>
       <p>{{ comment.comment }}</p>
     </div>
+
   </div>
   <div class="rating-details">
     <div class="rating-holder">

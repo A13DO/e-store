@@ -15,10 +15,47 @@ header {
 nav {
   border-right: solid 1px #c7c8c9;
   padding: 30px 30px 0 30px;
-  height: 100%;
+  /* height: 100%; */
   display: flex;
   flex-direction: column;
   gap: 25px;
+}
+
+nav .nav-toggle {
+  background-color: #3b82f6;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  right: -50px;
+  z-index: 30;
+  cursor: pointer;
+  color: white;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+@media (max-width: 992px) {
+  .products-header {
+    gap: 25%;
+  }
+  nav{
+    left: -280px;
+    transition: left 0.3s ease;
+    position: absolute;
+    width: 280px;
+    height: 100%;
+  }
+  nav .nav-toggle {
+    display: flex;
+  }
+}
+nav.open {
+  position: absolute;
+  z-index: 30;
+  background-color: white;
+  left: 0;
 }
 h3 {
   font-weight: bold;
@@ -33,7 +70,7 @@ nav .price-range {
   justify-content: center;
 } */
 body {
-  height: 80vh;
+  min-height: 100vh;
   width: 100%;
 }
 .products {
@@ -43,8 +80,9 @@ body {
   padding: 30px 30px;
 }
 
-
-
+:host ::ng-deep app-product-card .details-holder .cart-btn span {
+  flex-basis: 80%;
+}
 
 
 

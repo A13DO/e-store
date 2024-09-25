@@ -165,6 +165,13 @@ section {
   right: 40px;
   position: absolute;
 }
+.box.furniture.responisve {
+  display: none;
+
+}
+.box.furniture.responisve img{
+  top: -140px;
+}
 @media (max-width: 1400px) {
   .box.beauty img {
     top: -95px;
@@ -172,6 +179,22 @@ section {
   .box.furniture img {
     top: -130px;
     right: -35%;
+  }
+  .box.kitchen,
+  .box.beauty {
+    display: none;
+  }
+  .box.furniture {
+    display: none;
+  }
+  .box.furniture.responisve {
+    display: block;
+  }
+
+  .box.sport,
+  .box.electronics {
+    flex: 0 0 auto;
+    width: calc(50% - 1%);
   }
 }
 @media (max-width: 1200px) {
@@ -181,6 +204,9 @@ section {
   .box.furniture img {
     top: -100px;
     right: -35%;
+  }
+  .box.electronics img {
+    right: -85px;
   }
 }
 @media (max-width: 992px) {
@@ -212,6 +238,9 @@ section {
   display: flex;
   flex-direction: row;
   gap: 30px;
+}
+.products-showcase .info-text {
+  width: 300px;
 }
 .products-showcase .element {
   width: 300px;
@@ -268,6 +297,7 @@ section {
 .products-showcase .element img {
   width: 100%;
   transition: 0.3s all ease;
+  object-fit: contain;
 }
 .products-showcase .element:hover img {
   transform: translateY(-20px);
@@ -282,6 +312,15 @@ section {
   font-weight: 800;
   font-size: 18px;
   text-align: center;
+}
+@media (max-width: 992px) {
+  .products-showcase .info-text {
+    position: absolute;
+    width: 500px;
+  }
+  .products-showcase .element {
+    top: 70px;
+  }
 }
 section.info {
   margin-right: auto;
