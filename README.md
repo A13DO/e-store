@@ -1,5 +1,3 @@
-
-You said:
 # E-Store
 Angular Full Stack ([MEAN Stack](#MEAN-Stack)) application for users to browse and purchase products, manage their shopping cart, and handle orders efficiently. This application features user authentication, product listings, and an admin dashboard for managing inventory.
 
