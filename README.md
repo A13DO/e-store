@@ -3,7 +3,7 @@ Angular Full Stack ([MEAN Stack](#MEAN-Stack)) application for users to browse a
 
 ## Live Web Project
 Visit the Store as Customer [Store Demo](https://e-commerce-86f86.web.app). <br>
-Visit the Store Dashboard as Admin [Dashboard Demo](https://dashboard-5b2fd.web.app/dashboard).
+Visit the Store Dashboard as Admin [Dashboard Demo](https://dashboard-5b2fd.web.app/dashboard).  <br>
 Back-End API Docs [API Swagger](https://e-commerce-api-wvh5.onrender.com/api-docs/)
 *(please be patient, it may take a minute to load)*
 
