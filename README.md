@@ -38,7 +38,10 @@ Back-End API Docs [API Swagger](https://e-commerce-api-wvh5.onrender.com/api-doc
 - **[Bootstrap](https://getbootstrap.com/)**: CSS framework for responsive design.
 - **[PrimeNG](https://www.primefaces.org/primeng/)**: A rich UI component library for Angular applications.
 - **[Angular Material](https://material.angular.io/)**: A set of reusable UI components that implement Google's Material Design.
-
+### Angular Workspaces
+This project utilizes an Angular Workspace structure to manage multiple applications within a single codebase. The workspace contains two primary applications:
+- **User Application**: The main frontend application for end-users.
+- **Admin Application**: A separate application for administrators, providing features for managing the inventory.
 
 ## Getting Started
 
