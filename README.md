@@ -6,6 +6,8 @@ Visit the Store as Customer [Store Demo](https://e-commerce-86f86.web.app). <br>
 Visit the Store Dashboard as Admin [Dashboard Demo](https://dashboard-5b2fd.web.app/dashboard). *(please be patient, it may take a minute to load)*  <br>
 Back-End API Docs [API Swagger](https://e-commerce-api-wvh5.onrender.com/api-docs/) *(still working on it)* 
 
+![E-store](https://github.com/user-attachments/assets/e3aa2840-fef9-4706-be3d-b9fe5a39a2fa)
+
 
 ## Table of Contents
 - [Features](#features)
