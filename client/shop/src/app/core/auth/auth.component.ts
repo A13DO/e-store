@@ -54,4 +54,8 @@ export class AuthComponent {
       this.authForm.resetForm();
     }
   }
+  isShowEmail: boolean = true;
+  toggleDefaultEmail() {
+    this.isShowEmail = !this.isShowEmail;
+  }
 }

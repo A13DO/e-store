@@ -58,3 +58,21 @@ form {
   gap: 5px;
   margin-bottom: 8px;
 }
+.user-email {
+  width: 200px;
+  background-color: #00000045;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: auto;
+  position: relative;
+  top: 90px;
+}
+.user-email * {
+  width: 100%;
+  text-align: center;
+}
+button {
+  cursor: pointer;
+}
