@@ -19,11 +19,11 @@
 h1 {
   justify-self: flex-start;
   cursor: pointer;
-  margin:0;
+  margin: 0;
 }
 form {
   /* border: 1px solid #b19a9a; */
-  height: 500px;
+  height: 400px;
   width: 350px;
   padding: 40px;
   position: relative;
@@ -41,7 +41,7 @@ form {
 .form-control {
   width: 100%;
   padding: 10px;
-  background-color: #8080805e;
+  /* background-color: #8080805e; */
 }
 .p-float-label label {
   font-weight: bold;
@@ -59,3 +59,26 @@ form {
   color: white;
   width: 200px;
 } */
+.admin-email {
+  width: 200px;
+  background-color: #00000045;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: auto;
+  position: relative;
+  top: 90px;
+}
+.admin-email * {
+  width: 100%;
+  text-align: center;
+}
+button {
+  cursor: pointer;
+}
+form {
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+}

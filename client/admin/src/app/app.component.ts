@@ -53,7 +53,7 @@ export class AppComponent extends BaseComponent implements OnInit {
     this.router.navigate(['/dashboard/auth']);
   }
   Logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('adminData');
     this.isSigned = false;
     window.location.reload();
   }

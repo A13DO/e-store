@@ -61,11 +61,8 @@ export class AuthComponent extends BaseComponent {
     }
     this.submitted = true;
   }
+  isShowEmail: boolean = true;
+  toggleDefaultEmail() {
+    this.isShowEmail = !this.isShowEmail;
+  }
 }
-
-// .post<AuthResponseData>(
-//   'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCql3Npno578hxnzN5mjD4SHjyLcdkWe4U', {
-
-// .post<AuthResponseData>(
-//   'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCql3Npno578hxnzN5mjD4SHjyLcdkWe4U', {
-//     email: email,
