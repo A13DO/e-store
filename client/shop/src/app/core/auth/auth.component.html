@@ -3,50 +3,38 @@
     <div class="btns-holder">
       <h1 (click)="onLoginSwitch()" [ngStyle]="{'color': isLoginMode ? '#22c55e' : 'black'}">Log in</h1>
       <h1 (click)="onSignupSwitch()" [ngStyle]="{'color': !isLoginMode ? '#22c55e' : 'black'}">Sign up</h1>
-      <span class="after" [ngStyle]="{'left': isLoginMode ? '40px' : '120px', 'width': isLoginMode ? '20%' : '22%'}"></span>
+      <span class="after"
+        [ngStyle]="{'left': isLoginMode ? '40px' : '120px', 'width': isLoginMode ? '20%' : '22%'}"></span>
     </div>
     <!-- <div class="form-group"> -->
-      <span class="p-float-label" *ngIf="!isLoginMode">
-        <input
-        class="form-control"
-        id="name"
-        name="name"
-        type="name"
-        name
-        required
-        ngModel
-        pInputText
-        />
+    <span class="" *ngIf="!isLoginMode">
+
+      <div class="lable_group">
+        <mat-icon class="icon">person</mat-icon>
         <label for="name">Name</label>
-      </span>
-      <span class="p-float-label">
-        <input
-        class="form-control"
-        id="email"
-        name="email"
-        type="email"
-        email
-        required
-        ngModel
-        pInputText
-        />
+      </div>
+      <input class="form-control" id="name" name="name" type="name" name required ngModel pInputText
+        placeholder="Name" />
+    </span>
+    <span class="">
+
+      <div class="lable_group">
+        <mat-icon class="icon">email</mat-icon>
         <label for="email">Email</label>
-      </span>
-      <span class="p-float-label">
-        <input
-        class="form-control"
-        id="password"
-        name="password"
-        type="password"
-        required
-        ngModel
-        pInputText
-        />
+      </div>
+      <input class="form-control" id="email" name="email" type="email" email required ngModel pInputText
+        placeholder="Email" />
+    </span>
+    <span class="">
+      <div class="lable_group">
+        <mat-icon class="icon">lock</mat-icon>
         <label for="password">Password</label>
-      </span>
-      <p-button class="btn" styleClass=" p-button-success" label="Log In" type="submit" ></p-button>
+      </div>
+      <input class="form-control" id="password" name="password" type="password" required ngModel pInputText
+        placeholder="Password" />
+    </span>
+    <p-button class="btn" styleClass=" p-button-success" label="Log In" type="submit"></p-button>
     <!-- </div> -->
     <!-- <button class="btn" type="submit">Log In</button> -->
   </form>
 </div>
-

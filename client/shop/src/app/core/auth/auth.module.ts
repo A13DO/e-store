@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { RouterModule, Routes } from '@angular/router';
 import { SignedInGuard } from '../guards/signedin.guard';
+import { MatIconModule } from "@angular/material/icon";
 
 const routes: Routes = [
   { path: '', component: AuthComponent, canActivate: [SignedInGuard] }
@@ -19,7 +20,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     ButtonModule,
-    RouterModule.forChild(routes)
-  ]
+    RouterModule.forChild(routes),
+    MatIconModule
+]
 })
 export class AuthModule { }

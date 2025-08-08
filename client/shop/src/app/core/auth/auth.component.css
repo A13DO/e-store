@@ -20,7 +20,7 @@
 h1 {
   justify-self: flex-start;
   cursor: pointer;
-  margin:0;
+  margin: 0;
 }
 form {
   /* border: 1px solid #b19a9a; */
@@ -40,7 +40,7 @@ form {
 .form-control {
   width: 100%;
   padding: 10px;
-  background-color: #8080805e;
+  /* background-color: #8080805e; */
 }
 .p-float-label label {
   font-weight: bold;
@@ -50,3 +50,11 @@ form {
   color: white;
   width: 200px;
 } */
+
+.lable_group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 8px;
+}
