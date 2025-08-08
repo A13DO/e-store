@@ -1,5 +1,10 @@
-import { RequestsService } from './../../core/services/requests.service';
-import { Component, ElementRef, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Product } from '../../shared/product.model';
 import * as ProductsActions from '../../store/actions';
@@ -7,6 +12,7 @@ import { Observable, Subscription, tap } from 'rxjs';
 import { selectCartProducts } from '../../store/selectors';
 import { select } from '@ngrx/store';
 import { NgForm } from '@angular/forms';
+import { OrderService } from '../../core/services/order.service';
 interface UserInfo {
   name: string;
   email: string;
@@ -29,17 +35,20 @@ interface Order {
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.css']
+  styleUrls: ['./checkout.component.css'],
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
-
-
   minDate: string;
   maxDate: string;
-  expirationDate: string = "MM/YY";
+  expirationDate: string = 'MM/YY';
   isCardFlip: boolean = false;
-  cvv: string = "CVV";
-  constructor(private store: Store<any>, private requestsService: RequestsService, private renderer: Renderer2, private el: ElementRef) {
+  cvv: string = 'CVV';
+  constructor(
+    private store: Store<any>,
+    private _OrderService: OrderService,
+    private renderer: Renderer2,
+    private el: ElementRef
+  ) {
     const currentDate = new Date();
 
     // Set the min date to the current month and year
@@ -51,40 +60,39 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.maxDate = this.formatDate(maxDate);
   }
 
-
-isFlipped: boolean =false;
-formattedValue = '#### #### #### ####';
-toggleFlip() {
-  this.isFlipped = !this.isFlipped;
-}
+  isFlipped: boolean = false;
+  formattedValue = '#### #### #### ####';
+  toggleFlip() {
+    this.isFlipped = !this.isFlipped;
+  }
 
   products!: Product[];
-  cart = "CART";
+  cart = 'CART';
   totalPrice!: number;
   storeSub!: Subscription;
   order!: Order;
   ProductsObrsv$!: Observable<Product[]>;
   userEmail: any;
   cardNumber: any;
-  cardHolder: string = "";
-  CardMask = "#### #### #### ####";
+  cardHolder: string = '';
+  CardMask = '#### #### #### ####';
 
   ngOnInit(): void {
-    this.ProductsObrsv$ = this.store.pipe(select(selectCartProducts))
+    this.ProductsObrsv$ = this.store.pipe(select(selectCartProducts));
     this.storeSub = this.ProductsObrsv$.subscribe((cartProducts: Product[]) => {
       this.products = cartProducts;
       console.log(this.products);
       if (this.products !== null) {
         // Loop over the cart products array
-        this.getTotalPrice(this.products)
+        this.getTotalPrice(this.products);
       }
     });
     console.log(this.totalPrice);
-    const user = localStorage.getItem("userData");
+    const user = localStorage.getItem('userData');
 
     if (user) {
       const email = JSON.parse(user).email;
-      this.userEmail = email
+      this.userEmail = email;
       console.log(this.order);
     }
   }
@@ -96,7 +104,9 @@ toggleFlip() {
     // this.order.userInfo.totalCost = this.totalPrice;
   }
   onDeleteProduct(product: Product) {
-    this.store.dispatch(new ProductsActions.deleteCartItemAction([this.cart, product._id]))
+    this.store.dispatch(
+      new ProductsActions.deleteCartItemAction([this.cart, product._id])
+    );
     this.totalPrice -= product.price * product.unit;
   }
   limitCardNumberLength(event: Event) {
@@ -122,48 +132,33 @@ toggleFlip() {
     // Update the model and input field
     this.cardNumber = value;
   }
-  onSubmit(form: NgForm)  {
+  onSubmit(form: NgForm) {
     let NewOrder: Order = {
       userInfo: {
         name: form.value.name,
         email: this.userEmail,
-        contactNumber: form.value["contact-number"],
+        contactNumber: form.value['contact-number'],
         totalCost: this.totalPrice,
       },
-      products: []
-    }
+      products: [],
+    };
     for (let product of this.products) {
       NewOrder.products.push({
         name: product.title,
         quantity: product.unit,
-        price: product.price
+        price: product.price,
       });
     }
     console.log(NewOrder);
-    this.requestsService.createOrder(NewOrder)
+    this._OrderService.createOrder(NewOrder);
   }
   onCardNumberFocus() {
-  const element = this.el.nativeElement.querySelector('.card-item__focus');
-  const targetElement = this.el.nativeElement.querySelector('.card .card-number');
-  // Define the padding you want to apply
-  const paddingX = 30; // horizontal padding (left + right)
-  const paddingY = 15;  // vertical padding (top + bottom)
-  // Get the dimensions of the target element
-  const rect = targetElement.getBoundingClientRect();
-  // Add padding to the calculated width and height
-  const widthWithPadding = rect.width + paddingX;
-  const heightWithPadding = rect.height + paddingY;
-  this.renderer.addClass(element, 'focus-active');
-  this.renderer.setStyle(element, 'width', `${widthWithPadding}px`);
-  this.renderer.setStyle(element, 'height', `${heightWithPadding}px`);
-  this.renderer.setStyle(element, 'transform', 'translateX(68px) translateY(72px)');
-  }
-  onCardHolderFocus() {
     const element = this.el.nativeElement.querySelector('.card-item__focus');
-    const targetElement = this.el.nativeElement.querySelector('.card .card-holder-wrapper');
+    const targetElement =
+      this.el.nativeElement.querySelector('.card .card-number');
     // Define the padding you want to apply
-    const paddingX = 0; // horizontal padding (left + right)
-    const paddingY = 0;  // vertical padding (top + bottom)
+    const paddingX = 30; // horizontal padding (left + right)
+    const paddingY = 15; // vertical padding (top + bottom)
     // Get the dimensions of the target element
     const rect = targetElement.getBoundingClientRect();
     // Add padding to the calculated width and height
@@ -172,33 +167,64 @@ toggleFlip() {
     this.renderer.addClass(element, 'focus-active');
     this.renderer.setStyle(element, 'width', `${widthWithPadding}px`);
     this.renderer.setStyle(element, 'height', `${heightWithPadding}px`);
-    this.renderer.setStyle(element, 'transform', 'translateX(5px) translateY(133px)');
+    this.renderer.setStyle(
+      element,
+      'transform',
+      'translateX(68px) translateY(72px)'
+    );
+  }
+  onCardHolderFocus() {
+    const element = this.el.nativeElement.querySelector('.card-item__focus');
+    const targetElement = this.el.nativeElement.querySelector(
+      '.card .card-holder-wrapper'
+    );
+    // Define the padding you want to apply
+    const paddingX = 0; // horizontal padding (left + right)
+    const paddingY = 0; // vertical padding (top + bottom)
+    // Get the dimensions of the target element
+    const rect = targetElement.getBoundingClientRect();
+    // Add padding to the calculated width and height
+    const widthWithPadding = rect.width + paddingX;
+    const heightWithPadding = rect.height + paddingY;
+    this.renderer.addClass(element, 'focus-active');
+    this.renderer.setStyle(element, 'width', `${widthWithPadding}px`);
+    this.renderer.setStyle(element, 'height', `${heightWithPadding}px`);
+    this.renderer.setStyle(
+      element,
+      'transform',
+      'translateX(5px) translateY(133px)'
+    );
   }
   onExpirationDateFocus() {
-  const element = this.el.nativeElement.querySelector('.card-item__focus');
-  const targetElement = this.el.nativeElement.querySelector('.card .date-wrapper');
-  // Define the padding you want to apply
-  const paddingX = 20; // horizontal padding (left + right)
-  const paddingY = 0;  // vertical padding (top + bottom)
-  // Get the dimensions of the target element
-  const rect = targetElement.getBoundingClientRect();
-  // Add padding to the calculated width and height
-  const widthWithPadding = rect.width + paddingX;
-  const heightWithPadding = rect.height + paddingY;
-  this.renderer.addClass(element, 'focus-active');
-  this.renderer.setStyle(element, 'width', `${widthWithPadding}px`);
-  this.renderer.setStyle(element, 'height', `${heightWithPadding}px`);
-  this.renderer.setStyle(element, 'transform', 'translateX(287px) translateY(133px)');
+    const element = this.el.nativeElement.querySelector('.card-item__focus');
+    const targetElement = this.el.nativeElement.querySelector(
+      '.card .date-wrapper'
+    );
+    // Define the padding you want to apply
+    const paddingX = 20; // horizontal padding (left + right)
+    const paddingY = 0; // vertical padding (top + bottom)
+    // Get the dimensions of the target element
+    const rect = targetElement.getBoundingClientRect();
+    // Add padding to the calculated width and height
+    const widthWithPadding = rect.width + paddingX;
+    const heightWithPadding = rect.height + paddingY;
+    this.renderer.addClass(element, 'focus-active');
+    this.renderer.setStyle(element, 'width', `${widthWithPadding}px`);
+    this.renderer.setStyle(element, 'height', `${heightWithPadding}px`);
+    this.renderer.setStyle(
+      element,
+      'transform',
+      'translateX(287px) translateY(133px)'
+    );
   }
 
   dateInput(event: Event) {
     const input = event.target as HTMLInputElement;
     // Split the input string by '-'
-    const [year, month] = (input.value).split('-');
+    const [year, month] = input.value.split('-');
     // Return the formatted string as MM/YY
-    this.expirationDate = `${month}/${year.slice(2)}`
+    this.expirationDate = `${month}/${year.slice(2)}`;
     console.log(`${month}/${year.slice(2)}`);
-
   }
   formatDate(date: Date): string {
     const year = date.getFullYear();
@@ -219,10 +245,10 @@ toggleFlip() {
   getCardStyle() {
     return {
       transform: this.isCardFlip ? 'rotateY(-180deg)' : 'rotateY(0deg)',
-      transition: 'transform 0.6s'
+      transition: 'transform 0.6s',
     };
   }
   ngOnDestroy() {
-    this.storeSub.unsubscribe()
+    this.storeSub.unsubscribe();
   }
 }

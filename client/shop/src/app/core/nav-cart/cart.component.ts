@@ -1,124 +1,97 @@
-import { ProductsEffect } from '../../store/effects';
-import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import { RequestsService } from '../services/requests.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Product } from '../../shared/product.model';
 import { Store, select } from '@ngrx/store';
 import * as ProductsActions from '../../store/actions';
-import { Observable, Subscription, tap } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { selectCartProducts } from '../../store/selectors';
 import { AppState } from '../../store/app.reducer';
-import { productsState } from '../../store/store';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  styleUrls: ['./cart.component.css'],
 })
-export class CartComponent implements OnInit, OnDestroy{
-  products!: Product[];
+export class CartComponent implements OnInit, OnDestroy {
+  products: Product[] = [];
   totalPrice: number = 0;
-  units: number = 0;
-  cartStatus!: boolean;
-  cart = "CART";
-  storeSub!: Subscription;
-  ProductsObrsv$!: Observable<Product[]>;
+  cartStatus: boolean = false;
+  readonly cartType = 'CART'; // Marked as readonly since it's a constant
+
+  private subscriptions: Subscription = new Subscription();
+
   constructor(
-    private requestsService: RequestsService,
+    private _CartService: CartService,
     private store: Store<AppState>,
     private sanitizer: DomSanitizer
-    ) {
-      this.ProductsObrsv$ = this.store.pipe(select(selectCartProducts))
-      this.storeSub = this.ProductsObrsv$.subscribe((cartProducts: Product[]) => {
-        this.products = cartProducts;
-        if (this.products !== null) {
-          // Loop over the cart products array
-          this.getTotalPrice(this.products)
+  ) {}
+
+  ngOnInit(): void {
+    this.initCartProductsSubscription();
+    this.initTotalPriceSubscription();
+    this.initCartStatusSubscription();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+  private initCartProductsSubscription(): void {
+    const cartProducts$ = this.store.pipe(select(selectCartProducts));
+
+    this.subscriptions.add(
+      cartProducts$.subscribe((cartProducts: Product[]) => {
+        this.products = cartProducts || [];
+        if (this.products.length > 0) {
+          this.calculateTotalPrice(this.products);
         }
-      });
-    }
-    state: Observable<productsState> | undefined;
-  ngOnInit() {
-    this.requestsService.totalPrice$.subscribe(
-      data => {
-        this.totalPrice = data;
-      }
-    )
-    // this.subscription =
-    // this.state?.subscribe(
-    //   data => {
-    //     console.log(data.products);
-    //   }
-    // )
+      })
+    );
+  }
 
+  private initTotalPriceSubscription(): void {
+    this.subscriptions.add(
+      this._CartService.totalPrice$.subscribe(
+        (price: number) => (this.totalPrice = price)
+      )
+    );
+  }
 
-    // this.store.subscribe(
-    //   (data: AppState) => {
-    //     this.products = data.cartReducer.products;
-    //     if (this.products !== null) {this.getTotalPrice(this.products)}
-    //     // this.getTotalPrice(this.products);
-
-    //     console.log(data.cartReducer);
-    //   }
-    // )
-
-    // this.productsEffect.productsEffect$.subscribe(
-    //   data => {
-    //     console.log("From Cart Effect: ");
-    //     console.log(data);
-    //   }
-    // )
-    this.requestsService.isCartOpen$.subscribe(
-      status => {
+  private initCartStatusSubscription(): void {
+    this.subscriptions.add(
+      this._CartService.isCartOpen$.subscribe((status: boolean) => {
         this.cartStatus = status;
-        console.log(this.cartStatus);
-      }
-    )
+        console.log('Cart Status:', this.cartStatus);
+      })
+    );
   }
 
-  toSafeUrl(url: any) {
-    url = url.replace(/["\[\]]/g, '');
-    let safeUrl =  this.sanitizer.bypassSecurityTrustResourceUrl(url);
-    return safeUrl;
+  toSafeUrl(url: string): SafeResourceUrl {
+    const cleanedUrl = url.replace(/["\[\]]/g, '');
+    return this.sanitizer.bypassSecurityTrustResourceUrl(cleanedUrl);
   }
-  removeDuplicates(array: Product[]): Product[] {
-    const uniqueArray = array.filter((product, index, self) => {
-      // Check for duplicates based on "id"
-      const isFirstOccurrenceIndex = self.findIndex((p) => p._id === product._id);
-      const isFirstOccurrence = index === isFirstOccurrenceIndex;
-      // If it's not the first occurrence, self[Index].unit += 1;
-      if (!isFirstOccurrence) {
-        self[isFirstOccurrenceIndex].unit += 1;
-        console.log("removed!", product);
-      }
-      // If it's the first occurrence, include in the new array
-      return isFirstOccurrence;
-    });
-    return uniqueArray;
-  }
-  cartOpen() {
-    this.cartStatus = true;
-  }
-  cartClose() {
-    this.cartStatus = false;
-  }
-  onDeleteProduct(event: Event, product: Product) {
-    const productEl = (event.target as HTMLElement).closest('.product');
-    console.log(product);
-    // productEl?.remove()
-    // this.requestsService.removeItem(this.cart, product.id)
-    this.store.dispatch(new ProductsActions.deleteCartItemAction([this.cart, product._id]))
+
+  onDeleteProduct(event: Event, product: Product): void {
+    event.preventDefault();
+    this.store.dispatch(
+      new ProductsActions.deleteCartItemAction([this.cartType, product._id])
+    );
     this.totalPrice -= product.price * product.unit;
   }
-  getTotalPrice(products: Product[]) {
-    this.totalPrice = 0;
-    for (let i = 0; i < products.length; i++) {
-      this.totalPrice += products[i].price * products[i].unit;
-    }
+
+  private calculateTotalPrice(products: Product[]): void {
+    this.totalPrice = products.reduce(
+      (total, product) => total + product.price * product.unit,
+      0
+    );
   }
-  ngOnDestroy(): void {
-    // Unsubscribe when the component is destroyed
-    this.storeSub.unsubscribe();
+
+  openCart(): void {
+    this.cartStatus = true;
+  }
+
+  closeCart(): void {
+    this.cartStatus = false;
   }
 }
-

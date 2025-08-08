@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Product } from '../../shared/product.model';
 import * as ProductsActions from '../../store/actions';
-import { RequestsService } from '../../core/services/requests.service';
 import { Observable, Subscription, tap } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { selectCartProducts } from '../../store/selectors';
@@ -10,27 +9,29 @@ import { selectCartProducts } from '../../store/selectors';
 @Component({
   selector: 'app-cart-page',
   templateUrl: './cart-page.component.html',
-  styleUrls: ['./cart-page.component.css']
+  styleUrls: ['./cart-page.component.css'],
 })
 export class CartPageComponent implements OnInit, OnDestroy {
-[x: string]: any;
+  [x: string]: any;
   products: Product[] = [];
   value1: number = 0;
-  inputSize= 25
+  inputSize = 25;
   one = 1;
   two = 2;
   three = 3;
   four = 4;
   five = 5;
   selected: number = 0;
-  cart = "CART";
+  cart = 'CART';
   totalPrice!: number;
   storeSub!: Subscription;
   ProductsObrsv$!: Observable<Product[]>;
-value: any;
-  constructor(private store: Store<any>, private sanitizer: DomSanitizer ) {{}}
+  value: any;
+  constructor(private store: Store<any>, private sanitizer: DomSanitizer) {
+    {
+    }
+  }
   ngOnInit(): void {
-
     // this.store.select("cartReducer")
     // this.storeSub = this.store.subscribe(
     //   data => {
@@ -41,32 +42,32 @@ value: any;
     // )
 
     // this.value1 = product.unit;
-    this.ProductsObrsv$ = this.store.pipe(select(selectCartProducts))
+    this.ProductsObrsv$ = this.store.pipe(select(selectCartProducts));
     this.storeSub = this.ProductsObrsv$.subscribe((cartProducts: Product[]) => {
       this.products = cartProducts;
       if (this.products !== null) {
         // Loop over the cart products array
-        this.getTotalPrice(this.products)
+        this.getTotalPrice(this.products);
       }
     });
   }
   toSafeUrl(url: any) {
     url = url.replace(/["\[\]]/g, '');
-    let safeUrl =  this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    let safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
     return safeUrl;
   }
   onQuantityChange(selectedValue: number, product: Product) {
     // Update the product
-    product = {...product, unit: selectedValue};
+    product = { ...product, unit: selectedValue };
 
     console.log(product);
     // Add the updated product to the products
-    const index = this.products.findIndex((p) => p._id === product._id)
-    let array = [...(this.products)]
+    const index = this.products.findIndex((p) => p._id === product._id);
+    let array = [...this.products];
 
     array[index] = product;
     // save products
-    this.store.dispatch(new ProductsActions.updateProducts(array))
+    this.store.dispatch(new ProductsActions.updateProducts(array));
   }
   generateStockArray(stockQuantity: number = 1): number[] {
     return Array.from({ length: stockQuantity }, (_, i) => i + 1);
@@ -78,7 +79,9 @@ value: any;
     }
   }
   onDeleteProduct(product: Product) {
-    this.store.dispatch(new ProductsActions.deleteCartItemAction([this.cart, product._id]))
+    this.store.dispatch(
+      new ProductsActions.deleteCartItemAction([this.cart, product._id])
+    );
     this.totalPrice -= product.price * product.unit;
   }
 
@@ -87,13 +90,16 @@ value: any;
   }
 
   removeDuplicates(array: Product[], product: Product): Product[] {
-    console.log("=============================================");
+    console.log('=============================================');
 
     const index = array.findIndex((p) => p._id === product._id);
 
     if (index !== -1) {
       // If the object is found, create a modified object with the 'unit' property incremented
-      const modifiedObject: Product = { ...array[index], unit: array[index].unit};
+      const modifiedObject: Product = {
+        ...array[index],
+        unit: array[index].unit,
+      };
 
       // Update the array with the modified object
       array[index] = modifiedObject;
@@ -108,7 +114,6 @@ value: any;
   }
 
   ngOnDestroy() {
-    this.storeSub.unsubscribe()
+    this.storeSub.unsubscribe();
   }
 }
-

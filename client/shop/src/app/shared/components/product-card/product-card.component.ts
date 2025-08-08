@@ -1,18 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RequestsService } from '../../../core/services/requests.service';
 import { Product } from '../../product.model';
 import { Store } from '@ngrx/store';
 import * as ProductsActions from '../../../store/actions';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { CartService } from '../../../core/services/cart.service';
 
 @Component({
   selector: 'app-product-card',
   templateUrl: './product-card.component.html',
-  styleUrls: ['./product-card.component.css']
+  styleUrls: ['./product-card.component.css'],
 })
 export class ProductCardComponent implements OnInit {
-  wishlist = "WISHLIST";
+  wishlist = 'WISHLIST';
 
   value!: number;
   safeImageUrl: any;
@@ -20,20 +20,21 @@ export class ProductCardComponent implements OnInit {
   imageUrlTwo: any;
   imageUrlThree: any;
   user: any;
-  constructor(private requestsService: RequestsService, private store: Store, private sanitizer: DomSanitizer, private router: Router) {
-  }
+  constructor(
+    private _CartService: CartService,
+    private store: Store,
+    private sanitizer: DomSanitizer,
+    private router: Router
+  ) {}
   ngOnInit(): void {
     // this.cardProduct.unit = 1;
-      this.imageUrlOne = this.cardProduct.images?.[0];
-      this.imageUrlTwo = this.cardProduct.images?.[1];
-      this.imageUrlThree = this.cardProduct.images?.[2];
-      this.safeImageUrl =  this.toSafeUrl(this.imageUrlOne);
-    this.requestsService.isCartToggle$.subscribe(
-      status => {
-        this.cartToggle = status;
-      }
-    )
-
+    this.imageUrlOne = this.cardProduct.images?.[0];
+    this.imageUrlTwo = this.cardProduct.images?.[1];
+    this.imageUrlThree = this.cardProduct.images?.[2];
+    this.safeImageUrl = this.toSafeUrl(this.imageUrlOne);
+    this._CartService.isCartToggle$.subscribe((status) => {
+      this.cartToggle = status;
+    });
   }
   toSafeUrl(url: any) {
     if (url === undefined) {
@@ -56,9 +57,13 @@ export class ProductCardComponent implements OnInit {
     }
     if (this.wishToggle == false) {
       this.wishToggle = true;
-      this.store.dispatch(new ProductsActions.addToWishlistAction(this.cardProduct))
+      this.store.dispatch(
+        new ProductsActions.addToWishlistAction(this.cardProduct)
+      );
     } else {
-      this.store.dispatch(new ProductsActions.addToWishlistAction(this.cardProduct))
+      this.store.dispatch(
+        new ProductsActions.addToWishlistAction(this.cardProduct)
+      );
     }
   }
   onAddToCart() {
@@ -68,17 +73,26 @@ export class ProductCardComponent implements OnInit {
 
     if (this.cartToggle == false) {
       this.cartToggle = true;
-      this.store.dispatch(new ProductsActions.addToCartAction(this.cardProduct))
+      this.store.dispatch(
+        new ProductsActions.addToCartAction(this.cardProduct)
+      );
     } else {
-      this.store.dispatch(new ProductsActions.addToCartAction(this.cardProduct))
+      this.store.dispatch(
+        new ProductsActions.addToCartAction(this.cardProduct)
+      );
     }
   }
   onDeleteFromWishlist() {
-    this.store.dispatch(new ProductsActions.deleteWishlistItemAction([this.wishlist, this.cardProduct._id]))
+    this.store.dispatch(
+      new ProductsActions.deleteWishlistItemAction([
+        this.wishlist,
+        this.cardProduct._id,
+      ])
+    );
   }
   isSignedIn() {
     let user = localStorage.getItem('userData');
     console.log(user);
-    return user
+    return user;
   }
 }

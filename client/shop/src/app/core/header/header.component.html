@@ -41,14 +41,14 @@
       mat-raised-button
       style="background-color: #4caf50; color: white;"
       *ngIf="!isSignedIn"
-      (click)="Login()"
+      (click)="login()"
       routerLink="/auth"
       >
       Log in
       </button>
       <button
       *ngIf="isSignedIn"
-      (click)="Logout()"
+      (click)="logout()"
       mat-raised-button color="warn">
         Log out
       </button>

@@ -1,20 +1,28 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { RequestsService } from './core/services/requests.service';
 import { Store } from '@ngrx/store';
 import * as ProductsActions from '../app/store/actions';
 import { NavigationEnd, Router } from '@angular/router';
+import { WishlistService } from './core/services/wishlist.service';
+import { CartService } from './core/services/cart.service';
+import { BaseComponent } from 'global/base/base.component';
+import { takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent extends BaseComponent implements OnInit {
   title = 'E-Store';
   showHeader: boolean = true;
   isAuth: boolean = false;
-  constructor(private requestsService: RequestsService, private store: Store<any>, private router: Router) {
-
+  constructor(
+    private _WishlistService: WishlistService,
+    private _CartService: CartService,
+    private store: Store<any>,
+    private router: Router
+  ) {
+    super();
   }
 
   // @HostListener('window:beforeunload', ['$event'])
@@ -32,14 +40,13 @@ export class AppComponent implements OnInit {
   // }
 
   ngOnInit() {
-
-    this.router.events.subscribe(event => {
+    this.router.events.pipe(takeUntil(this.destroy$)).subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.showHeader = !event.urlAfterRedirects.startsWith('/auth');
         this.isAuth = event.urlAfterRedirects.startsWith('/auth');
       }
     });
-    const jsonString: any = localStorage.getItem("userData");
+    const jsonString: any = localStorage.getItem('userData');
     console.log('Retrieved from localStorage:', jsonString);
 
     if (jsonString) {
@@ -54,17 +61,20 @@ export class AppComponent implements OnInit {
       console.error('No data found in localStorage.');
     }
 
+    this._CartService
+      .getCart()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        this.store.dispatch(new ProductsActions.initializeStateAction(data));
+      });
 
-    this.requestsService.getCart().subscribe(
-      data => {
-        this.store.dispatch(new ProductsActions.initializeStateAction(data))
-    })
-
-    this.requestsService.getWishlist().subscribe(
-      data => {
+    this._WishlistService
+      .getWishlist()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
         console.log(data);
-        this.store.dispatch(new ProductsActions.initializeWishlistAction(data))
-    })
+        this.store.dispatch(new ProductsActions.initializeWishlistAction(data));
+      });
   }
   isVisible = false; // Determines the visibility of the button
   // Detects scroll events
@@ -82,16 +92,21 @@ export class AppComponent implements OnInit {
   scrollToTop(): void {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   }
   isSticky: boolean = false;
 
   @HostListener('window:scroll', [])
   onScroll() {
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    const scrollPosition =
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
 
-    if (scrollPosition > 105) { // Adjust 200px to your need
+    if (scrollPosition > 105) {
+      // Adjust 200px to your need
       this.isSticky = true;
     } else {
       this.isSticky = false;

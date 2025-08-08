@@ -4,26 +4,26 @@
       Home > Product > {{ product ? product.title || "" : "" }}
     </p>
   </div>
-  </header>
+</header>
 <div class="container">
   <div class="row">
     <!-- <img class="product-img col-lg-4 col-md-4 col-sm-12" [src]="product.images?.[0]" alt="image">
     <img class="product-img col-lg-4 col-md-4 col-sm-12" [src]="toSafeUrl(product.images?.[1])" alt="image">
     <img class="product-img col-lg-4 col-md-4 col-sm-12" [src]="toSafeUrl(product.images?.[2])" alt="image"> -->
-      <div class="product-img col-lg-4 col-md-4 col-sm-12">
-        <p-galleria [value]="images" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '640px' }" >
-          <ng-template pTemplate="item" let-item>
-            <img [src]="item" style="width: 100%;" />
+    <div class="product-img col-lg-4 col-md-4 col-sm-12">
+      <p-galleria [value]="images" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '640px' }">
+        <ng-template pTemplate="item" let-item>
+          <img [src]="item" style="width: 100%;" />
         </ng-template>
         <ng-template pTemplate="thumbnail" let-item>
           <div class="grid grid-nogutter justify-content-center">
-              <img [src]="item" style="width: 90%;"/>
+            <img [src]="item" style="width: 90%;" />
           </div>
         </ng-template>
-        </p-galleria>
-      </div>
+      </p-galleria>
+    </div>
 
-      <!-- <p-galleria [value]="images" [numVisible]="3" [circular]="true">
+    <!-- <p-galleria [value]="images" [numVisible]="3" [circular]="true">
         <ng-template let-image pTemplate="item">
           <img [src]="image.src" alt="Image" style="display:block;width:100%">
         </ng-template>
@@ -37,13 +37,13 @@
         <mat-icon class="icon true">star_rate</mat-icon>
         <mat-icon class="icon">star_rate</mat-icon>
         <!-- star_rate_half -->
-        <p class="text">{{ product.rate }}</p>
+        <p class="text">{{ product.rating }}</p>
       </div>
       <h3 class="price">${{product.price}}</h3>
       <div class="description">
         {{ product.description }}
       </div>
-      <div class="type"><strong class="text">Type:</strong>{{ product.category?.name }}</div>
+      <div class="type"><strong class="text">Type:</strong>{{ product.category }}</div>
       <div class="type"><strong class="text">Brand:</strong>{{ product.title }}</div>
       <div class="type"><strong class="text">Color:</strong>Red</div>
       <div class="type"><strong class="text">Material:</strong>-</div>
@@ -86,7 +86,7 @@
     </div>
     <h1>comments</h1>
     <!-- <div class="comment" *ngFor="let comment of comments"> -->
-    <div class="comment" *ngFor="let comment of CommentsObrsv$ | async" >
+    <div class="comment" *ngFor="let comment of CommentsObrsv$ | async">
       <div class="user-details">
         <div class="pfp"><span>{{ comment.username[0] }}</span></div>
         <h2>{{ comment.username }}</h2>
@@ -102,14 +102,14 @@
   <div class="rating-details">
     <div class="rating-holder">
 
-    <div class="rating" >
-      <mat-icon class="icon true">star_rate</mat-icon>
-      <mat-icon class="icon true">star_rate</mat-icon>
-      <mat-icon class="icon true">star_rate</mat-icon>
-      <mat-icon class="icon true">star_rate</mat-icon>
-      <mat-icon class="icon">star_rate</mat-icon>
-    </div>
-    <span class="rating">4.5</span>
+      <div class="rating">
+        <mat-icon class="icon true">star_rate</mat-icon>
+        <mat-icon class="icon true">star_rate</mat-icon>
+        <mat-icon class="icon true">star_rate</mat-icon>
+        <mat-icon class="icon true">star_rate</mat-icon>
+        <mat-icon class="icon">star_rate</mat-icon>
+      </div>
+      <span class="rating">4.5</span>
     </div>
     <hr>
     <div class="rating-numbers">
@@ -141,16 +141,17 @@
     </div>
   </div>
 </section>
-  <!-- <app-comment  *ngFor="let comment of comments" [commenttt]="comment"></app-comment> -->
+<!-- <app-comment  *ngFor="let comment of comments" [commenttt]="comment"></app-comment> -->
 <hr>
-<p-carousel [value]="recommendedProducts" [numVisible]="3" [numScroll]="3" [circular]="false" [responsiveOptions]="responsiveOptions">
+<p-carousel [value]="recommendedProducts" [numVisible]="3" [numScroll]="3" [circular]="false"
+  [responsiveOptions]="responsiveOptions">
   <ng-template let-product pTemplate="item">
-      <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
-          <!-- <div class="mb-3">
+    <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
+      <!-- <div class="mb-3">
             <img [src]="product.images[0]" [alt]="product.name" style="width: 80%;" class="w-6 shadow-2" />
           </div> -->
-          <app-product-card class="mb-3" [cardProduct]="product" class="w-6 shadow-2" ></app-product-card>
-          <!-- <div>
+      <app-product-card class="mb-3" [cardProduct]="product" class="w-6 shadow-2"></app-product-card>
+      <!-- <div>
               <h4 class="mb-1">{{ product.name }}</h4>
               <h6 class="mt-0 mb-3">{{ '$' + product.price }}</h6>
               <div class="car-buttons mt-5">
@@ -158,7 +159,7 @@
                   <p-button type="button" styleClass="p-button-success p-button-rounded mr-2" icon="pi pi-star-fill"></p-button>
               </div>
           </div> -->
-      </div>
+    </div>
   </ng-template>
 </p-carousel>
 <app-loading></app-loading>
