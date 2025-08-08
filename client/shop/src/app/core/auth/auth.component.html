@@ -37,14 +37,14 @@
     <!-- </div> -->
     <!-- <button class="btn" type="submit">Log In</button> -->
   </form>
-  <div class="admin-email">
-    <button (click)="toggleDefaultEmail()">
-      <span *ngIf="isShowEmail" class="material-symbols-outlined">arrow_drop_up</span>
-      <span *ngIf="!isShowEmail" class="material-symbols-outlined">arrow_drop_down</span>
-    </button>
-    <div *ngIf="isShowEmail">
-      <p>Email: test@mail.com</p>
-      <p>Password: 123123</p>
-    </div>
+</div>
+<div class="user-email">
+  <button (click)="toggleDefaultEmail()">
+    <span *ngIf="isShowEmail" class="material-symbols-outlined">arrow_drop_up</span>
+    <span *ngIf="!isShowEmail" class="material-symbols-outlined">arrow_drop_down</span>
+  </button>
+  <div *ngIf="isShowEmail">
+    <p>Email: test@mail.com</p>
+    <p>Password: 123123</p>
   </div>
 </div>
