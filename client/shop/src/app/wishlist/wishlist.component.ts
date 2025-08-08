@@ -21,7 +21,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // this.store.select('wishlistReducer')
-    // this.store.subscribe(data => {
+    // this.store.pipe(takeUntil(this.destroy$)).subscribe(data => {
     //   // Handle the selected state here
     //   this.products = data.wishlistReducer.products;
     //   console.log(this.products);

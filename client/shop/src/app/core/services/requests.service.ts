@@ -11,7 +11,8 @@ import {
   tap,
 } from 'rxjs';
 import { jwtDecode } from 'jwt-decode'; // Change import statement
-import { map } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
+import { BaseComponent } from 'global/base/base.component';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ import { map } from 'rxjs/operators';
 // this.favoritesUrl = `https://movies-guide-eb5a7-default-rtdb.firebaseio.com/${this.uid}/favorites.json`;
 // this.cartUrl = `https://movies-guide-eb5a7-default-rtdb.firebaseio.com/${this.uid}/cart.json`;
 // this.wishlistUrl = `https://movies-guide-eb5a7-default-rtdb.firebaseio.com/${this.uid}/wishlist.json`;
-export class RequestsService {
+export class RequestsService extends BaseComponent {
   private isCartToggleSubject = new Subject<boolean>();
   private isCartOpenSubject = new BehaviorSubject<boolean>(false);
   private totalPriceSubject = new BehaviorSubject<number>(0);
@@ -43,6 +44,7 @@ export class RequestsService {
   // cartUrl = `https://movies-guide-eb5a7-default-rtdb.firebaseio.com/${this.uid}/cart.json`;
   // wishlistUrl = `https://movies-guide-eb5a7-default-rtdb.firebaseio.com/${this.uid}/wishlist.json`;
   constructor(private http: HttpClient) {
+    super();
     // Safe JSON parsing with error handling
     const jsonString = localStorage.getItem('userData');
     if (jsonString) {
@@ -53,22 +55,26 @@ export class RequestsService {
         console.error('Error parsing userData from localStorage:', error);
       }
     }
-    this.getWishlist().subscribe((data) => {
-      data == null ? (this.dbWishlist = []) : (this.dbWishlist = data);
-      this.wishlistLengthSubject.next(this.dbWishlist.length);
-    });
-    this.getCart().subscribe((data) => {
-      data == null ? (this.dbCart = []) : (this.dbCart = data);
-      console.log('from SERVICE>', this.dbCart);
-      // this.cartLengthSubject.next(this.dbCart.length)
-      this.cartLengthSubject.next(data.length);
-    });
+    this.getWishlist()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        data == null ? (this.dbWishlist = []) : (this.dbWishlist = data);
+        this.wishlistLengthSubject.next(this.dbWishlist.length);
+      });
+    this.getCart()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        data == null ? (this.dbCart = []) : (this.dbCart = data);
+        console.log('from SERVICE>', this.dbCart);
+        // this.cartLengthSubject.next(this.dbCart.length)
+        this.cartLengthSubject.next(data.length);
+      });
   }
 
   // // getCart
   //   getDbCart() {
   //     let products!: Product[];
-  //     this.getCart().subscribe(
+  //     this.getCart().pipe(takeUntil(this.destroy$)).subscribe(
   //       data => {
   //         data == null? this.dbCart = [] : this.dbCart = data;
   //         console.log("from SERVICE>", this.dbCart);
@@ -181,6 +187,7 @@ export class RequestsService {
   createOrder(body: any) {
     this.http
       .post<any>('https://e-commerce-api-wvh5.onrender.com/api/v1/orders', body)
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
         (res) => {
           console.log(res);
@@ -300,7 +307,7 @@ export class RequestsService {
   //     let listName;
   //     console.log("First", this.dbCart);
   //     if (componentName === this.cart) {
-  //       this.getDbCart().subscribe(
+  //       this.getDbCart().pipe(takeUntil(this.destroy$)).subscribe(
   //         products => {
   //           this.dbCart = products;
   //           list = this.dbCart;

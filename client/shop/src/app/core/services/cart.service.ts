@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
 import { Product } from '../../shared/product.model';
 import { removeDuplicates } from './requests.service';
+import { BaseComponent } from 'global/base/base.component';
 
 @Injectable({ providedIn: 'root' })
-export class CartService {
+export class CartService extends BaseComponent {
   private isCartOpenSubject = new BehaviorSubject<boolean>(false);
   private totalPriceSubject = new BehaviorSubject<number>(0);
   private cartLengthSubject = new BehaviorSubject<number>(0);
@@ -21,6 +22,7 @@ export class CartService {
   private uid: string | undefined;
 
   constructor(private http: HttpClient) {
+    super();
     this.initializeUid();
     this.loadCart();
   }
@@ -38,10 +40,12 @@ export class CartService {
   }
 
   private loadCart() {
-    this.getCart().subscribe((data) => {
-      this.dbCart = data ?? [];
-      this.cartLengthSubject.next(this.dbCart.length);
-    });
+    this.getCart()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        this.dbCart = data ?? [];
+        this.cartLengthSubject.next(this.dbCart.length);
+      });
   }
 
   addToCart(product: Product) {

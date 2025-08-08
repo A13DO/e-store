@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, takeUntil } from 'rxjs';
 
 import { CartService } from '../../../core/services/cart.service';
 import { WishlistService } from '../../../core/services/wishlist.service';
@@ -14,13 +14,14 @@ import { selectComments } from '../../../store/selectors';
 
 import * as ProductsActions from '../../../store/actions';
 import * as CommentsActions from '../../../shared/components/comment/store/comment.actions';
+import { BaseComponent } from 'global/base/base.component';
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css'],
 })
-export class ProductDetailsComponent implements OnInit {
+export class ProductDetailsComponent extends BaseComponent implements OnInit {
   statusCartText = 'Add to cart';
   product: Product = new Product('', '', 0, 0, [], '', '');
   catId: number = 0;
@@ -65,11 +66,12 @@ export class ProductDetailsComponent implements OnInit {
     private store: Store,
     private router: Router
   ) {
+    super();
     this.CommentsObrsv$ = this.store.pipe(select(selectComments));
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
+    this.route.params.pipe(takeUntil(this.destroy$)).subscribe((params) => {
       this.productId = params['id'];
       this.getProductsDetails(this.productId);
       this.getComments(this.productId);
@@ -80,6 +82,7 @@ export class ProductDetailsComponent implements OnInit {
       this.uid = JSON.parse(user).id;
       this.commentService
         .getOneComment(this.productId, this.uid)
+        .pipe(takeUntil(this.destroy$))
         .subscribe((res: any) => {
           this.commentExists = res.hasOwnProperty(this.uid as string);
         });
@@ -87,24 +90,27 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   getComments(id: string) {
-    this.commentService.getComments(id).subscribe((res) => {
-      this.comments = [];
-      console.log(res.comments);
+    this.commentService
+      .getComments(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        this.comments = [];
+        console.log(res.comments);
 
-      for (let key of Object.keys(res.comments[0].comments)) {
-        this.comments.push(
-          new Comment(
-            res.comments[0].comments[key].uid,
-            res.comments[0].comments[key].username,
-            res.comments[0].comments[key].comment,
-            res.comments[0].comments[key].rating
-          )
+        for (let key of Object.keys(res.comments[0].comments)) {
+          this.comments.push(
+            new Comment(
+              res.comments[0].comments[key].uid,
+              res.comments[0].comments[key].username,
+              res.comments[0].comments[key].comment,
+              res.comments[0].comments[key].rating
+            )
+          );
+        }
+        this.store.dispatch(
+          new CommentsActions.initializeCommentsAction(this.comments)
         );
-      }
-      this.store.dispatch(
-        new CommentsActions.initializeCommentsAction(this.comments)
-      );
-    });
+      });
   }
 
   addComment() {
@@ -141,11 +147,14 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   getProductsDetails(id: any) {
-    this.productService.getProduct(id).subscribe((resProduct: any) => {
-      this.product = resProduct.data;
-      this.images = this.product.images;
-      this.getRecommendations(this.product.category);
-    });
+    this.productService
+      .getProduct(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((resProduct: any) => {
+        this.product = resProduct.data;
+        this.images = this.product.images;
+        this.getRecommendations(this.product.category);
+      });
   }
 
   toSafeUrl(url: any): SafeResourceUrl {
@@ -170,6 +179,7 @@ export class ProductDetailsComponent implements OnInit {
   getRecommendations(category: string) {
     this.productService
       .getCategory(category)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((resProducts: Product[]) => {
         this.recommendedProducts = resProducts.filter(
           (p) => p._id !== this.product._id

@@ -29,7 +29,7 @@ export class ProductsEffect {
     private _CartService: CartService,
     private store: Store<any>
   ) {
-    // this.store.pipe(select(selectCartProducts)).subscribe((cartProducts: Product[]) => {
+    // this.store.pipe(select(selectCartProducts)).pipe(takeUntil(this.destroy$)).subscribe((cartProducts: Product[]) => {
     //   this.products = cartProducts;
     //   console.log(this.products);
     // })
@@ -93,7 +93,7 @@ export class ProductsEffect {
 }
 
 // this.http.put<Product[]>("https://e-commerce-86f86-default-rtdb.firebaseio.com/cart.json",
-// list).subscribe(
+// list).pipe(takeUntil(this.destroy$)).subscribe(
 //   res => {
 //     console.log(res);
 //   }

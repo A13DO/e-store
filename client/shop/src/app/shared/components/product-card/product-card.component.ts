@@ -5,13 +5,15 @@ import * as ProductsActions from '../../../store/actions';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { CartService } from '../../../core/services/cart.service';
+import { BaseComponent } from 'global/base/base.component';
+import { takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-product-card',
   templateUrl: './product-card.component.html',
   styleUrls: ['./product-card.component.css'],
 })
-export class ProductCardComponent implements OnInit {
+export class ProductCardComponent extends BaseComponent implements OnInit {
   wishlist = 'WISHLIST';
 
   value!: number;
@@ -25,16 +27,20 @@ export class ProductCardComponent implements OnInit {
     private store: Store,
     private sanitizer: DomSanitizer,
     private router: Router
-  ) {}
+  ) {
+    super();
+  }
   ngOnInit(): void {
     // this.cardProduct.unit = 1;
     this.imageUrlOne = this.cardProduct.images?.[0];
     this.imageUrlTwo = this.cardProduct.images?.[1];
     this.imageUrlThree = this.cardProduct.images?.[2];
     this.safeImageUrl = this.toSafeUrl(this.imageUrlOne);
-    this._CartService.isCartToggle$.subscribe((status) => {
-      this.cartToggle = status;
-    });
+    this._CartService.isCartToggle$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((status) => {
+        this.cartToggle = status;
+      });
   }
   toSafeUrl(url: any) {
     if (url === undefined) {

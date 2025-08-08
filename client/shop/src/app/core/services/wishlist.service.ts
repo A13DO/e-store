@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, takeUntil } from 'rxjs';
 import { Product } from '../../shared/product.model';
 import { removeDuplicates } from './requests.service';
+import { BaseComponent } from 'global/base/base.component';
 
 @Injectable({ providedIn: 'root' })
-export class WishlistService {
+export class WishlistService extends BaseComponent {
   private wishlistLengthSubject = new BehaviorSubject<number>(0);
   wishlistLength$ = this.wishlistLengthSubject.asObservable();
 
@@ -13,6 +14,7 @@ export class WishlistService {
   private uid: string | undefined;
 
   constructor(private http: HttpClient) {
+    super();
     this.initializeUid();
     this.loadWishlist();
   }
@@ -22,10 +24,12 @@ export class WishlistService {
   }
 
   private loadWishlist() {
-    this.getWishlist().subscribe((data) => {
-      this.dbWishlist = data ?? [];
-      this.wishlistLengthSubject.next(this.dbWishlist.length);
-    });
+    this.getWishlist()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        this.dbWishlist = data ?? [];
+        this.wishlistLengthSubject.next(this.dbWishlist.length);
+      });
   }
 
   addToWishlist(product: Product) {

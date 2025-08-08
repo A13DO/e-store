@@ -11,11 +11,12 @@ import { Store } from '@ngrx/store';
 import { Product } from '../shared/product.model';
 import * as ProductsActions from '../store/actions';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
+import { Observable, takeUntil } from 'rxjs';
 import { ProductsService } from 'client/admin/src/app/core/services/products.service';
 import { Route, Router } from '@angular/router';
 import { Carousel } from 'primeng/carousel';
 import { ProductService } from '../core/services/product.service';
+import { BaseComponent } from 'global/base/base.component';
 
 interface SortByOption {
   name: string;
@@ -26,7 +27,7 @@ interface SortByOption {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent extends BaseComponent implements OnInit {
   // })
   brands = [
     { image: 'pngwing.com (10).webp' },
@@ -69,7 +70,8 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private store: Store<any>
   ) {
-    // this.requestsService.getWishlist().subscribe(
+    super();
+    // this.requestsService.getWishlist().pipe(takeUntil(this.destroy$)).subscribe(
     //   data => {
     //     this.products = data;
     //     if (this.products == null) {
@@ -77,22 +79,20 @@ export class HomeComponent implements OnInit {
     //     }
     //   }
     // )
-    // this.store.subscribe(data => {
+    // this.store.pipe(takeUntil(this.destroy$)).subscribe(data => {
     //   this.count = data.counter.n
     // })
   }
 
-  ngOnDestroy() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
-  }
   ngOnInit() {
     this.onGetAll(undefined, this.selectedSortByOption.code);
-    this.productsService.getAllCategories().subscribe((res: any) => {
-      this.categories = res.categories;
-      console.log(this.categories);
-    });
+    this.productsService
+      .getAllCategories()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res: any) => {
+        this.categories = res.categories;
+        console.log(this.categories);
+      });
   }
   convertRangeToCurrency(range: number[]): string {
     if (range[1] == 670) {
@@ -141,6 +141,7 @@ export class HomeComponent implements OnInit {
     console.log(category, sortOption, numericFilter);
     this._ProductService
       .getAll(undefined, category, sortOption, numericFilter, 4)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((resProducts: Product[]) => {
         const data: Product[] = resProducts;
         this.products = data;
@@ -196,5 +197,10 @@ export class HomeComponent implements OnInit {
         }, this.autoPlayInterval - 500); // Adjust the delay to reset earlier
       }
     }, this.autoPlayInterval);
+  }
+  override ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 }

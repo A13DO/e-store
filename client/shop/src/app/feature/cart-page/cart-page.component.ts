@@ -2,16 +2,20 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Product } from '../../shared/product.model';
 import * as ProductsActions from '../../store/actions';
-import { Observable, Subscription, tap } from 'rxjs';
+import { Observable, Subscription, takeUntil, tap } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { selectCartProducts } from '../../store/selectors';
+import { BaseComponent } from 'global/base/base.component';
 
 @Component({
   selector: 'app-cart-page',
   templateUrl: './cart-page.component.html',
   styleUrls: ['./cart-page.component.css'],
 })
-export class CartPageComponent implements OnInit, OnDestroy {
+export class CartPageComponent
+  extends BaseComponent
+  implements OnInit, OnDestroy
+{
   [x: string]: any;
   products: Product[] = [];
   value1: number = 0;
@@ -28,12 +32,11 @@ export class CartPageComponent implements OnInit, OnDestroy {
   ProductsObrsv$!: Observable<Product[]>;
   value: any;
   constructor(private store: Store<any>, private sanitizer: DomSanitizer) {
-    {
-    }
+    super();
   }
   ngOnInit(): void {
     // this.store.select("cartReducer")
-    // this.storeSub = this.store.subscribe(
+    // this.storeSub = this.store.pipe(takeUntil(this.destroy$)).subscribe(
     //   data => {
     //     this.products = data.cartReducer.products
     //     console.log(this.products);
@@ -43,7 +46,9 @@ export class CartPageComponent implements OnInit, OnDestroy {
 
     // this.value1 = product.unit;
     this.ProductsObrsv$ = this.store.pipe(select(selectCartProducts));
-    this.storeSub = this.ProductsObrsv$.subscribe((cartProducts: Product[]) => {
+    this.storeSub = this.ProductsObrsv$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe((cartProducts: Product[]) => {
       this.products = cartProducts;
       if (this.products !== null) {
         // Loop over the cart products array
@@ -111,9 +116,5 @@ export class CartPageComponent implements OnInit, OnDestroy {
     // If the object is not found, add it to the array
 
     return [...array, product];
-  }
-
-  ngOnDestroy() {
-    this.storeSub.unsubscribe();
   }
 }
